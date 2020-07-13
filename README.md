@@ -1,7 +1,7 @@
-Final Project App Idea
+Final Project App - Ribbon Resources
 ===
 by Helen Paulini
-# Penpal Match (need to think of name)
+
 
 ## Table of Contents
 1. [Overview](#Overview)
