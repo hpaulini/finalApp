@@ -10,7 +10,7 @@ by Helen Paulini
 2. [Schema](#Schema)
 
 ## Overview
-see more app details here: https://docs.google.com/document/d/16AGL_55VVOsBGQ3J4Q-zXzgnN7mGAAUPjbTKNezEgDY/edit
+see more app details here: https://docs.google.com/document/d/16AGL_55VVOsBGQ3J4Q-zXzgnN7mGAAUPjbTKNezEgDY/edit?usp=sharing
 ### Description
 This app is for patients at Children's Hospitals, and people who have gone through similar experiences who will be paired with the patients to be their penpals. In particular, I want to start by focusing on pediatric oncology, and matching current pediatric cancer patients with childhood cancer survivors. This app can also be used by parents of patients, as a resource and to communicate with other parents or survivors.
 
