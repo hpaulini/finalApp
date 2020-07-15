@@ -7,8 +7,14 @@
     android:orientation="vertical"
     tools:context=".fragments.ProfileFragment">
 
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Username" />
+
     <ImageView
-        android:id="@+id/ivAddProfilePic"
+        android:id="@+id/ivProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:srcCompat="@tools:sample/avatars" />
@@ -60,6 +66,30 @@
         android:inputType="textPersonName" />
 
     <EditText
+        android:id="@+id/etHospital"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Hospital"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etCancerType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="CancerType"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etTreatmentType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Treatment Type"
+        android:inputType="textPersonName" />
+
+    <EditText
         android:id="@+id/etTreatmentStart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,10 +98,16 @@
         android:inputType="date" />
 
     <EditText
-        android:id="@+id/etTreatmentEndDate"
+        android:id="@+id/etTreatmentEnd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Treatment End Date"
         android:inputType="date" />
+
+    <Button
+        android:id="@+id/btnSaveProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Profile Information" />
 </LinearLayout>
