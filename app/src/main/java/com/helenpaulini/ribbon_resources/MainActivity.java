@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -15,6 +17,7 @@ import com.helenpaulini.ribbon_resources.fragments.DashboardFragment;
 import com.helenpaulini.ribbon_resources.fragments.FindusersFragment;
 import com.helenpaulini.ribbon_resources.fragments.ProfileFragment;
 import com.helenpaulini.ribbon_resources.fragments.ResourcesFragment;
+import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,5 +65,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         bottomNavigationView.setSelectedItemId(R.id.dashboard);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.logout_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.logout){
+            ParseUser.logOut();
+            ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+            goLoginActivity();
+            Toast.makeText(this, "Logging Out", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
+
+    private void goLoginActivity() {
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 }
