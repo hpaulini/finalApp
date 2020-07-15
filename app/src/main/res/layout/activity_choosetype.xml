@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tvChooseType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select User Type (choose one)"
+        android:textSize="18sp" />
+
+    <CheckBox
+        android:id="@+id/cbCurrentPatient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Current Patient" />
+
+    <CheckBox
+        android:id="@+id/cbCancerSurvivor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Previous Patient" />
+
+    <TextView
+        android:id="@+id/tvCancerType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancer Type (choose one)"
+        android:textSize="18sp" />
+
+    <Spinner
+        android:id="@+id/sprCancerTypeDropdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown" />
+</LinearLayout>
