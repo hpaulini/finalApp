@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvPostHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="textStart"
+        android:textSize="18sp"
+        tools:text="Post Header" />
+
+    <TextView
+        android:id="@+id/tvPostAuthor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Post Author" />
+
+    <TextView
+        android:id="@+id/tvPostDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Date Posted" />
+
+    <TextView
+        android:id="@+id/tvPostDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Post Description" />
+
+    <ImageView
+        android:id="@+id/ivPostImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:srcCompat="@tools:sample/avatars" />
 
 </LinearLayout>
