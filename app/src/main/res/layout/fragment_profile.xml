@@ -1,59 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragments.ProfileFragment">
 
-
     <ImageView
-        android:id="@+id/ivProfile"
-        android:layout_width="wrap_content"
+        android:id="@+id/ivAddProfilePic"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        tools:src="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/tvFirstName"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btnAddProfilePic"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/ivProfile"
-        tools:text="Helen" />
+        android:text="Add/Edit Profile Picture" />
 
-    <TextView
-        android:id="@+id/tvLastName"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/etFirstName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/tvFirstName"
-        tools:text="Paulini" />
+        android:ems="10"
+        android:hint="First Name"
+        android:inputType="textPersonName" />
 
-    <TextView
-        android:id="@+id/tvUsername"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/etLastName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvFirstName"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/ivProfile"
-        tools:text="hpaulini" />
+        android:ems="10"
+        android:hint="Last Name"
+        android:inputType="textPersonName" />
 
-    <TextView
-        android:id="@+id/tvBio"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/etBio"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUsername"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/ivProfile"
-        tools:text="Bio paragraph" />
-</RelativeLayout>
+        android:ems="10"
+        android:hint="Bio: Tell us a little about yourself!"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etBirthday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Birthdate"
+        android:inputType="date" />
+
+    <EditText
+        android:id="@+id/etCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Current City of Residence"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etTreatmentStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Treatment Start Date"
+        android:inputType="date" />
+
+    <EditText
+        android:id="@+id/etTreatmentEndDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Treatment End Date"
+        android:inputType="date" />
+</LinearLayout>

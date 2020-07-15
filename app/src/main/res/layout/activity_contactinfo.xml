@@ -1,47 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".fragments.ProfileFragment">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/ivAddProfilePic"
+    <TextView
+        android:id="@+id/tvContactInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <Button
-        android:id="@+id/btnAddProfilePic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Profile Picture" />
-
-    <EditText
-        android:id="@+id/etFirstName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="First Name"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/etLastName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Last Name"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/etBio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Bio: Tell us a little about yourself!"
-        android:inputType="textPersonName" />
+        android:text="Contact Info"
+        android:textAlignment="center"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/etEmail"
@@ -49,45 +18,69 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Email: you@example.com"
-        android:inputType="textEmailAddress" />
-
-    <EditText
-        android:id="@+id/etPhoneNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Phone Number (optional)"
-        android:inputType="phone" />
-
-    <EditText
-        android:id="@+id/etBirthday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Birthdate"
-        android:inputType="date" />
-
-    <EditText
-        android:id="@+id/etCity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Current City of Residence"
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/etTreatmentStart"
+        android:id="@+id/etPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Treatment Start Date"
-        android:inputType="date" />
+        android:hint="Phone: (123)456-7890"
+        android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/etTreatmentEndDate"
+        android:id="@+id/etFacebook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Treatment End Date"
-        android:inputType="date" />
+        android:hint="Facebook Username"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etInstagram"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Instagram Username"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mailing Address"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/etAdressLine1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Street Address"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etAddressLine2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="City"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etAddressLine3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="State"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etAddressLine4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Zip Code"
+        android:inputType="textPersonName" />
 </LinearLayout>
