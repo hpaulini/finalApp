@@ -44,7 +44,7 @@ import java.util.Date;
  */
 public class ProfileFragment extends Fragment {
 
-    public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 47;
+    public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     public static final String TAG = "ProfileFragment";
 
     private ImageView ivProfile;
@@ -115,6 +115,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         ivProfile = view.findViewById(R.id.ivProfile);
         etFirstName = view.findViewById(R.id.etFirstName);
         etLastName = view.findViewById(R.id.etLastName);
@@ -155,10 +156,10 @@ public class ProfileFragment extends Fragment {
                     Toast.makeText(getContext(), "First Name cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (photoFile == null || ivProfile.getDrawable() == null) {
-                    Toast.makeText(getContext(), "No profile picture selected", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+//                if (photoFile == null || ivProfile.getDrawable() == null) {
+//                    Toast.makeText(getContext(), "No profile picture selected", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 saveProfile(currentUser, firstName, lastName, bio, city, hospital, cancerType, treatmentType, birthday, treatmentStart, treatmentEnd, photoFile);
             }
