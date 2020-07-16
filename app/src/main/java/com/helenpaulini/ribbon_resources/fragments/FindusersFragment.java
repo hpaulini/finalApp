@@ -2,13 +2,28 @@ package com.helenpaulini.ribbon_resources.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.helenpaulini.ribbon_resources.ProfileAdapter;
 import com.helenpaulini.ribbon_resources.R;
+import com.helenpaulini.ribbon_resources.models.Post;
+import com.helenpaulini.ribbon_resources.models.SurvivorProfile;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +31,13 @@ import com.helenpaulini.ribbon_resources.R;
  * create an instance of this fragment.
  */
 public class FindusersFragment extends Fragment {
+
+    public static final String TAG = "FindusersFragment";
+
+    private String client;
+    private RecyclerView rvFindUsers;
+    protected ProfileAdapter adapter;
+    protected List<SurvivorProfile> sProfiles;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,4 +85,42 @@ public class FindusersFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_findusers, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        rvFindUsers = view.findViewById(R.id.rvFindUsers);
+        sProfiles = new ArrayList<>();
+
+        //create the adapter
+        adapter = new ProfileAdapter(getContext(), sProfiles);
+        //set the adapter on the recycler view
+        rvFindUsers.setAdapter(adapter);
+        //set the layout on the recycler view
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvFindUsers.setLayoutManager(linearLayoutManager);
+        querysProfiles();
+    }
+
+    protected void querysProfiles() {
+        ParseQuery<SurvivorProfile> query = ParseQuery.getQuery(SurvivorProfile.class);
+        query.include(SurvivorProfile.KEY_USER);
+        //query.addDescendingOrder(SurvivorProfile.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<SurvivorProfile>() {
+            @Override
+            public void done(List<SurvivorProfile> sProfilesList, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting profiles", e);
+                    return;
+                }
+                for (SurvivorProfile sProfile : sProfilesList) {
+                    Log.i(TAG, "Username: " + sProfile.getUser().getUsername());
+                }
+                sProfiles.addAll(sProfilesList);
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
 }
