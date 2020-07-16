@@ -5,8 +5,11 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
 import java.util.Date;
 
+@Parcel(analyze = {SurvivorProfile.class})
 @ParseClassName("SurvivorProfile")
 public class SurvivorProfile extends ParseObject {
 
@@ -18,16 +21,15 @@ public class SurvivorProfile extends ParseObject {
     public static final String KEY_CANCERTYPE = "cancerType";
     public static final String KEY_TREATMENTTYPE = "treatmentType";
     public static final String KEY_BIO = "bio";
-    public static final String KEY_TREATMENTSTART = "treatmentStart";
-    public static final String KEY_TREATMENTEND = "treatmentEnd";
     public static final String KEY_PROFILEPIC = "profilePic";
-    public static final String KEY_BIRTHDAY = "birthday";
+    public static final String KEY_EMAIL ="email";
 
-    public static final String KEY_EMAIL = "email";
 
 
     //empty constructor for parceler
-    public SurvivorProfile() {}
+    public SurvivorProfile(){
+
+    }
 
     public ParseUser getUser() {
         return getParseUser(KEY_USER);
@@ -101,22 +103,12 @@ public class SurvivorProfile extends ParseObject {
         put(KEY_TREATMENTTYPE, treatmentType);
     }
 
-    public Date getBirthday() {
-        return getDate(KEY_BIRTHDAY);
+    public String getEmail() {
+        return getString(KEY_EMAIL);
     }
 
-    public void setBirthday(Date birthday) {
-        put(KEY_BIRTHDAY, birthday);
+    public void setEmail(String email) {
+        put(KEY_EMAIL, email);
     }
-
-    public Date getTreatmentStart() { return getDate(KEY_TREATMENTSTART); }
-
-    public void setTreatmentStart(Date treatmentStart) { put(KEY_TREATMENTSTART, treatmentStart); }
-
-    public Date getTreatmentEnd() {
-        return getDate(KEY_TREATMENTEND);
-    }
-
-    public void setTreatmentEnd(Date treatmentEnd) { put(KEY_TREATMENTEND, treatmentEnd); }
 
 }

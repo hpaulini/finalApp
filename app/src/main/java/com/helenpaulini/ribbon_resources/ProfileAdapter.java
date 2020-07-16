@@ -111,7 +111,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             tvFirstName.setText(sProfile.getFirstName());
             tvLastName.setText(sProfile.getLastName());
             tvCity.setText(sProfile.getCity());
-            tvAge.setText(age(sProfile.getBirthday()));
             tvUserType.setText("Childhood Cancer Survivor");
             tvCancerType.setText(sProfile.getCanerType());
             tvHospital.setText(sProfile.getHospital());

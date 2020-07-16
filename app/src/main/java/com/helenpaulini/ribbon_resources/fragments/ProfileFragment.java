@@ -53,12 +53,10 @@ public class ProfileFragment extends Fragment {
     private EditText etLastName;
     private EditText etBio;
     private EditText etCity;
-    private EditText etBirthday;
     private EditText etHospital;
     private EditText etCancerType;
     private EditText etTreatmentType;
-    private EditText etTreatmentStart;
-    private EditText etTreatmentEnd;
+    private EditText etEmail;
     private Button btnAddProfilePic;
     private Button btnSaveProfile;
 
@@ -122,12 +120,10 @@ public class ProfileFragment extends Fragment {
         tvUsername = view.findViewById(R.id.tvUsername);
         etBio = view.findViewById(R.id.etBio);
         etCity = view.findViewById(R.id.etCity);
-        etBirthday = view.findViewById(R.id.etBirthday);
         etHospital = view.findViewById(R.id.etHospital);
         etCancerType = view.findViewById(R.id.etCancerType);
         etTreatmentType = view.findViewById(R.id.etTreatmentType);
-        etTreatmentStart = view.findViewById(R.id.etTreatmentStart);
-        etTreatmentEnd = view.findViewById(R.id.etTreatmentEnd);
+        etEmail = view.findViewById(R.id.etEmail);
         btnAddProfilePic = view.findViewById(R.id.btnAddProfilePic);
         btnSaveProfile = view.findViewById(R.id.btnSaveProfile);
 
@@ -141,6 +137,7 @@ public class ProfileFragment extends Fragment {
         btnSaveProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(TAG, "Clicked save profile");
                 String firstName = etFirstName.getText().toString();
                 String lastName = etLastName.getText().toString();
                 String bio = etBio.getText().toString();
@@ -148,9 +145,7 @@ public class ProfileFragment extends Fragment {
                 String hospital = etHospital.getText().toString();
                 String cancerType = etCancerType.getText().toString();
                 String treatmentType = etTreatmentType.getText().toString();
-                Date birthday = (Date) etBirthday.getText();
-                Date treatmentStart = (Date) etTreatmentStart.getText();
-                Date treatmentEnd = (Date) etTreatmentEnd.getText();
+                String email = etEmail.getText().toString();
 
                 if (firstName.isEmpty()) {
                     Toast.makeText(getContext(), "First Name cannot be empty", Toast.LENGTH_SHORT).show();
@@ -160,11 +155,10 @@ public class ProfileFragment extends Fragment {
 //                    Toast.makeText(getContext(), "No profile picture selected", Toast.LENGTH_SHORT).show();
 //                    return;
 //                }
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                saveProfile(currentUser, firstName, lastName, bio, city, hospital, cancerType, treatmentType, birthday, treatmentStart, treatmentEnd, photoFile);
+//                ParseUser currentUser = ParseUser.getCurrentUser();
+                saveProfile(firstName, lastName, bio, city, hospital, cancerType, treatmentType, email, photoFile);
             }
         });
-
     }
 
     private void launchCamera() {
@@ -219,8 +213,12 @@ public class ProfileFragment extends Fragment {
         return new File(mediaStorageDir.getPath() + File.separator + fileName);
     }
 
-    private void saveProfile(ParseUser currentUser, String firstName, String lastName, String bio, String city, String hospital, String cancerType, String treatmentType, Date birthday, Date treatmentStart, Date treatmentEnd, File photoFile) {
+    private void saveProfile(String firstName, String lastName, String bio, String city, String hospital, String cancerType, String treatmentType, String email, File photoFile) {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.fetchInBackground();
+
         SurvivorProfile survivorProfile = new SurvivorProfile();
+        survivorProfile.setUser(currentUser);
         survivorProfile.setFirstName(firstName);
         survivorProfile.setLastName(lastName);
         survivorProfile.setBio(bio);
@@ -228,12 +226,10 @@ public class ProfileFragment extends Fragment {
         survivorProfile.setHospital(hospital);
         survivorProfile.setCancerType(cancerType);
         survivorProfile.setTreatmentType(treatmentType);
-        survivorProfile.setBirthday(birthday);
-        survivorProfile.setTreatmentStart(treatmentStart);
-        survivorProfile.setTreatmentEnd(treatmentEnd);
-
+        survivorProfile.setEmail(email);
         survivorProfile.setImage(new ParseFile(photoFile));
-        survivorProfile.setUser(currentUser);
+
+
         survivorProfile.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
