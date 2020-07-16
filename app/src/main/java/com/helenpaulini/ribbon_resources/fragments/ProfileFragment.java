@@ -44,6 +44,9 @@ import java.util.Date;
  */
 public class ProfileFragment extends Fragment {
 
+    //TO DO: when the user leaves this fragment, save the instance state
+    // so that the view is the same when they return
+
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     public static final String TAG = "ProfileFragment";
 
@@ -240,5 +243,10 @@ public class ProfileFragment extends Fragment {
                 Log.i(TAG, "Profile saved successfully!!");
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 }
