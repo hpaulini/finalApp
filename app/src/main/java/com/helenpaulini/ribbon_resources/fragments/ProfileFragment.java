@@ -30,6 +30,7 @@ import java.io.File;
 import static android.app.Activity.RESULT_OK;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.google.android.material.tabs.TabLayout;
 import com.helenpaulini.ribbon_resources.FragmentTabsAdapter;
 import com.helenpaulini.ribbon_resources.ProfileAdapter;
 import com.helenpaulini.ribbon_resources.R;
@@ -125,7 +126,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 

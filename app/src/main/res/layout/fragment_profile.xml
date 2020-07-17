@@ -16,11 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="48dip" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <ImageView
         android:id="@+id/ivProfile"
         android:layout_width="match_parent"
@@ -126,6 +121,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save Profile Information" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
 </ScrollView>

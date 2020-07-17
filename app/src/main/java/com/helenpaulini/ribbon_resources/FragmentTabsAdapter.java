@@ -6,10 +6,13 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.helenpaulini.ribbon_resources.fragments.ProfileFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FragmentTabsAdapter extends FragmentPagerAdapter {
 
     final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[] { "Tab1", "Tab2", "Tab3" };
+    private String tabTitles[] = new String[] { "Profile", "Contact Info", "Personal Info" };
 
     public FragmentTabsAdapter(FragmentManager fm) {
         super(fm);
