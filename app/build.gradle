@@ -52,5 +52,7 @@ dependencies {
 
     testImplementation 'org.codehaus.groovy:groovy-all:2.4.15'
 
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
+    implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
 }

@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -26,6 +29,9 @@ import android.widget.Toast;
 import java.io.File;
 import static android.app.Activity.RESULT_OK;
 
+import com.astuetz.PagerSlidingTabStrip;
+import com.helenpaulini.ribbon_resources.FragmentTabsAdapter;
+import com.helenpaulini.ribbon_resources.ProfileAdapter;
 import com.helenpaulini.ribbon_resources.R;
 import com.helenpaulini.ribbon_resources.models.Post;
 import com.helenpaulini.ribbon_resources.models.SurvivorProfile;
@@ -35,7 +41,9 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,9 +57,9 @@ public class ProfileFragment extends Fragment {
 
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     public static final String TAG = "ProfileFragment";
+    public static final String ARG_PAGE = "ARG_PAGE";
 
     private ImageView ivProfile;
-    private TextView tvUsername;
     private EditText etFirstName;
     private EditText etLastName;
     private EditText etBio;
@@ -97,6 +105,14 @@ public class ProfileFragment extends Fragment {
         return fragment;
     }
 
+    public static ProfileFragment newInstance(int page) {
+        Bundle args = new Bundle();
+        args.putInt(ARG_PAGE, page);
+        ProfileFragment fragment = new ProfileFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,10 +133,18 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        ViewPager viewPager = view.findViewById(R.id.pager);
+        viewPager.setAdapter(new FragmentTabsAdapter(getFragmentManager()));
+
+        // Give the PagerSlidingTabStrip the ViewPager
+        PagerSlidingTabStrip tabsStrip = view.findViewById(R.id.tabs);
+        // Attach the view pager to the tab strip
+        tabsStrip.setViewPager(viewPager);
+
         ivProfile = view.findViewById(R.id.ivProfile);
         etFirstName = view.findViewById(R.id.etFirstName);
         etLastName = view.findViewById(R.id.etLastName);
-        tvUsername = view.findViewById(R.id.tvUsername);
         etBio = view.findViewById(R.id.etBio);
         etCity = view.findViewById(R.id.etCity);
         etHospital = view.findViewById(R.id.etHospital);

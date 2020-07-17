@@ -11,12 +11,15 @@
     android:orientation="vertical"
     tools:context=".fragments.ProfileFragment">
 
-    <TextView
-        android:id="@+id/tvUsername"
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        tools:text="Username" />
+        android:layout_height="48dip" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <ImageView
         android:id="@+id/ivProfile"
@@ -123,5 +126,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save Profile Information" />
+
 </LinearLayout>
 </ScrollView>
