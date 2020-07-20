@@ -11,10 +11,10 @@
     android:orientation="vertical"
     tools:context=".fragments.ProfileFragment">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/ivProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
@@ -108,11 +108,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save Profile Information" />
-
-    <FrameLayout
-        android:id="@+id/child_fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>
 </ScrollView>
