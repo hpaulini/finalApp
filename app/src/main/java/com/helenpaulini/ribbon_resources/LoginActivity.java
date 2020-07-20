@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -54,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i(TAG, "onClick signup button");
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                Boolean userType = true;
                 signupUser(username, password);
             }
         });

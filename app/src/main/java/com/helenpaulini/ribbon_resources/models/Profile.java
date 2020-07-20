@@ -25,6 +25,7 @@ public class Profile extends ParseObject {
     public static final String KEY_BIO = "bio";
     public static final String KEY_TREATMENTSTART = "treatmentStart";
     public static final String KEY_TREATMENTEND = "treatmentEnd";
+    public static final String KEY_ISCURRENTPATIENT = "isCurrentPatient";
 
     //empty constructor for parceler
     public Profile(){
@@ -136,4 +137,9 @@ public class Profile extends ParseObject {
     public void setTreatmentEnd(Date treatmentEnd) {
         put(KEY_TREATMENTEND, treatmentEnd);
     }
+
+    //isCurrentUser
+    public Boolean getIsCurrentPatient(){ return getBoolean(KEY_ISCURRENTPATIENT); }
+
+    public void setisCurrentPatient(Boolean isCurrentPatient){ put(KEY_ISCURRENTPATIENT, isCurrentPatient); }
 }

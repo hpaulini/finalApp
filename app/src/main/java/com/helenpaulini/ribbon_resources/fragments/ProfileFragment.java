@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -75,8 +76,11 @@ public class ProfileFragment extends Fragment {
     private EditText etTreatmentSart;
     private EditText etTreatmentEnd;
     private Button btnAddProfilePic;
+    private CheckBox cbCurrentPatient;
     private Button btnSaveProfile;
     private Button btnNext;
+
+    private Boolean isCurrentPatient;
 
     private File photoFile;
     public String photoFileName = "photo.jpg";
@@ -150,10 +154,23 @@ public class ProfileFragment extends Fragment {
             etBio = view.findViewById(R.id.etBio);
             etTreatmentSart = view.findViewById(R.id.etTreatmentStart);
             etTreatmentEnd = view.findViewById(R.id.etTreatmentEnd);
+            cbCurrentPatient = view.findViewById(R.id.cbCurrentPatient);
 
             btnAddProfilePic = view.findViewById(R.id.btnAddProfilePic);
             btnSaveProfile = view.findViewById(R.id.btnSaveProfile);
             btnNext = view.findViewById(R.id.btnNext);
+
+            cbCurrentPatient.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i(TAG, "onClick checkbox");
+                    if (((CheckBox) v).isChecked()) {
+                        isCurrentPatient = true;
+                    } else {
+                        isCurrentPatient = false;
+                    }
+                }
+            });
 
             btnAddProfilePic.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -256,6 +273,7 @@ public class ProfileFragment extends Fragment {
             Profile profile = new Profile();
             profile.setUser(currentUser);
 
+            profile.setisCurrentPatient(isCurrentPatient);
             profile.setFirstName(firstName);
             profile.setLastName(lastName);
             profile.setBio(bio);

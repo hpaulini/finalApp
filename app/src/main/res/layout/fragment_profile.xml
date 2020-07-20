@@ -23,6 +23,12 @@
         android:layout_height="wrap_content"
         android:text="Add/Edit Profile Picture" />
 
+    <CheckBox
+        android:id="@+id/cbCurrentPatient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Check this box if you are a current patient" />
+
     <EditText
         android:id="@+id/etFirstName"
         android:layout_width="match_parent"
