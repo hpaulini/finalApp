@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -75,6 +76,7 @@ public class ProfileFragment extends Fragment {
     private EditText etTreatmentEnd;
     private Button btnAddProfilePic;
     private Button btnSaveProfile;
+    private Button btnNext;
 
     private File photoFile;
     public String photoFileName = "photo.jpg";
@@ -151,6 +153,7 @@ public class ProfileFragment extends Fragment {
 
             btnAddProfilePic = view.findViewById(R.id.btnAddProfilePic);
             btnSaveProfile = view.findViewById(R.id.btnSaveProfile);
+            btnNext = view.findViewById(R.id.btnNext);
 
             btnAddProfilePic.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -179,6 +182,17 @@ public class ProfileFragment extends Fragment {
                         return;
                     }
                     saveProfile(firstName, lastName, city, birthday, hospital, cancerType, treatmentType, bio, treatmentStart, treatmentEnd, photoFile);
+                }
+            });
+
+            btnNext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fts = fm.beginTransaction();
+                    fts.replace(R.id.flContainer, new ContactinfoFragment());
+                    fts.addToBackStack(TAG);
+                    fts.commit();
                 }
             });
         }

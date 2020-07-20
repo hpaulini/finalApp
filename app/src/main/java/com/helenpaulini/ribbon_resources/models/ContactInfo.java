@@ -52,11 +52,11 @@ public class ContactInfo extends ParseObject {
     }
 
     //Instagram
-    public ParseFile getInstagram() {
-        return getParseFile(KEY_INSTAGRAM);
+    public String getInstagram() {
+        return getString(KEY_INSTAGRAM);
     }
 
-    public void setInstagram(ParseFile instagram) {
+    public void setInstagram(String instagram) {
         put(KEY_INSTAGRAM, instagram);
     }
 

@@ -5,19 +5,22 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.astuetz.PagerSlidingTabStrip;
-import com.helenpaulini.ribbon_resources.FragmentTabsAdapter;
 import com.helenpaulini.ribbon_resources.R;
+import com.helenpaulini.ribbon_resources.models.ContactInfo;
+import com.helenpaulini.ribbon_resources.models.Profile;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +28,8 @@ import com.helenpaulini.ribbon_resources.R;
  * create an instance of this fragment.
  */
 public class ContactinfoFragment extends Fragment {
+
+    public static final String TAG = "Contactinfo Fragment";
 
     private EditText etEmail;
     private EditText etPhone;
@@ -34,7 +39,7 @@ public class ContactinfoFragment extends Fragment {
     private EditText etAddressLine2;
     private EditText etAddressLine3;
     private EditText etAddressLine4;
-    private Button btnNext;
+    private Button btnSave;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -95,9 +100,9 @@ public class ContactinfoFragment extends Fragment {
         etAddressLine2 = view.findViewById(R.id.etAddressLine2);
         etAddressLine3 = view.findViewById(R.id.etAddressLine3);
         etAddressLine4 = view.findViewById(R.id.etAddressLine4);
-        btnNext = view.findViewById(R.id.btnNext);
+        btnSave = view.findViewById(R.id.btnSave);
 
-        btnNext.setOnClickListener(new View.OnClickListener() {
+        btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = etEmail.getText().toString();
@@ -109,16 +114,32 @@ public class ContactinfoFragment extends Fragment {
                 String address3 = etAddressLine3.getText().toString();
                 String address4 = etAddressLine4.getText().toString();
                 saveContactInfo(email, phone, facebook, instagram, address1, address2, address3, address4);
-                goToNextPage();
             }
         });
     }
 
     public void saveContactInfo(String email, String phone, String facebook, String instagram, String address1, String address2, String address3, String address4){
-        //TO DO: add these user inputs to the parse model
-    }
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.fetchInBackground();
 
-    public void goToNextPage(){
+        ContactInfo contact = new ContactInfo();
+        contact.setUser(currentUser);
 
+        contact.setEmail(email);
+        contact.setPhone(phone);
+        contact.setFacebook(facebook);
+        contact.setInstagram(instagram);
+        contact.setAddress(address1+"/n"+address2+"/n"+address3+", "+address4);
+
+        contact.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving", e);
+                    Toast.makeText(getContext(), "Error while saving", Toast.LENGTH_SHORT).show();
+                }
+                Log.i(TAG, "Profile saved successfully!!");
+            }
+        });
     }
 }
