@@ -9,26 +9,29 @@ import org.parceler.Parcel;
 
 import java.util.Date;
 
-@Parcel(analyze = {SurvivorProfile.class})
-@ParseClassName("SurvivorProfile")
-public class SurvivorProfile extends ParseObject {
+@Parcel(analyze = {Profile.class})
+@ParseClassName("Profile")
+public class Profile extends ParseObject {
 
     public static final String KEY_USER = "user";
     public static final String KEY_FIRSTNAME = "firstName";
     public static final String KEY_LASTNAME = "lastName";
+    public static final String KEY_PROFILEPIC = "profilePic";
     public static final String KEY_CITY = "city";
+    public static final String KEY_BIRTHDAY =  "birthday";
     public static final String KEY_HOSPITAL = "hospital";
     public static final String KEY_CANCERTYPE = "cancerType";
     public static final String KEY_TREATMENTTYPE = "treatmentType";
     public static final String KEY_BIO = "bio";
-    public static final String KEY_PROFILEPIC = "profilePic";
-    public static final String KEY_EMAIL ="email";
+    public static final String KEY_TREATMENTSTART = "treatmentStart";
+    public static final String KEY_TREATMENTEND = "treatmentEnd";
 
     //empty constructor for parceler
-    public SurvivorProfile(){
+    public Profile(){
 
     }
 
+    //User
     public ParseUser getUser() {
         return getParseUser(KEY_USER);
     }
@@ -37,14 +40,7 @@ public class SurvivorProfile extends ParseObject {
         put(KEY_USER, user);
     }
 
-    public ParseFile getImage() {
-        return getParseFile(KEY_PROFILEPIC);
-    }
-
-    public void setImage(ParseFile parseFile) {
-        put(KEY_PROFILEPIC, parseFile);
-    }
-
+    //First name
     public String getFirstName() {
         return getString(KEY_FIRSTNAME);
     }
@@ -53,6 +49,7 @@ public class SurvivorProfile extends ParseObject {
         put(KEY_FIRSTNAME, firstName);
     }
 
+    //Last name
     public String getLastName() {
         return getString(KEY_LASTNAME);
     }
@@ -61,14 +58,16 @@ public class SurvivorProfile extends ParseObject {
         put(KEY_LASTNAME, lastName);
     }
 
-    public String getBio() {
-        return getString(KEY_BIO);
+    //Profile pic
+    public ParseFile getImage() {
+        return getParseFile(KEY_PROFILEPIC);
     }
 
-    public void setBio(String bio) {
-        put(KEY_BIO, bio);
+    public void setImage(ParseFile parseFile) {
+        put(KEY_PROFILEPIC, parseFile);
     }
 
+    //City
     public String getCity() {
         return getString(KEY_CITY);
     }
@@ -77,6 +76,16 @@ public class SurvivorProfile extends ParseObject {
         put(KEY_CITY, city);
     }
 
+    //Birthday
+    public Date getBirthday() {
+        return getDate(KEY_BIRTHDAY);
+    }
+
+    public void setBirthday(Date birthday) {
+        put(KEY_BIRTHDAY, birthday);
+    }
+
+    //Hospital
     public String getHospital() {
         return getString(KEY_HOSPITAL);
     }
@@ -85,6 +94,7 @@ public class SurvivorProfile extends ParseObject {
         put(KEY_HOSPITAL, hospital);
     }
 
+    //Cancer type
     public String getCanerType() {
         return getString(KEY_CANCERTYPE);
     }
@@ -93,6 +103,7 @@ public class SurvivorProfile extends ParseObject {
         put(KEY_CANCERTYPE, cancerType);
     }
 
+    //Treatment type
     public String getTreatmentType() {
         return getString(KEY_TREATMENTTYPE);
     }
@@ -101,12 +112,28 @@ public class SurvivorProfile extends ParseObject {
         put(KEY_TREATMENTTYPE, treatmentType);
     }
 
-    public String getEmail() {
-        return getString(KEY_EMAIL);
+    //Bio
+    public String getBio() {
+        return getString(KEY_BIO);
     }
 
-    public void setEmail(String email) {
-        put(KEY_EMAIL, email);
+    public void setBio(String bio) {
+        put(KEY_BIO, bio);
     }
 
+    //Treatment start
+    public Date getTreatmentStart() {
+        return getDate(KEY_TREATMENTSTART);
+    }
+
+    public void setTreatmentStart(Date treatmentStart) { put(KEY_TREATMENTSTART, treatmentStart); }
+
+    //Treatment End
+    public Date getTreatmentEnd() {
+        return getDate(KEY_TREATMENTEND);
+    }
+
+    public void setTreatmentEnd(Date treatmentEnd) {
+        put(KEY_TREATMENTEND, treatmentEnd);
+    }
 }

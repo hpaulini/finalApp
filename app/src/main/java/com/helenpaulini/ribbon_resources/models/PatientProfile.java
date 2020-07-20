@@ -35,4 +35,76 @@ public class PatientProfile extends ParseObject {
         put(KEY_USER, user);
     }
 
+    public ParseFile getImage() {
+        return getParseFile(KEY_PROFILEPIC);
+    }
+
+    public void setImage(ParseFile parseFile) {
+        put(KEY_PROFILEPIC, parseFile);
+    }
+
+    public String getFirstName() {
+        return getString(KEY_FIRSTNAME);
+    }
+
+    public void setFirstName(String firstName) {
+        put(KEY_FIRSTNAME, firstName);
+    }
+
+    public String getLastName() {
+        return getString(KEY_LASTNAME);
+    }
+
+    public void setLastName(String lastName) {
+        put(KEY_LASTNAME, lastName);
+    }
+
+    public String getBio() {
+        return getString(KEY_BIO);
+    }
+
+    public void setBio(String bio) {
+        put(KEY_BIO, bio);
+    }
+
+    public String getCity() {
+        return getString(KEY_CITY);
+    }
+
+    public void setCity(String city) {
+        put(KEY_CITY, city);
+    }
+
+    public String getHospital() {
+        return getString(KEY_HOSPITAL);
+    }
+
+    public void setHospital(String hospital) {
+        put(KEY_HOSPITAL, hospital);
+    }
+
+    public String getCanerType() {
+        return getString(KEY_CANCERTYPE);
+    }
+
+    public void setCancerType(String cancerType) {
+        put(KEY_CANCERTYPE, cancerType);
+    }
+
+    public String getTreatmentType() {
+        return getString(KEY_TREATMENTTYPE);
+    }
+
+    public void setTreatmentType(String treatmentType) {
+        put(KEY_TREATMENTTYPE, treatmentType);
+    }
+
+    public String getEmail() {
+        return getString(KEY_EMAIL);
+    }
+
+    public void setEmail(String email) {
+        put(KEY_EMAIL, email);
+    }
+
 }

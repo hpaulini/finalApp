@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.helenpaulini.ribbon_resources.ProfileAdapter;
 import com.helenpaulini.ribbon_resources.R;
 import com.helenpaulini.ribbon_resources.models.Post;
+import com.helenpaulini.ribbon_resources.models.Profile;
 import com.helenpaulini.ribbon_resources.models.SurvivorProfile;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -37,7 +38,7 @@ public class FindusersFragment extends Fragment {
     private String client;
     private RecyclerView rvFindUsers;
     protected ProfileAdapter adapter;
-    protected List<SurvivorProfile> sProfiles;
+    protected List<Profile> profiles;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -91,10 +92,10 @@ public class FindusersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvFindUsers = view.findViewById(R.id.rvFindUsers);
-        sProfiles = new ArrayList<>();
+        profiles = new ArrayList<>();
 
         //create the adapter
-        adapter = new ProfileAdapter(getContext(), sProfiles);
+        adapter = new ProfileAdapter(getContext(), profiles);
         //set the adapter on the recycler view
         rvFindUsers.setAdapter(adapter);
         //set the layout on the recycler view
@@ -104,23 +105,22 @@ public class FindusersFragment extends Fragment {
     }
 
     protected void querysProfiles() {
-        ParseQuery<SurvivorProfile> query = ParseQuery.getQuery(SurvivorProfile.class);
-        query.include(SurvivorProfile.KEY_USER);
+        ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
+        query.include(Profile.KEY_USER);
         //query.addDescendingOrder(SurvivorProfile.KEY_CREATED_AT);
-        query.findInBackground(new FindCallback<SurvivorProfile>() {
+        query.findInBackground(new FindCallback<Profile>() {
             @Override
-            public void done(List<SurvivorProfile> sProfilesList, ParseException e) {
+            public void done(List<Profile> profilesList, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Issue with getting profiles", e);
                     return;
                 }
-                for (SurvivorProfile sProfile : sProfilesList) {
-                    Log.i(TAG, "Username: " + sProfile.getUser().getUsername());
+                for (Profile profile : profilesList) {
+                    Log.i(TAG, "Username: " + profile.getUser().getUsername());
                 }
-                sProfiles.addAll(sProfilesList);
+                profiles.addAll(profilesList);
                 adapter.notifyDataSetChanged();
             }
         });
     }
-
 }

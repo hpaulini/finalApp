@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.helenpaulini.ribbon_resources.R;
 import com.helenpaulini.ribbon_resources.models.Post;
+import com.helenpaulini.ribbon_resources.models.Profile;
 import com.helenpaulini.ribbon_resources.models.SurvivorProfile;
 import com.parse.ParseFile;
 
@@ -35,11 +36,11 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
     public static final String TAG = "ProfileAdapter";
     Context context;
-    List<SurvivorProfile> sProfiles;
+    List<Profile> profiles;
 
-    public ProfileAdapter(Context context, List<SurvivorProfile> sProfiles) {
+    public ProfileAdapter(Context context, List<Profile> profiles) {
         this.context = context;
-        this.sProfiles = sProfiles;
+        this.profiles = profiles;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -56,26 +57,26 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder" + position);
         // Get the movie at the position
-        SurvivorProfile sProfile = sProfiles.get(position);
+        Profile profile = profiles.get(position);
         //Bind the movie data into the view holder
-        holder.bind(sProfile);
+        holder.bind(profile);
     }
 
     // Returns the total count of the items in the list
     @Override
     public int getItemCount() {
-        return sProfiles.size();
+        return profiles.size();
     }
 
     // Clean all elements of the recycler
     public void clear() {
-        sProfiles.clear();
+        profiles.clear();
         notifyDataSetChanged();
     }
 
     // Add a list of items -- change to type used
-    public void addAll(List<SurvivorProfile> list) {
-        sProfiles.addAll(list);
+    public void addAll(List<Profile> list) {
+        profiles.addAll(list);
         notifyDataSetChanged();
     }
 
@@ -106,16 +107,16 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             itemView.setOnClickListener(this);
         }
 
-        public void bind(SurvivorProfile sProfile) {
-            tvUsername.setText(sProfile.getUser().getUsername());
-            tvFirstName.setText(sProfile.getFirstName());
-            tvLastName.setText(sProfile.getLastName());
-            tvCity.setText(sProfile.getCity());
+        public void bind(Profile profile) {
+            tvUsername.setText(profile.getUser().getUsername());
+            tvFirstName.setText(profile.getFirstName());
+            tvLastName.setText(profile.getLastName());
+            tvCity.setText(profile.getCity());
             tvUserType.setText("Childhood Cancer Survivor");
-            tvCancerType.setText(sProfile.getCanerType());
-            tvHospital.setText(sProfile.getHospital());
+            tvCancerType.setText(profile.getCanerType());
+            tvHospital.setText(profile.getHospital());
 
-            ParseFile image = sProfile.getImage();
+            ParseFile image = profile.getImage();
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivProfilePic);
             }

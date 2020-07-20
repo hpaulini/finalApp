@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -32,7 +34,7 @@ public class ContactinfoFragment extends Fragment {
     private EditText etAddressLine2;
     private EditText etAddressLine3;
     private EditText etAddressLine4;
-    private Button btnSave;
+    private Button btnNext;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,22 +87,38 @@ public class ContactinfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager viewPager = view.findViewById(R.id.pager);
-        viewPager.setAdapter(new FragmentTabsAdapter(getChildFragmentManager()));
-
-        // Give the PagerSlidingTabStrip the ViewPager
-        PagerSlidingTabStrip tabsStrip = view.findViewById(R.id.tabs);
-        // Attach the view pager to the tab strip
-        tabsStrip.setViewPager(viewPager);
-
         etEmail = view.findViewById(R.id.etEmail);
         etPhone = view.findViewById(R.id.etPhone);
         etFacebook = view.findViewById(R.id.etFacebook);
+        etInstagram = view.findViewById(R.id.etInstagram);
         etAddressLine1 = view.findViewById(R.id.etAdressLine1);
         etAddressLine2 = view.findViewById(R.id.etAddressLine2);
         etAddressLine3 = view.findViewById(R.id.etAddressLine3);
         etAddressLine4 = view.findViewById(R.id.etAddressLine4);
-        btnSave = view.findViewById(R.id.btnSave);
+        btnNext = view.findViewById(R.id.btnNext);
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = etEmail.getText().toString();
+                String phone = etPhone.getText().toString();
+                String facebook = etFacebook.getText().toString();
+                String instagram = etInstagram.getText().toString();
+                String address1 = etAddressLine1.getText().toString();
+                String address2 = etAddressLine2.getText().toString();
+                String address3 = etAddressLine3.getText().toString();
+                String address4 = etAddressLine4.getText().toString();
+                saveContactInfo(email, phone, facebook, instagram, address1, address2, address3, address4);
+                goToNextPage();
+            }
+        });
+    }
+
+    public void saveContactInfo(String email, String phone, String facebook, String instagram, String address1, String address2, String address3, String address4){
+        //TO DO: add these user inputs to the parse model
+    }
+
+    public void goToNextPage(){
+
     }
 }

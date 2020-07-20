@@ -40,23 +40,23 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.dashboard:
                     default:
-                        Toast.makeText(MainActivity.this, "dashboard!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "dashboard!", Toast.LENGTH_SHORT).show();
                         fragment = new DashboardFragment();
                         break;
                     case R.id.profile:
-                        Toast.makeText(MainActivity.this, "profile!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "profile!", Toast.LENGTH_SHORT).show();
                         fragment = new ProfileFragment();
                         break;
                     case R.id.myConnections:
-                        Toast.makeText(MainActivity.this, "connections!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "connections!", Toast.LENGTH_SHORT).show();
                         fragment = new ConnectionsFragment();
                         break;
                     case R.id.findUsers:
-                        Toast.makeText(MainActivity.this, "findusers!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "findusers!", Toast.LENGTH_SHORT).show();
                         fragment = new FindusersFragment();
                         break;
                     case R.id.resources:
-                        Toast.makeText(MainActivity.this, "resources!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "resources!", Toast.LENGTH_SHORT).show();
                         fragment = new ResourcesFragment();
                         break;
                 }
