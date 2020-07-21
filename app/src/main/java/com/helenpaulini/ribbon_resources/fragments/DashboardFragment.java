@@ -16,9 +16,11 @@ import android.view.ViewGroup;
 import com.helenpaulini.ribbon_resources.ProfileAdapter;
 import com.helenpaulini.ribbon_resources.R;
 import com.helenpaulini.ribbon_resources.models.Profile;
+import com.helenpaulini.ribbon_resources.utilities.Matching;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +106,7 @@ public class DashboardFragment extends Fragment {
         query.findInBackground(new FindCallback<Profile>() {
             @Override
             public void done(List<Profile> profilesList, ParseException e) {
+                profilesList = profileMatches(getCurrentProfile(ParseUser.getCurrentUser(), profilesList), profilesList);
                 if (e != null) {
                     Log.e(TAG, "Issue with getting profiles", e);
                     return;
@@ -115,5 +118,32 @@ public class DashboardFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public Profile getCurrentProfile(ParseUser user, List<Profile> allProfiles){
+        int indexOfCurrentProfile=0;
+        for(int i=0; i<allProfiles.size(); i++){
+            if (allProfiles.get(i).getUser().equals(user)){
+                indexOfCurrentProfile = i;
+            }
+        }
+        Log.i(TAG, "current user: " + allProfiles.get(indexOfCurrentProfile).getUser().getUsername());
+        return allProfiles.get(indexOfCurrentProfile);
+    }
+
+    public List<Profile> profileMatches (Profile currentProfile, List<Profile> profiles){
+        List<Profile> profileMatches = new ArrayList<>();
+        Matching potentialmatch = new Matching();
+        for(int i=0; i<profiles.size(); i++){
+
+            Log.i(TAG, "match value between "+ currentProfile.getUser().getUsername()
+                    + " and "+ profiles.get(i).getUser().getUsername()+" is "+potentialmatch.matchValue(currentProfile, profiles.get(i)));
+
+            if(potentialmatch.matchValue(currentProfile, profiles.get(i))>0){
+                //Log.i(TAG, "a match: " + profiles.get(i).getUser().getUsername());
+                profileMatches.add(profiles.get(i));
+            }
+        }
+        return profileMatches;
     }
 }
