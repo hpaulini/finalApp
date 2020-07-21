@@ -101,13 +101,13 @@ public class FindusersFragment extends Fragment {
         //set the layout on the recycler view
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvFindUsers.setLayoutManager(linearLayoutManager);
-        querysProfiles();
+        queryProfiles();
     }
 
-    protected void querysProfiles() {
+    protected void queryProfiles() {
         ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
         query.include(Profile.KEY_USER);
-        //query.addDescendingOrder(SurvivorProfile.KEY_CREATED_AT);
+        query.addDescendingOrder(Profile.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Profile>() {
             @Override
             public void done(List<Profile> profilesList, ParseException e) {

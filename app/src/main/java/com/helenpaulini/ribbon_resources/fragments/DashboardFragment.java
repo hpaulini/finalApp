@@ -2,13 +2,26 @@ package com.helenpaulini.ribbon_resources.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.helenpaulini.ribbon_resources.ProfileAdapter;
 import com.helenpaulini.ribbon_resources.R;
+import com.helenpaulini.ribbon_resources.models.Profile;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +29,13 @@ import com.helenpaulini.ribbon_resources.R;
  * create an instance of this fragment.
  */
 public class DashboardFragment extends Fragment {
+
+    public static final String TAG = "Dashboard fragment";
+
+    private String client;
+    private RecyclerView rvDashboard;
+    protected ProfileAdapter adapter;
+    protected List<Profile> profiles;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +82,38 @@ public class DashboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        rvDashboard = view.findViewById(R.id.rvDashboard);
+        profiles = new ArrayList<>();
+
+        adapter = new ProfileAdapter(getContext(), profiles);
+        rvDashboard.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvDashboard.setLayoutManager(linearLayoutManager);
+        queryProfiles();
+    }
+
+    protected void queryProfiles() {
+        ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
+        query.include(Profile.KEY_USER);
+        query.findInBackground(new FindCallback<Profile>() {
+            @Override
+            public void done(List<Profile> profilesList, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting profiles", e);
+                    return;
+                }
+                for (Profile profile : profilesList) {
+                    Log.i(TAG, "Username: " + profile.getUser().getUsername());
+                }
+                profiles.addAll(profilesList);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }

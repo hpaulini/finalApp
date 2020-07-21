@@ -86,7 +86,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         private TextView tvFirstName;
         private TextView tvLastName;
         private TextView tvCity;
-        private TextView tvAge;
+        private TextView tvAge; //To do: calculate age based on birthday
         private TextView tvUserType;
         private TextView tvCancerType;
         private TextView tvHospital;
@@ -112,7 +112,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             tvFirstName.setText(profile.getFirstName());
             tvLastName.setText(profile.getLastName());
             tvCity.setText(profile.getCity());
-            tvUserType.setText("Childhood Cancer Survivor");
+            tvUserType.setText("Childhood Cancer Survivor"); //To do: make this reflect what the user checks off in their profile
             tvCancerType.setText(profile.getCanerType());
             tvHospital.setText(profile.getHospital());
 
