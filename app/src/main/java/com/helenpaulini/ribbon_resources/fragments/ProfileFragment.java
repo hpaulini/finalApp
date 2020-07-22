@@ -81,7 +81,7 @@ public class ProfileFragment extends Fragment {
     private EditText etLastName;
     private EditText etCity;
     private EditText etBirthday;
-    private EditText etHospital;
+    //private EditText etHospital;
     private EditText etCancerType;
     private EditText etTreatmentType;
     private EditText etBio;
@@ -163,7 +163,7 @@ public class ProfileFragment extends Fragment {
             etLastName = view.findViewById(R.id.etLastName);
             etCity = view.findViewById(R.id.etCity);
             etBirthday = view.findViewById(R.id.etBirthday);
-            etHospital = view.findViewById(R.id.etHospital);
+            //etHospital = view.findViewById(R.id.etHospital);
             etCancerType = view.findViewById(R.id.etCancerType);
             etTreatmentType = view.findViewById(R.id.etTreatmentType);
             etBio = view.findViewById(R.id.etBio);
@@ -189,7 +189,6 @@ public class ProfileFragment extends Fragment {
                                 android.R.layout.simple_spinner_item, hospitalNameList(hospitals));
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spHospital.setAdapter(adapter);
-                        Log.i(TAG, "hospitals name at 0" +hospitals.get(0).getName());
                     } catch (JSONException e) {
                         Log.e(TAG, "json exception", e);
                     }
@@ -199,10 +198,6 @@ public class ProfileFragment extends Fragment {
                     Log.e(TAG, "onfailure", throwable);
                 }
             });
-
-//            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-//                    android.R.layout.simple_spinner_dropdown_item, hospitalNames(hospitals));
-//            spHospital.setAdapter(adapter);
 
             cbCurrentPatient.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -231,18 +226,19 @@ public class ProfileFragment extends Fragment {
                     String lastName = etLastName.getText().toString();
                     String city = etCity.getText().toString();
                     String birthday = etBirthday.getText().toString();
-                    String hospital = etHospital.getText().toString();
+                    //String hospital = etHospital.getText().toString();
                     String cancerType = etCancerType.getText().toString();
                     String treatmentType = etTreatmentType.getText().toString();
                     String bio = etBio.getText().toString();
                     String treatmentStart = etTreatmentSart.getText().toString();
                     String treatmentEnd = etTreatmentEnd.getText().toString();
+                    String selectedHospital = spHospital.getSelectedItem().toString();
 
-                    if (firstName.isEmpty() || city.isEmpty() || hospital.isEmpty() || cancerType.isEmpty()) {
+                    if (firstName.isEmpty() || city.isEmpty() || cancerType.isEmpty()) {
                         Toast.makeText(getContext(), "Required fields cannot be empty", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    saveProfile(firstName, lastName, city, birthday, hospital, cancerType, treatmentType, bio, treatmentStart, treatmentEnd, photoFile);
+                    saveProfile(firstName, lastName, city, birthday, selectedHospital, cancerType, treatmentType, bio, treatmentStart, treatmentEnd, photoFile);
                 }
             });
 
@@ -310,7 +306,7 @@ public class ProfileFragment extends Fragment {
             return new File(mediaStorageDir.getPath() + File.separator + fileName);
         }
 
-        private void saveProfile(String firstName, String lastName, String city, String birthday, String hospital, String cancerType, String treatmentType, String bio, String treatmentStart, String treatmentEnd, File photoFile) {
+        private void saveProfile(String firstName, String lastName, String city, String birthday, String selectedHospital, String cancerType, String treatmentType, String bio, String treatmentStart, String treatmentEnd, File photoFile) {
             ParseUser currentUser = ParseUser.getCurrentUser();
             currentUser.fetchInBackground();
 
@@ -322,7 +318,7 @@ public class ProfileFragment extends Fragment {
             profile.setLastName(lastName);
             profile.setBio(bio);
             profile.setCity(city);
-            profile.setHospital(hospital);
+            profile.setHospital(selectedHospital);
             profile.setCancerType(cancerType);
             profile.setTreatmentType(treatmentType);
             profile.setImage(new ParseFile(photoFile));
@@ -345,10 +341,8 @@ public class ProfileFragment extends Fragment {
         }
 
         private ArrayList<String> hospitalNameList(List<Hospital> hospitals){
-            Log.i(TAG, "In hospitalNameList method, hospitals.size()=" + hospitals.size());
             ArrayList<String> hospitalNameList = new ArrayList<>();
             for(int i=0; i<hospitals.size(); i++){
-                Log.i(TAG, "In for loop");
                 hospitalNameList.add(hospitals.get(i).getName());
             }
             return hospitalNameList;

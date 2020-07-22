@@ -30,7 +30,6 @@ public class Hospital {
     }
 
     public String getName(){
-        Log.i(TAG, "name: "+name);
         return name;
     }
 }
