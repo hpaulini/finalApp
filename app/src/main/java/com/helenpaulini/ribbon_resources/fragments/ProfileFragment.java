@@ -98,7 +98,7 @@ public class ProfileFragment extends Fragment {
     private File photoFile;
     public String photoFileName = "photo.jpg";
 
-    List<Hospital> hospitals;
+    public List<Hospital> hospitals = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -158,27 +158,6 @@ public class ProfileFragment extends Fragment {
         public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
 
-            AsyncHttpClient client = new AsyncHttpClient();
-            client.get(API_URL, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Headers headers, JSON json) {
-                    Log.d(TAG, "onsuccess");
-                    JSONObject jsonObject = json.jsonObject;
-                    try {
-                        JSONArray features = jsonObject.getJSONArray("features");
-                        hospitals = Hospital.fromJsonArray(features); //hospitals is a list of [{key:{key1:value, key2:value, ...}}, ...]
-                        Log.i(TAG, "hospitals array list " +hospitals.toString());
-                    } catch (JSONException e) {
-                        Log.e(TAG, "json exception", e);
-                    }
-                }
-
-                @Override
-                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                    Log.d(TAG, "onfailure");
-                }
-            });
-
             ivProfile = view.findViewById(R.id.ivProfile);
             etFirstName = view.findViewById(R.id.etFirstName);
             etLastName = view.findViewById(R.id.etLastName);
@@ -197,10 +176,29 @@ public class ProfileFragment extends Fragment {
             btnNext = view.findViewById(R.id.btnNext);
             spHospital = view.findViewById(R.id.spHospital);
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                    android.R.layout.simple_spinner_item, hospitalNameList(hospitals));
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spHospital.setAdapter(adapter);
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get(API_URL, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    Log.d(TAG, "onsuccess");
+                    JSONObject jsonObject = json.jsonObject;
+                    try {
+                        JSONArray features = jsonObject.getJSONArray("features");
+                        hospitals = Hospital.fromJsonArray(features); //hospitals is a list of [{key:{key1:value, key2:value, ...}}, ...]
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                                android.R.layout.simple_spinner_item, hospitalNameList(hospitals));
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spHospital.setAdapter(adapter);
+                        Log.i(TAG, "hospitals name at 0" +hospitals.get(0).getName());
+                    } catch (JSONException e) {
+                        Log.e(TAG, "json exception", e);
+                    }
+                }
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    Log.e(TAG, "onfailure", throwable);
+                }
+            });
 
 //            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
 //                    android.R.layout.simple_spinner_dropdown_item, hospitalNames(hospitals));
@@ -347,8 +345,10 @@ public class ProfileFragment extends Fragment {
         }
 
         private ArrayList<String> hospitalNameList(List<Hospital> hospitals){
+            Log.i(TAG, "In hospitalNameList method, hospitals.size()=" + hospitals.size());
             ArrayList<String> hospitalNameList = new ArrayList<>();
             for(int i=0; i<hospitals.size(); i++){
+                Log.i(TAG, "In for loop");
                 hospitalNameList.add(hospitals.get(i).getName());
             }
             return hospitalNameList;
