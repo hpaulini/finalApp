@@ -22,10 +22,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,10 +35,13 @@ import java.io.File;
 import static android.app.Activity.RESULT_OK;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.material.tabs.TabLayout;
 import com.helenpaulini.ribbon_resources.FragmentTabsAdapter;
 import com.helenpaulini.ribbon_resources.ProfileAdapter;
 import com.helenpaulini.ribbon_resources.R;
+import com.helenpaulini.ribbon_resources.models.Hospital;
 import com.helenpaulini.ribbon_resources.models.Post;
 import com.helenpaulini.ribbon_resources.models.Profile;
 import com.helenpaulini.ribbon_resources.models.SurvivorProfile;
@@ -45,10 +50,16 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import okhttp3.Headers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +74,7 @@ public class ProfileFragment extends Fragment {
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     public static final String TAG = "ProfileFragment";
     public static final String ARG_PAGE = "ARG_PAGE";
+    public static final String API_URL = "https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json";
 
     private ImageView ivProfile;
     private EditText etFirstName;
@@ -79,11 +91,14 @@ public class ProfileFragment extends Fragment {
     private CheckBox cbCurrentPatient;
     private Button btnSaveProfile;
     private Button btnNext;
+    private Spinner spHospital;
 
     private Boolean isCurrentPatient;
 
     private File photoFile;
     public String photoFileName = "photo.jpg";
+
+    List<Hospital> hospitals;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -143,6 +158,27 @@ public class ProfileFragment extends Fragment {
         public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
 
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get(API_URL, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    Log.d(TAG, "onsuccess");
+                    JSONObject jsonObject = json.jsonObject;
+                    try {
+                        JSONArray features = jsonObject.getJSONArray("features");
+                        hospitals = Hospital.fromJsonArray(features); //hospitals is a list of [{key:{key1:value, key2:value, ...}}, ...]
+                        Log.i(TAG, "hospitals array list " +hospitals.toString());
+                    } catch (JSONException e) {
+                        Log.e(TAG, "json exception", e);
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    Log.d(TAG, "onfailure");
+                }
+            });
+
             ivProfile = view.findViewById(R.id.ivProfile);
             etFirstName = view.findViewById(R.id.etFirstName);
             etLastName = view.findViewById(R.id.etLastName);
@@ -159,6 +195,16 @@ public class ProfileFragment extends Fragment {
             btnAddProfilePic = view.findViewById(R.id.btnAddProfilePic);
             btnSaveProfile = view.findViewById(R.id.btnSaveProfile);
             btnNext = view.findViewById(R.id.btnNext);
+            spHospital = view.findViewById(R.id.spHospital);
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_spinner_item, hospitalNameList(hospitals));
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spHospital.setAdapter(adapter);
+
+//            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+//                    android.R.layout.simple_spinner_dropdown_item, hospitalNames(hospitals));
+//            spHospital.setAdapter(adapter);
 
             cbCurrentPatient.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -298,5 +344,13 @@ public class ProfileFragment extends Fragment {
         @Override
         public void onSaveInstanceState(@NonNull Bundle outState) {
             super.onSaveInstanceState(outState);
+        }
+
+        private ArrayList<String> hospitalNameList(List<Hospital> hospitals){
+            ArrayList<String> hospitalNameList = new ArrayList<>();
+            for(int i=0; i<hospitals.size(); i++){
+                hospitalNameList.add(hospitals.get(i).getName());
+            }
+            return hospitalNameList;
         }
     }

@@ -77,6 +77,11 @@
         android:hint="Hospital"
         android:inputType="textPersonName" />
 
+    <Spinner
+        android:id="@+id/spHospital"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <EditText
         android:id="@+id/etCancerType"
         android:layout_width="match_parent"

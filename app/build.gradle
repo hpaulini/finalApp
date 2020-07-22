@@ -55,4 +55,6 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
+
+    implementation 'com.codepath.libraries:asynchttpclient:0.0.9'
 }
