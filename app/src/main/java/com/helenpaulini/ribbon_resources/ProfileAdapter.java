@@ -110,7 +110,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 for (int i=0; i<profileListFull.size(); i++){
                     Log.i(TAG, "In for loop");
                     if((profileListFull.get(i).getFirstName().toLowerCase().trim()).contains(filterPattern)
-                    || (profileListFull.get(i).getLastName().toLowerCase().trim()).contains(filterPattern)){
+                    || (profileListFull.get(i).getLastName().toLowerCase().trim()).contains(filterPattern)
+                    || (profileListFull.get(i).getHospital().toLowerCase().trim()).contains(filterPattern)
+                    || (profileListFull.get(i).getCanerType().toLowerCase().trim()).contains(filterPattern)
+                    || (profileListFull.get(i).getIsCurrentPatient().toString().toLowerCase().trim()).contains(filterPattern)){
                         filteredList.add(profileListFull.get(i));
                     }
                 }
