@@ -1,5 +1,7 @@
 package com.helenpaulini.ribbon_resources.models;
 
+import android.util.Log;
+
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -7,7 +9,9 @@ import com.parse.ParseUser;
 
 import org.parceler.Parcel;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Parcel(analyze = {Profile.class})
 @ParseClassName("Profile")
@@ -26,6 +30,7 @@ public class Profile extends ParseObject {
     public static final String KEY_TREATMENTSTART = "treatmentStart";
     public static final String KEY_TREATMENTEND = "treatmentEnd";
     public static final String KEY_ISCURRENTPATIENT = "isCurrentPatient";
+    public static final String KEY_MYCONNECTIONS = "myConnections";
 
     //empty constructor for parceler
     public Profile(){
@@ -138,8 +143,18 @@ public class Profile extends ParseObject {
         put(KEY_TREATMENTEND, treatmentEnd);
     }
 
-    //isCurrentUser
+    //isCurrent Patient
     public Boolean getIsCurrentPatient(){ return getBoolean(KEY_ISCURRENTPATIENT); }
 
     public void setisCurrentPatient(Boolean isCurrentPatient){ put(KEY_ISCURRENTPATIENT, isCurrentPatient); }
+
+    //MyConnections
+    public List<Profile> getMyConnections() {
+        return getList(KEY_MYCONNECTIONS);
+    }
+
+    public void setMyConnections(List<Profile> myConnections) {
+        Log.i("Profile", "myConnections list: "+myConnections.get(0).getUser().getUsername());
+        put(KEY_MYCONNECTIONS, myConnections);
+    }
 }

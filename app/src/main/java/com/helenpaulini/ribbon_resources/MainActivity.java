@@ -38,14 +38,14 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment fragment;
                 switch (menuItem.getItemId()) {
-                    case R.id.dashboard:
-                    default:
-                        //Toast.makeText(MainActivity.this, "dashboard!", Toast.LENGTH_SHORT).show();
-                        fragment = new DashboardFragment();
-                        break;
                     case R.id.profile:
+                    default:
                         //Toast.makeText(MainActivity.this, "profile!", Toast.LENGTH_SHORT).show();
                         fragment = new ProfileFragment();
+                        break;
+                    case R.id.dashboard:
+                        //Toast.makeText(MainActivity.this, "dashboard!", Toast.LENGTH_SHORT).show();
+                        fragment = new DashboardFragment();
                         break;
                     case R.id.myConnections:
                         //Toast.makeText(MainActivity.this, "connections!", Toast.LENGTH_SHORT).show();

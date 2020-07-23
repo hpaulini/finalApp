@@ -10,23 +10,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.helenpaulini.ribbon_resources.R;
+import com.helenpaulini.ribbon_resources.models.MyConnections;
 import com.helenpaulini.ribbon_resources.models.Post;
 import com.helenpaulini.ribbon_resources.models.Profile;
 import com.helenpaulini.ribbon_resources.models.SurvivorProfile;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +43,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     public static final String TAG = "ProfileAdapter";
     Context context;
     List<Profile> profiles;
+    List<Profile> myConnections = new ArrayList<>();
 
     public ProfileAdapter(Context context, List<Profile> profiles) {
         this.context = context;
@@ -91,6 +98,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         private TextView tvCancerType;
         private TextView tvHospital;
         private ImageView ivProfilePic;
+        private Button btnNotification;
+        private Button btnConnect;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -103,18 +112,29 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             tvCancerType = itemView.findViewById(R.id.tvCancerType);
             tvHospital = itemView.findViewById(R.id.tvHospital);
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
+            btnNotification = itemView.findViewById(R.id.btnNotification);
+            btnConnect = itemView.findViewById(R.id.btnConnect);
 
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Profile profile) {
+        public void bind(final Profile profile) {
             tvUsername.setText(profile.getUser().getUsername());
             tvFirstName.setText(profile.getFirstName());
             tvLastName.setText(profile.getLastName());
             tvCity.setText(profile.getCity());
-            tvUserType.setText("Childhood Cancer Survivor"); //To do: make this reflect what the user checks off in their profile
+            tvUserType.setText("User Type"); //To do: make this reflect what the user checks off in their profile
             tvCancerType.setText(profile.getCanerType());
             tvHospital.setText(profile.getHospital());
+
+            //to do: put my connections stuff in its own class where it makes an array list containing the saved connections
+            //then, in profile (or connections??) fragment, make a new object of that class and send the list to the parse database for the current user
+            btnConnect.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onSaveConnectionClick(profile);
+                }
+            });
 
             ParseFile image = profile.getImage();
             if (image != null) {
@@ -169,6 +189,42 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 //                // show the activity
 //                context.startActivity(intent);
 //            }
+        }
+
+        public void onSaveConnectionClick(Profile clickedProfile){
+            //add the clicked profile item to the current user's myConnections arraylist
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            currentUser.fetchInBackground();
+
+            //if current user already has a pointer to myconnections, then just add to the list and save it
+            //otherwise, make a new myconnections object, add to it, and save it
+
+            if((MyConnections) currentUser.getParseObject("myConnections")==null){
+                MyConnections connections = new MyConnections();
+                connections.setUser(currentUser);
+                myConnections.add(clickedProfile);
+                connections.setMyConnections(myConnections);
+
+                connections.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(com.parse.ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving", e);
+                            Toast.makeText(context, "Error while saving", Toast.LENGTH_SHORT).show();
+                        }
+                        Log.i(TAG, "Profile saved successfully!!");
+                    }
+                });
+                currentUser.put("myConnections", connections);
+                currentUser.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(com.parse.ParseException e) {
+
+                    }
+                });
+            } else {
+                Toast.makeText(context, "Already added to saved", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

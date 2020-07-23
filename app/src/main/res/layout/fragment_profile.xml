@@ -69,14 +69,6 @@
         android:hint="Current City of Residence"
         android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/etHospital"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Hospital"
-        android:inputType="textPersonName" />
-
     <Spinner
         android:id="@+id/spHospital"
         android:layout_width="match_parent"
