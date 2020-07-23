@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.helenpaulini.ribbon_resources.ProfileAdapter;
 import com.helenpaulini.ribbon_resources.R;
+import com.helenpaulini.ribbon_resources.models.MyConnections;
 import com.helenpaulini.ribbon_resources.models.Post;
 import com.helenpaulini.ribbon_resources.models.Profile;
 import com.helenpaulini.ribbon_resources.utilities.Matching;
@@ -110,11 +111,8 @@ public class ConnectionsFragment extends Fragment {
         query.findInBackground(new FindCallback<Profile>() {
             @Override
             public void done(List<Profile> profilesList, ParseException e) {
-                Log.i(TAG, "in done method");
-                profilesList = new ArrayList<>();
-                profilesList = profileConnections(getCurrentProfile(ParseUser.getCurrentUser(), profilesList), profilesList);
-                //Log.i(TAG, "connections list: "+profilesList.toString());
-                if(profilesList != null){
+                Log.i(TAG, "Connections" +((MyConnections) ParseUser.getCurrentUser().getParseObject("myConnections")).getMyConnections());
+                //profilesList = ((MyConnections) ParseUser.getCurrentUser().getParseObject("myConnections")).getMyConnections();
                     if (e != null) {
                         Log.e(TAG, "Issue with getting profiles", e);
                         return;
@@ -124,7 +122,6 @@ public class ConnectionsFragment extends Fragment {
                     }
                     profiles.addAll(profilesList);
                     adapter.notifyDataSetChanged();
-                }
             }
         });
     }
@@ -132,11 +129,11 @@ public class ConnectionsFragment extends Fragment {
     public Profile getCurrentProfile(ParseUser user, List<Profile> allProfiles){
         int indexOfCurrentProfile=0;
         for(int i=0; i<allProfiles.size(); i++){
-            if (allProfiles.get(i).getUser().equals(user)){
+            if (allProfiles.get(i).getUser().getObjectId().equals(user.getObjectId())){
                 indexOfCurrentProfile = i;
             }
         }
-        //Log.i(TAG, "current user: " + allProfiles.get(indexOfCurrentProfile).getUser().getUsername());
+        Log.i(TAG, "current user: " + allProfiles.get(indexOfCurrentProfile).getUser().getUsername());
         return allProfiles.get(indexOfCurrentProfile);
     }
 

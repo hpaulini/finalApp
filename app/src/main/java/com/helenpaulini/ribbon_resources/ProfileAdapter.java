@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,16 +40,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
+public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> implements Filterable {
 
     public static final String TAG = "ProfileAdapter";
     Context context;
     List<Profile> profiles;
+    List<Profile> profileListFull;
     List<Profile> myConnections = new ArrayList<>();
 
     public ProfileAdapter(Context context, List<Profile> profiles) {
         this.context = context;
         this.profiles = profiles;
+        //profileListFull = new ArrayList<>(profiles);
+        profileListFull = profiles;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -86,6 +91,43 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         profiles.addAll(list);
         notifyDataSetChanged();
     }
+
+    @Override
+    public Filter getFilter() {
+        return profileFilter;
+    }
+
+    private Filter profileFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Profile> filteredList = new ArrayList<>();
+            Log.i(TAG, "What user typed: "+constraint);
+            if(constraint == null || constraint.length()==0){
+                filteredList.addAll(profileListFull);
+            } else{
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                Log.i(TAG, "in else"+profileListFull.size());
+                for (int i=0; i<profileListFull.size(); i++){
+                    Log.i(TAG, "In for loop");
+                    if((profileListFull.get(i).getFirstName().toLowerCase().trim()).contains(filterPattern)
+                    || (profileListFull.get(i).getLastName().toLowerCase().trim()).contains(filterPattern)){
+                        filteredList.add(profileListFull.get(i));
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            profiles.clear();
+            profiles.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -196,11 +238,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             ParseUser currentUser = ParseUser.getCurrentUser();
             currentUser.fetchInBackground();
 
-            //if current user already has a pointer to myconnections, then just add to the list and save it
-            //otherwise, make a new myconnections object, add to it, and save it
-
-
-                //MyConnections connections = new MyConnections();
                 MyConnections connections = (MyConnections) currentUser.getParseObject("myConnections");
                 connections.setUser(currentUser);
                 myConnections.add(clickedProfile);

@@ -1,5 +1,8 @@
 package com.helenpaulini.ribbon_resources.fragments;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.SearchView;
 
 import com.helenpaulini.ribbon_resources.ProfileAdapter;
 import com.helenpaulini.ribbon_resources.R;
@@ -37,6 +42,7 @@ public class FindusersFragment extends Fragment {
 
     private String client;
     private RecyclerView rvFindUsers;
+    private SearchView svFindUsers;
     protected ProfileAdapter adapter;
     protected List<Profile> profiles;
 
@@ -92,6 +98,23 @@ public class FindusersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvFindUsers = view.findViewById(R.id.rvFindUsers);
+        svFindUsers = view.findViewById(R.id.svFindUsers);
+
+        svFindUsers.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        svFindUsers.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s);
+                return false;
+            }
+        });
+
         profiles = new ArrayList<>();
 
         //create the adapter
@@ -122,5 +145,9 @@ public class FindusersFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public void doMySearch(String query){
+
     }
 }

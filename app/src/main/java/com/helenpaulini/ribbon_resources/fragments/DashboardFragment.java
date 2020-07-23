@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.helenpaulini.ribbon_resources.ProfileAdapter;
 import com.helenpaulini.ribbon_resources.R;
+import com.helenpaulini.ribbon_resources.models.MyConnections;
 import com.helenpaulini.ribbon_resources.models.Profile;
 import com.helenpaulini.ribbon_resources.utilities.Matching;
 import com.parse.FindCallback;
@@ -123,7 +124,7 @@ public class DashboardFragment extends Fragment {
     public Profile getCurrentProfile(ParseUser user, List<Profile> allProfiles){
         int indexOfCurrentProfile=0;
         for(int i=0; i<allProfiles.size(); i++){
-            if (allProfiles.get(i).getUser().equals(user)){
+            if (allProfiles.get(i).getUser().getObjectId().equals(user.getObjectId())){
                 indexOfCurrentProfile = i;
             }
         }
