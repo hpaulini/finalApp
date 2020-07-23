@@ -199,8 +199,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             //if current user already has a pointer to myconnections, then just add to the list and save it
             //otherwise, make a new myconnections object, add to it, and save it
 
-            if((MyConnections) currentUser.getParseObject("myConnections")==null){
-                MyConnections connections = new MyConnections();
+
+                //MyConnections connections = new MyConnections();
+                MyConnections connections = (MyConnections) currentUser.getParseObject("myConnections");
                 connections.setUser(currentUser);
                 myConnections.add(clickedProfile);
                 connections.setMyConnections(myConnections);
@@ -222,9 +223,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
                     }
                 });
-            } else {
-                Toast.makeText(context, "Already added to saved", Toast.LENGTH_SHORT).show();
-            }
         }
     }
 }
