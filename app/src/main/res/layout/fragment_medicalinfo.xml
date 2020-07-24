@@ -3,15 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.PersonalinfoFragment">
+    tools:context=".fragments.MedicalinfoFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="469dp"
+        android:layout_width="401dp"
+        android:layout_height="585dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="92dp"
-        android:text="@string/hello_blank_fragment" />
+        android:text="tab3" />
 
 </RelativeLayout>

@@ -111,7 +111,11 @@ public class ConnectionsFragment extends Fragment {
         query.findInBackground(new FindCallback<Profile>() {
             @Override
             public void done(List<Profile> profilesList, ParseException e) {
-                Log.i(TAG, "Connections" +((MyConnections) ParseUser.getCurrentUser().getParseObject("myConnections")).getMyConnections());
+                try {
+                    Log.i(TAG, "Connections" +((MyConnections) ParseUser.getCurrentUser().fetchIfNeeded().getParseObject("myConnections")).getMyConnections());
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
+                }
                 //profilesList = ((MyConnections) ParseUser.getCurrentUser().getParseObject("myConnections")).getMyConnections();
                     if (e != null) {
                         Log.e(TAG, "Issue with getting profiles", e);

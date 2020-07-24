@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.helenpaulini.ribbon_resources.fragments.ContactinfoFragment;
+import com.helenpaulini.ribbon_resources.fragments.MedicalinfoFragment;
+import com.helenpaulini.ribbon_resources.fragments.NameAndBioFragment;
 import com.helenpaulini.ribbon_resources.fragments.PersonalinfoFragment;
 import com.helenpaulini.ribbon_resources.fragments.ProfileFragment;
 
@@ -24,11 +26,11 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
         switch (position){
             case 0:
-                return new ProfileFragment();
-            case 1:
-                return new ContactinfoFragment();
-            case 2:
                 return new PersonalinfoFragment();
+            case 1:
+                return new NameAndBioFragment();
+            case 2:
+                return new MedicalinfoFragment();
             default:
                 return null;
         }

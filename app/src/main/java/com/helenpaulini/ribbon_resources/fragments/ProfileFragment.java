@@ -12,9 +12,6 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -28,23 +25,16 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import static android.app.Activity.RESULT_OK;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.google.android.material.tabs.TabLayout;
-import com.helenpaulini.ribbon_resources.FragmentTabsAdapter;
-import com.helenpaulini.ribbon_resources.ProfileAdapter;
 import com.helenpaulini.ribbon_resources.R;
 import com.helenpaulini.ribbon_resources.models.Hospital;
-import com.helenpaulini.ribbon_resources.models.Post;
 import com.helenpaulini.ribbon_resources.models.Profile;
-import com.helenpaulini.ribbon_resources.models.SurvivorProfile;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -54,9 +44,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.Headers;
