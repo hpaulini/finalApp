@@ -12,7 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="565dp"
         android:layout_above="@id/bottomNavigation"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="0dp" >
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
@@ -21,6 +27,33 @@
         android:layout_alignParentBottom="true"
         app:menu="@menu/menu_bottom_navigation" />
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/profiletab1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tab 1" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/profiletab2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tab 2" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/profiletab3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tab 3" />
+    </com.google.android.material.tabs.TabLayout>
 
 
 </RelativeLayout>
