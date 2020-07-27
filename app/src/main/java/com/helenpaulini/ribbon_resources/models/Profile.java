@@ -83,11 +83,11 @@ public class Profile extends ParseObject {
     }
 
     //Birthday
-    public Date getBirthday() {
-        return getDate(KEY_BIRTHDAY);
+    public String getBirthday() {
+        return getString(KEY_BIRTHDAY);
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         put(KEY_BIRTHDAY, birthday);
     }
 

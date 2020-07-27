@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.dashboard:
                         //Toast.makeText(MainActivity.this, "dashboard!", Toast.LENGTH_SHORT).show();
-                        fragment = new DashboardFragment();
+                        fragment = new ResourcesFragment();
                         break;
                     case R.id.myConnections:
                         //Toast.makeText(MainActivity.this, "connections!", Toast.LENGTH_SHORT).show();

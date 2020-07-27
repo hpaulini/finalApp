@@ -20,13 +20,23 @@
         android:layout_marginTop="16dp"
         app:srcCompat="@drawable/ic_twotone_account_circle_24" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignTop="@+id/ivAddProfPic"
+        android:layout_alignEnd="@+id/ivAddProfPic"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/firstName"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/btnAddPic"
         android:layout_alignParentStart="true"
         android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
@@ -35,6 +45,7 @@
         app:helperText="*Required">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/first"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -53,6 +64,7 @@
         android:hint="Last Name">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/last"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -71,6 +83,7 @@
         android:hint="Birthday">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -88,33 +101,28 @@
         android:hint="Bio">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/biography"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="150dp"
+    <Button
+        android:id="@+id/btnAddPic"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivAddProfPic"
+        android:layout_alignStart="@+id/ivAddProfPic"
         android:layout_alignEnd="@+id/ivAddProfPic"
+        android:layout_marginStart="-25dp"
         android:layout_marginTop="0dp"
-        android:layout_marginEnd="-7.5dp"
-        android:text="Add New Profile Picture" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignTop="@+id/textView"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
-        android:layout_toStartOf="@+id/textView"
-        android:src="@drawable/ic_baseline_add_24" />
+        android:layout_marginEnd="-25dp"
+        android:text="Add New Profile Picture"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:icon="@drawable/ic_baseline_add_24" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -165,7 +173,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <Button
-        android:id="@+id/outlinedButton"
+        android:id="@+id/saveProf"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
