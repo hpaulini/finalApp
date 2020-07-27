@@ -27,10 +27,9 @@ public class Matching {
     //usertype, city, hospital, cancertype, treatmenttype, birthday,
     //years of treatment, years post treatment, interests
     public int matchValue(Profile user1, Profile user2){
-        Log.i(TAG, "usertype of "+ user1.getUser().getUsername() + ": "+ user1.getIsCurrentPatient());
-        Log.i(TAG, "usertype of "+ user2.getUser().getUsername() + ": "+ user2.getIsCurrentPatient());
 
-        if (user1.getIsCurrentPatient().equals(user2.getIsCurrentPatient())){
+
+        if (user1.getUserType().equals(user2.getUserType())){
             return 0; //users cannot be of the same type to be a match
         }
         if(user1.getCanerType().equals(user2.getCanerType())){

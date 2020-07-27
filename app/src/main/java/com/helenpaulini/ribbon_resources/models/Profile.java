@@ -29,7 +29,7 @@ public class Profile extends ParseObject {
     public static final String KEY_BIO = "bio";
     public static final String KEY_TREATMENTSTART = "treatmentStart";
     public static final String KEY_TREATMENTEND = "treatmentEnd";
-    public static final String KEY_ISCURRENTPATIENT = "isCurrentPatient";
+    public static final String KEY_USERTYPE = "userType";
     public static final String KEY_MYCONNECTIONS = "myConnections";
 
     //empty constructor for parceler
@@ -144,9 +144,9 @@ public class Profile extends ParseObject {
     }
 
     //isCurrent Patient
-    public Boolean getIsCurrentPatient(){ return getBoolean(KEY_ISCURRENTPATIENT); }
+    public String getUserType(){ return getString(KEY_USERTYPE); }
 
-    public void setisCurrentPatient(Boolean isCurrentPatient){ put(KEY_ISCURRENTPATIENT, isCurrentPatient); }
+    public void setUserType(String userType){ put(KEY_USERTYPE, userType); }
 
     //MyConnections
     public List<Profile> getMyConnections() {

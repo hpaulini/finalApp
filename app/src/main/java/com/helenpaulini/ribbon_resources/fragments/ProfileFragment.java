@@ -301,7 +301,7 @@ public class ProfileFragment extends Fragment {
             Profile profile = new Profile();
             profile.setUser(currentUser);
 
-            profile.setisCurrentPatient(isCurrentPatient);
+            profile.setUserType("patient");
             profile.setFirstName(firstName);
             profile.setLastName(lastName);
             profile.setBio(bio);

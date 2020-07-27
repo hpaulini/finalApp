@@ -194,11 +194,6 @@ public class NameAndBioFragment extends Fragment {
         profile.setLastName(lastName);
         profile.setBirthday(birthday);
         profile.setBio(bio);
-        profile.setHospital("sethospital");
-        profile.setCity("setcity");
-        profile.setCancerType("setcancertype");
-        profile.setImage(new ParseFile(photoFile));
-        profile.setisCurrentPatient(false);
 
         profile.saveInBackground(new SaveCallback() {
             @Override
