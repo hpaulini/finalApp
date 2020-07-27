@@ -1,16 +1,250 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.MedicalinfoFragment">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="401dp"
-        android:layout_height="585dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:text="tab3" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.MedicalinfoFragment">
 
-</RelativeLayout>
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/textView2"
+            android:layout_marginTop="0dp">
+
+            <RadioButton
+                android:id="@+id/currentPatient"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Current Patient" />
+
+            <RadioButton
+                android:id="@+id/previousPatient"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Previous Patient" />
+
+            <RadioButton
+                android:id="@+id/parentOfPatient"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Parent of Patient" />
+        </RadioGroup>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/hospital"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radio_group"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:hint="Hospital of Treatment*"
+            app:helperText="*Required">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cancerType"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/hospital"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:hint="Cancer Type*"
+            app:helperText="*Required">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/treatmentType"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cancerType"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:hint="Treatment Type">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/treatmentStart"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/treatmentType"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:hint="Treatment Start">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/treatmentEnd"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/treatmentType"
+            android:layout_alignTop="@+id/treatmentStart"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_toEndOf="@+id/treatmentStart"
+            android:hint="Treatment End">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/interests"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/treatmentStart"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:hint="Interests"
+            app:helperText="This will help us match you with users of similar interests">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivAddProfPic"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="0dp"
+            android:text="Matching Information"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="0dp"
+            android:text="Select what type of user you are:"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/hospital"
+            android:layout_alignBottom="@+id/hospital"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="-28dp"
+            android:layout_marginBottom="8dp"
+            android:layout_toStartOf="@+id/hospital"
+            android:src="@drawable/ic_baseline_local_hospital_24" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="17dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/cancerType"
+            android:layout_alignBottom="@+id/cancerType"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="-24dp"
+            android:layout_marginBottom="8dp"
+            android:layout_toStartOf="@+id/cancerType"
+            android:background="#FFFFFF"
+            android:src="@drawable/ic_ribbon"
+            android:tint="#626262" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/treatmentType"
+            android:layout_alignBottom="@+id/treatmentType"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="-28dp"
+            android:layout_marginBottom="0dp"
+            android:layout_toStartOf="@+id/treatmentType"
+            android:src="@drawable/ic_baseline_healing_24" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/treatmentStart"
+            android:layout_alignBottom="@+id/treatmentStart"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="-28dp"
+            android:layout_marginBottom="0dp"
+            android:layout_toStartOf="@+id/treatmentStart"
+            android:src="@drawable/ic_baseline_date_range_24" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/interests"
+            android:layout_alignBottom="@+id/interests"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="-28dp"
+            android:layout_marginBottom="0dp"
+            android:layout_toStartOf="@+id/interests"
+            android:src="@drawable/ic_baseline_sports_tennis_24" />
+
+        <Button
+            android:id="@+id/outlinedButton"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/interests"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="0dp"
+            android:text="Save Match Data" />
+
+    </RelativeLayout>
+</ScrollView>

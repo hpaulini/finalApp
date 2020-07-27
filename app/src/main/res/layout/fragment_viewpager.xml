@@ -25,19 +25,19 @@
             android:id="@+id/profiletab1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tab 1" />
+            android:text="Profile" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/profiletab2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tab 2" />
+            android:text="Match Info." />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/profiletab3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tab 3" />
+            android:text="Contact" />
     </com.google.android.material.tabs.TabLayout>
 
 </RelativeLayout>

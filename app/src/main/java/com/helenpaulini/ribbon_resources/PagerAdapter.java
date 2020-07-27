@@ -26,11 +26,11 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
         switch (position){
             case 0:
-                return new PersonalinfoFragment();
-            case 1:
                 return new NameAndBioFragment();
-            case 2:
+            case 1:
                 return new MedicalinfoFragment();
+            case 2:
+                return new PersonalinfoFragment();
             default:
                 return null;
         }

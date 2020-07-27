@@ -260,7 +260,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 currentUser.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(com.parse.ParseException e) {
-
                     }
                 });
         }
