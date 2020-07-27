@@ -31,6 +31,7 @@ public class Profile extends ParseObject {
     public static final String KEY_TREATMENTEND = "treatmentEnd";
     public static final String KEY_USERTYPE = "userType";
     public static final String KEY_MYCONNECTIONS = "myConnections";
+    public static final String KEY_INTERESTS = "interests";
 
     //empty constructor for parceler
     public Profile(){
@@ -128,22 +129,22 @@ public class Profile extends ParseObject {
     }
 
     //Treatment start
-    public Date getTreatmentStart() {
-        return getDate(KEY_TREATMENTSTART);
+    public String getTreatmentStart() {
+        return getString(KEY_TREATMENTSTART);
     }
 
-    public void setTreatmentStart(Date treatmentStart) { put(KEY_TREATMENTSTART, treatmentStart); }
+    public void setTreatmentStart(String treatmentStart) { put(KEY_TREATMENTSTART, treatmentStart); }
 
     //Treatment End
-    public Date getTreatmentEnd() {
-        return getDate(KEY_TREATMENTEND);
+    public String getTreatmentEnd() {
+        return getString(KEY_TREATMENTEND);
     }
 
-    public void setTreatmentEnd(Date treatmentEnd) {
+    public void setTreatmentEnd(String treatmentEnd) {
         put(KEY_TREATMENTEND, treatmentEnd);
     }
 
-    //isCurrent Patient
+    //User Type
     public String getUserType(){ return getString(KEY_USERTYPE); }
 
     public void setUserType(String userType){ put(KEY_USERTYPE, userType); }
@@ -156,5 +157,14 @@ public class Profile extends ParseObject {
     public void setMyConnections(List<Profile> myConnections) {
         Log.i("Profile", "myConnections list: "+myConnections.get(0).getUser().getUsername());
         put(KEY_MYCONNECTIONS, myConnections);
+    }
+
+    //Interests
+    public String getInsterests() {
+        return getString(KEY_INTERESTS);
+    }
+
+    public void setInterests(String interests) {
+        put(KEY_INTERESTS, interests);
     }
 }
