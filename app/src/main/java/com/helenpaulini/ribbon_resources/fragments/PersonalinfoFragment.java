@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.helenpaulini.ribbon_resources.MainActivity;
@@ -93,6 +94,9 @@ public class PersonalinfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.fetchInBackground();
+
         cityText = view.findViewById(R.id.cityText);
         emailText = view.findViewById(R.id.emailText);
         phoneText = view.findViewById(R.id.phoneText);
@@ -100,6 +104,30 @@ public class PersonalinfoFragment extends Fragment {
         instagramText = view.findViewById(R.id.instagramText);
         saveContactInfo = view.findViewById(R.id.saveContactInfo);
         getMatches = view.findViewById(R.id.getMatches);
+
+        //if this user already has made a profile, then restore the edit text field inputs
+        try {
+            if(currentUser.fetchIfNeeded().getParseObject("profile")!=null){
+                ContactInfo currentContact = (ContactInfo) currentUser.fetchIfNeeded().getParseObject("contactInfo");
+                if(currentContact.fetchIfNeeded().getString("address")!=null){
+                    cityText.setText(currentContact.fetchIfNeeded().getString("address"));
+                }
+                if(currentContact.fetchIfNeeded().getString("email")!=null){
+                    emailText.setText(currentContact.fetchIfNeeded().getString("email"));
+                }
+                if(currentContact.fetchIfNeeded().getString("phone")!=null){
+                    phoneText.setText(currentContact.fetchIfNeeded().getString("phone"));
+                }
+                if(currentContact.fetchIfNeeded().getString("facebook")!=null){
+                    facebookText.setText(currentContact.fetchIfNeeded().getString("facebook"));
+                }
+                if(currentContact.fetchIfNeeded().getString("instagram")!=null){
+                    instagramText.setText(currentContact.fetchIfNeeded().getString("instagram"));
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         saveContactInfo.setOnClickListener(new View.OnClickListener() {
             @Override

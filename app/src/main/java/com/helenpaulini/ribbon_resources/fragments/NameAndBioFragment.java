@@ -243,23 +243,4 @@ public class NameAndBioFragment extends Fragment {
             }
         });
     }
-
-//    @Override
-//    public void onSaveInstanceState(@NonNull Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        outState.putString("firstName", firstName);
-//        outState.putString("lastName", lastName);
-//        outState.putString("birthday", birthday);
-//        outState.putString("bio", bio);
-//    }
-//
-//    @Override
-//    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-//        super.onViewStateRestored(savedInstanceState);
-//        etFirst.setText(savedInstanceState.getString("firstName"), TextView.BufferType.EDITABLE);
-//        etLast.setText(savedInstanceState.getString("lastName"), TextView.BufferType.EDITABLE);
-//        bday.setText(savedInstanceState.getString("birthday"), TextView.BufferType.EDITABLE);
-//        biography.setText(savedInstanceState.getString("bio"), TextView.BufferType.EDITABLE);
-//
-//    }
 }

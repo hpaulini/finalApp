@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 import com.helenpaulini.ribbon_resources.R;
 import com.helenpaulini.ribbon_resources.models.Profile;
@@ -35,6 +36,8 @@ public class MedicalinfoFragment extends Fragment {
     private RadioButton currentPatient;
     private RadioButton previousPatient;
     private RadioButton parentOfPatient;
+    private RadioButton selectedRadioButton;
+
     private TextInputEditText hospitalText;
     private TextInputEditText cancerText;
     private TextInputEditText treatmentText;
@@ -94,10 +97,14 @@ public class MedicalinfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.fetchInBackground();
+
         radio_group = view.findViewById(R.id.radio_group);
         currentPatient = view.findViewById(R.id.currentPatient);
         previousPatient = view.findViewById(R.id.previousPatient);
         parentOfPatient = view.findViewById(R.id.parentOfPatient);
+
         hospitalText = view.findViewById(R.id.hospitalText);
         cancerText = view.findViewById(R.id.cancerText);
         treatmentText = view.findViewById(R.id.treatmentText);
@@ -106,11 +113,40 @@ public class MedicalinfoFragment extends Fragment {
         interestsText = view.findViewById(R.id.interestsText);
         savePersonalInfo = view.findViewById(R.id.savePersonalInfo);
 
+        //if this user already has made a profile, then restore the edit text field inputs
+        try {
+            if(currentUser.fetchIfNeeded().getParseObject("profile")!=null){
+                Profile currentProfile = (Profile) currentUser.fetchIfNeeded().getParseObject("profile");
+                if(currentProfile.fetchIfNeeded().getString("userType")!=null){
+                    setRadioButtonSelected(currentProfile.fetchIfNeeded().getString("userType"));
+                }
+                if(currentProfile.fetchIfNeeded().getString("hospital")!=null){
+                    hospitalText.setText(currentProfile.fetchIfNeeded().getString("hospital"));
+                }
+                if(currentProfile.fetchIfNeeded().getString("cancerType")!=null){
+                    cancerText.setText(currentProfile.fetchIfNeeded().getString("cancerType"));
+                }
+                if(currentProfile.fetchIfNeeded().getString("treatmentType")!=null){
+                    treatmentText.setText(currentProfile.fetchIfNeeded().getString("treatmentType"));
+                }
+                if(currentProfile.fetchIfNeeded().getString("treatmentStart")!=null){
+                    startText.setText(currentProfile.fetchIfNeeded().getString("treatmentStart"));
+                }
+                if(currentProfile.fetchIfNeeded().getString("treatmentEnd")!=null){
+                    endText.setText(currentProfile.fetchIfNeeded().getString("treatmentEnd"));
+                }
+                if(currentProfile.fetchIfNeeded().getString("interests")!=null){
+                    interestsText.setText(currentProfile.fetchIfNeeded().getString("interests"));
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         savePersonalInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RadioButton selectedRadioButton = (RadioButton) view.findViewById(radio_group.getCheckedRadioButtonId());
-                String userType = selectedRadioButton.getText().toString();
+                String userType = getRadioButtonString();
                 String hospital = hospitalText.getText().toString();
                 String cancer = cancerText.getText().toString();
                 String treatment = treatmentText.getText().toString();
@@ -120,6 +156,18 @@ public class MedicalinfoFragment extends Fragment {
                 saveToProfile(userType, hospital, cancer, treatment, start, end, interests);
             }
         });
+    }
+
+    public String getRadioButtonString(){
+        int selectedButtonID = radio_group.getCheckedRadioButtonId();
+        if(selectedButtonID == currentPatient.getId())
+        {
+            return "Current Patient";
+        } else if(selectedButtonID == previousPatient.getId()){
+            return "Previous Patient";
+        } else {
+            return "Parent of Patient";
+        }
     }
 
     public void saveToProfile(String userType, String hospital, String cancer, String treatment, String start, String end, String interests){
@@ -148,6 +196,16 @@ public class MedicalinfoFragment extends Fragment {
             });
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void setRadioButtonSelected(String userType){
+        if(userType.equals("Current Patient")){
+            currentPatient.setChecked(true);
+        } else if(userType.equals("Previous Patient")){
+            previousPatient.setChecked(true);
+        } else {
+            parentOfPatient.setChecked(true);
         }
     }
 }
