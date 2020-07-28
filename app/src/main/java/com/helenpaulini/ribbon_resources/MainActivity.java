@@ -92,4 +92,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
         finish();
     }
+
+    public BottomNavigationView getBottomNavigationView (){
+        return bottomNavigationView;
+    }
 }

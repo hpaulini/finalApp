@@ -23,6 +23,7 @@
             app:helperText="*Required">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/cityText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -42,6 +43,7 @@
             app:helperText="*Required">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -59,6 +61,44 @@
             android:hint="Phone Number">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/facebook"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/phone"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:hint="Facebook Username">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/facebookText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/instagram"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/facebook"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:hint="Instragram Username"
+            app:prefixText="@string/at">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/instagramText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -113,22 +153,46 @@
             android:layout_toStartOf="@+id/phone"
             android:src="@drawable/ic_baseline_local_phone_24" />
 
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/facebook"
+            android:layout_alignBottom="@+id/facebook"
+            android:layout_marginTop="-8dp"
+            android:layout_marginEnd="-36dp"
+            android:layout_marginBottom="-8dp"
+            android:layout_toStartOf="@+id/facebook"
+            android:src="@drawable/ic_facebook" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/instagram"
+            android:layout_alignBottom="@+id/instagram"
+            android:layout_marginTop="-8dp"
+            android:layout_marginEnd="-36dp"
+            android:layout_marginBottom="-8dp"
+            android:layout_toStartOf="@+id/instagram"
+            android:src="@drawable/ic_instagram" />
+
         <Button
-            android:id="@+id/outlinedButton"
+            android:id="@+id/saveContactInfo"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/phone"
+            android:layout_below="@+id/instagram"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="0dp"
             android:text="Save Contact Info." />
 
         <Button
-            android:id="@+id/containedButton"
+            android:id="@+id/getMatches"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/outlinedButton"
+            android:layout_below="@+id/saveContactInfo"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="0dp"

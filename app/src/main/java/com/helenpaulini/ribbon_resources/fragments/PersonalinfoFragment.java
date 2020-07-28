@@ -5,13 +5,26 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.textfield.TextInputEditText;
+import com.helenpaulini.ribbon_resources.MainActivity;
 import com.helenpaulini.ribbon_resources.R;
+import com.helenpaulini.ribbon_resources.models.ContactInfo;
+import com.helenpaulini.ribbon_resources.models.Profile;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +32,15 @@ import com.helenpaulini.ribbon_resources.R;
  * create an instance of this fragment.
  */
 public class PersonalinfoFragment extends Fragment {
+    public static final String TAG = "Contact Info";
+
+    private TextInputEditText cityText;
+    private TextInputEditText emailText;
+    private TextInputEditText phoneText;
+    private TextInputEditText facebookText;
+    private TextInputEditText instagramText;
+    private Button saveContactInfo;
+    private Button getMatches;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -65,5 +87,82 @@ public class PersonalinfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_personalinfo, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        cityText = view.findViewById(R.id.cityText);
+        emailText = view.findViewById(R.id.emailText);
+        phoneText = view.findViewById(R.id.phoneText);
+        facebookText = view.findViewById(R.id.facebookText);
+        instagramText = view.findViewById(R.id.instagramText);
+        saveContactInfo = view.findViewById(R.id.saveContactInfo);
+        getMatches = view.findViewById(R.id.getMatches);
+
+        saveContactInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String city = cityText.getText().toString();
+                String email = emailText.getText().toString();
+                String phone = phoneText.getText().toString();
+                String facebook = facebookText.getText().toString();
+                String instagram = "@"+instagramText.getText().toString();
+                saveToContact(city, email, phone, facebook, instagram);
+            }
+        });
+
+        getMatches.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToMatches();
+            }
+        });
+    }
+
+    public void saveToContact(String city, String email, String phone, String facebook, String instagram){
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.fetchInBackground();
+
+        ContactInfo contact = new ContactInfo();
+        contact.setUser(currentUser);
+
+        contact.setAddress(city);
+        contact.setEmail(email);
+        contact.setPhone(phone);
+        contact.setFacebook(facebook);
+        contact.setInstagram(instagram);
+
+        contact.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving", e);
+                    Toast.makeText(getContext(), "Error while saving", Toast.LENGTH_SHORT).show();
+                }
+                Log.i(TAG, "Profile saved successfully!!");
+            }
+        });
+        currentUser.put("contactInfo", contact);
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(com.parse.ParseException e) {
+            }
+        });
+    }
+
+    public void goToMatches(){
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction fts = fm.beginTransaction();
+        fts.replace(R.id.flContainer, new ResourcesFragment());
+        fts.addToBackStack(TAG);
+        fts.commit();
+
+        BottomNavigationView bottom = getActivity().findViewById(R.id.bottomNavigation);
+        bottom.setSelectedItemId(R.id.dashboard);
+//        MainActivity main = new MainActivity();
+//        BottomNavigationView bottomNav = main.getBottomNavigationView();
+//        bottomNav.setSelectedItemId(R.id.dashboard);
     }
 }

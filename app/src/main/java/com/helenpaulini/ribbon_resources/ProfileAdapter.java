@@ -113,7 +113,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                     || (profileListFull.get(i).getLastName().toLowerCase().trim()).contains(filterPattern)
                     || (profileListFull.get(i).getHospital().toLowerCase().trim()).contains(filterPattern)
                     || (profileListFull.get(i).getCanerType().toLowerCase().trim()).contains(filterPattern)
-                    || (profileListFull.get(i).getUserType().toString().toLowerCase().trim()).contains(filterPattern)){
+                    || (profileListFull.get(i).getUserType().toLowerCase().trim()).contains(filterPattern)){
                         filteredList.add(profileListFull.get(i));
                     }
                 }
