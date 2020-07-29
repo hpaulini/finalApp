@@ -4,71 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/rectangle_background"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp">
 
     <TextView
         android:id="@+id/tvFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_toEndOf="@+id/ivProfilePic"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="First Name" />
 
     <TextView
         android:id="@+id/tvLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_toEndOf="@+id/tvFirstName"
-        tools:text="Last Name" />
-
-    <TextView
-        android:id="@+id/tvUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvFirstName"
-        android:layout_marginStart="10dp"
+        android:layout_alignTop="@+id/tvFirstName"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/ivProfilePic"
-        tools:text="Username" />
+        android:layout_toEndOf="@+id/tvFirstName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:text="Last Name" />
 
     <TextView
         android:id="@+id/tvUserType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvCity"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="0dp"
+        android:layout_below="@+id/tvCancerType"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_toEndOf="@+id/ivProfilePic"
         tools:text="User Type" />
-
-    <TextView
-        android:id="@+id/tvAge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUsername"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/tvCity"
-        tools:text="Age" />
-
-    <TextView
-        android:id="@+id/tvCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUsername"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/ivProfilePic"
-        tools:text="City" />
 
     <TextView
         android:id="@+id/tvHospital"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tvCancerType"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/tvCancerType"
         tools:text="Hospital" />
@@ -77,9 +56,9 @@
         android:id="@+id/tvCancerType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUserType"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="0dp"
+        android:layout_below="@+id/tvFirstName"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_toEndOf="@+id/ivProfilePic"
         tools:text="Cancer Type" />
 
@@ -93,24 +72,41 @@
     <!--        android:layout_marginTop="0dp"-->
     <!--        tools:srcCompat="@tools:sample/avatars" />-->
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivProfilePic"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:useLevel="false"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/btnConnect"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUserType"
         android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="8dp"
+        android:text="Save Profile"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/btnUserDetails"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUserType"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
-        android:text="Save Connection"
+        android:layout_toStartOf="@+id/btnConnect"
+        android:layout_toEndOf="@+id/ivProfilePic"
+        android:text="View Details"
         android:textSize="10sp" />
 
 </RelativeLayout>
