@@ -21,10 +21,12 @@ import com.helenpaulini.ribbon_resources.models.Profile;
 import com.helenpaulini.ribbon_resources.utilities.Matching;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -39,6 +41,7 @@ public class ConnectionsFragment extends Fragment {
     private RecyclerView rvConnections;
     protected ProfileAdapter adapter;
     protected List<Profile> profiles;
+    List<Profile> profilesFromParseObject;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -107,42 +110,119 @@ public class ConnectionsFragment extends Fragment {
     protected void queryProfiles() {
         ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
         query.include(Profile.KEY_USER);
-        query.addDescendingOrder(Profile.KEY_CREATED_AT);
-        query.findInBackground(new FindCallback<Profile>() {
+        final List<ParseUser> savedUsers = new ArrayList<>();
+        final ParseQuery<ParseObject> userRelation = ParseUser.getCurrentUser().getRelation("userRelation").getQuery();
+        userRelation.include("User");
+        userRelation.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(List<Profile> profilesList, ParseException e) {
-                try {
-                    Log.i(TAG, "Connections" +((MyConnections) ParseUser.getCurrentUser().fetchIfNeeded().getParseObject("myConnections")).getMyConnections());
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
+            public void done(List<ParseObject> users, ParseException e) {
+                for(ParseObject user : users){
+                    savedUsers.add((ParseUser) user);
                 }
-                //profilesList = ((MyConnections) ParseUser.getCurrentUser().getParseObject("myConnections")).getMyConnections();
-                    if (e != null) {
-                        Log.e(TAG, "Issue with getting profiles", e);
-                        return;
+                savedUsers.add(ParseUser.getCurrentUser());
+                query.whereContainedIn(Profile.KEY_USER, savedUsers);
+                query.addDescendingOrder(Profile.KEY_CREATED_AT);
+                query.findInBackground(new FindCallback<Profile>() {
+                    @Override
+                    public void done(List<Profile> profilesList, ParseException e) {
+                        if(e!=null){
+                            Log.e(TAG, "Issue with getting profiles");
+                            return;
+                        }
+                        for(Profile profile:profilesList){
+                            Log.i(TAG, "Profile username: "+profile.getUser().getUsername());
+                        }
+                        adapter.addAll(profilesList);
+                        adapter.notifyDataSetChanged();
                     }
-                    for (Profile profile : profilesList) {
-                        Log.i(TAG, "Username: " + profile.getUser().getUsername());
-                    }
-                    profiles.addAll(profilesList);
-                    adapter.notifyDataSetChanged();
+                });
             }
         });
     }
 
-    public Profile getCurrentProfile(ParseUser user, List<Profile> allProfiles){
-        int indexOfCurrentProfile=0;
-        for(int i=0; i<allProfiles.size(); i++){
-            if (allProfiles.get(i).getUser().getObjectId().equals(user.getObjectId())){
-                indexOfCurrentProfile = i;
-            }
-        }
-        Log.i(TAG, "current user: " + allProfiles.get(indexOfCurrentProfile).getUser().getUsername());
-        return allProfiles.get(indexOfCurrentProfile);
-    }
-
-    public List<Profile> profileConnections (Profile currentProfile, List<Profile> profiles){
-        Log.i(TAG, "current user here: "+ currentProfile.getUser().getUsername());
-        return currentProfile.getMyConnections();
-    }
 }
+
+
+
+
+//    protected void queryProfiles() {
+//        ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
+//        query.include(Profile.KEY_USER);
+//        query.addDescendingOrder(Profile.KEY_CREATED_AT);
+//        try {
+//            ParseUser.getCurrentUser().fetchIfNeeded().getParseObject("profile").getRelation("profileRelation").getQuery().findInBackground(new FindCallback<ParseObject>() {
+//                @Override
+//                public void done(List<ParseObject> objects, ParseException e) {
+//                    profilesFromParseObject = profilesFromParseObject(objects);
+//                }
+//            });
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        query.findInBackground(new FindCallback<Profile>() {
+//            @Override
+//            public void done(List<Profile> profilesList, ParseException e) {
+//                profilesList = profilesFromParseObject;
+//                if (e != null) {
+//                    Log.e(TAG, "Issue with getting profiles", e);
+//                    return;
+//                }
+//                for (Profile profile : profilesList) {
+//                    //Log.i(TAG, "Username: " + profile.getUser().getUsername());
+//                }
+//                profiles.addAll(profilesList);
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
+//    }
+
+//    public List<Profile> profilesFromParseObject(List<ParseObject> objects){
+//        List<Profile> profileList = new ArrayList<>();
+//
+//        for(int i=0; i<objects.size(); i++){
+//            profileList.add(i, (Profile) objects.get(i));
+//        }
+//        return profileList;
+//    }
+
+//        query.include(Profile.KEY_USER);
+//        query.addDescendingOrder(Profile.KEY_CREATED_AT);
+//        query.findInBackground(new FindCallback<Profile>() {
+//            @Override
+//            public void done(List<Profile> profilesList, ParseException e) {
+
+//                try {
+//                    Log.i(TAG, "Connections pointer " +(MyConnections) ParseUser.getCurrentUser().fetchIfNeeded().getParseObject("myConnections"));
+//                    Log.i(TAG, "Connections array " +((MyConnections) ParseUser.getCurrentUser().fetchIfNeeded().getParseObject("myConnections")).getMyConnections());
+//                } catch (ParseException ex) {
+//                    ex.printStackTrace();
+//                }
+    //profilesList = ((MyConnections) ParseUser.getCurrentUser().getParseObject("myConnections")).getMyConnections();
+//                    if (e != null) {
+//                        Log.e(TAG, "Issue with getting profiles", e);
+//                        return;
+//                    }
+//                    for (Profile profile : profilesList) {
+//                        Log.i(TAG, "Username: " + profile.getUser().getUsername());
+//                    }
+//                    profiles.addAll(profilesList);
+//                    adapter.notifyDataSetChanged();
+//            }
+//        });
+//    }
+
+//    public Profile getCurrentProfile(ParseUser user, List<Profile> allProfiles){
+//        int indexOfCurrentProfile=0;
+//        for(int i=0; i<allProfiles.size(); i++){
+//            if (allProfiles.get(i).getUser().getObjectId().equals(user.getObjectId())){
+//                indexOfCurrentProfile = i;
+//            }
+//        }
+//        Log.i(TAG, "current user: " + allProfiles.get(indexOfCurrentProfile).getUser().getUsername());
+//        return allProfiles.get(indexOfCurrentProfile);
+//    }
+//
+//    public List<Profile> profileConnections (Profile currentProfile, List<Profile> profiles){
+//        Log.i(TAG, "current user here: "+ currentProfile.getUser().getUsername());
+//        return currentProfile.getMyConnections();
+//    }

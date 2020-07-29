@@ -32,6 +32,7 @@ public class Profile extends ParseObject {
     public static final String KEY_USERTYPE = "userType";
     public static final String KEY_MYCONNECTIONS = "myConnections";
     public static final String KEY_INTERESTS = "interests";
+    public static final String KEY_PROFILEARRAY = "profileArray";
 
     //empty constructor for parceler
     public Profile(){
@@ -167,4 +168,14 @@ public class Profile extends ParseObject {
     public void setInterests(String interests) {
         put(KEY_INTERESTS, interests);
     }
+
+    //Profile array
+    public List<Profile> getProfileArray() {
+        return getList(KEY_PROFILEARRAY);
+    }
+
+    public void setProfileArray(List<Profile> profiles) {
+        put(KEY_PROFILEARRAY, profiles);
+    }
+
 }

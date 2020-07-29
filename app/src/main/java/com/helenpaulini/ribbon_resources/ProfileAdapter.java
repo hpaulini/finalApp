@@ -176,7 +176,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             btnConnect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onSaveConnectionClick(profile);
+                    saveUserRelation(profile);
+                    //addToProfileArray(profile);
+                    //saveConnectionsRelation(profile);
+                    //onSaveConnectionClick(profile);
                 }
             });
 
@@ -234,6 +237,79 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 //                context.startActivity(intent);
 //            }
         }
+
+        public void saveUserRelation(Profile clickedProfile){
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            currentUser.fetchInBackground();
+            try {
+                currentUser.fetchIfNeeded().getRelation("userRelation").add(clickedProfile.getUser());
+
+                currentUser.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(com.parse.ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving", e);
+                            Toast.makeText(context, "Error while saving", Toast.LENGTH_SHORT).show();
+                        }
+                        Log.i(TAG, "My user relaitons saved successfully!!");
+                    }
+                });
+                Log.i(TAG, "saved user relations**");
+            } catch (com.parse.ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void addToProfileArray(Profile clickedProfile){
+            myConnections.add(clickedProfile);
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            currentUser.fetchInBackground();
+
+            try {
+                Profile currentProfile = (Profile) currentUser.fetchIfNeeded().getParseObject("profile");
+                currentProfile.setProfileArray(myConnections);
+
+                currentProfile.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(com.parse.ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving", e);
+                            Toast.makeText(context, "Error while saving", Toast.LENGTH_SHORT).show();
+                        }
+                        Log.i(TAG, "My connections array saved successfully!!");
+                    }
+                });
+            } catch (com.parse.ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void saveConnectionsRelation(Profile clickedProfile){
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            currentUser.fetchInBackground();
+            try {
+                Profile currentProfile = (Profile) currentUser.fetchIfNeeded().getParseObject("profile");
+                Log.i(TAG, "clicked profile: "+clickedProfile.getFirstName());
+                Log.i(TAG, "current profile: "+(Profile) currentUser.fetchIfNeeded().getParseObject("profile"));
+                currentProfile.fetchIfNeeded().getRelation("profileRelation").add(clickedProfile);
+
+                currentProfile.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(com.parse.ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving", e);
+                            Toast.makeText(context, "Error while saving", Toast.LENGTH_SHORT).show();
+                        }
+                        Log.i(TAG, "My connections model saved successfully!!");
+                    }
+                });
+                Log.i(TAG, "saved profiles**");
+            } catch (com.parse.ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+
 
         public void onSaveConnectionClick(Profile clickedProfile){
 
