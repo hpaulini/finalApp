@@ -23,7 +23,7 @@
         android:title="find"
         app:showAsAction="always" />
     <item
-        android:id="@+id/tabsView"
+        android:id="@+id/resources"
         android:icon="@drawable/ic_baseline_comment_24"
         android:title="resources"
         app:showAsAction="always" />

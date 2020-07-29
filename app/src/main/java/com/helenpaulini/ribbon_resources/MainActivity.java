@@ -44,11 +44,11 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.profile:
                     default:
                         //Toast.makeText(MainActivity.this, "profile!", Toast.LENGTH_SHORT).show();
-                        fragment = new ProfileFragment();
+                        fragment = new ViewpagerFragment();
                         break;
                     case R.id.dashboard:
                         //Toast.makeText(MainActivity.this, "dashboard!", Toast.LENGTH_SHORT).show();
-                        fragment = new ResourcesFragment();
+                        fragment = new DashboardFragment();
                         break;
                     case R.id.myConnections:
                         //Toast.makeText(MainActivity.this, "connections!", Toast.LENGTH_SHORT).show();
@@ -58,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
                         //Toast.makeText(MainActivity.this, "findusers!", Toast.LENGTH_SHORT).show();
                         fragment = new FindusersFragment();
                         break;
-                    case R.id.tabsView:
+                    case R.id.resources:
                         //Toast.makeText(MainActivity.this, "resources!", Toast.LENGTH_SHORT).show();
-                        fragment = new ViewpagerFragment();
+                        fragment = new ResourcesFragment();
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();

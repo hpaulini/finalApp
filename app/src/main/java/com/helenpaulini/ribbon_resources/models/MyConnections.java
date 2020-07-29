@@ -39,4 +39,5 @@ public class MyConnections extends ParseObject {
     public void setMyConnections(List<Profile> myConnections) {
         put(KEY_SAVEDCONNECTIONS, myConnections);
     }
+
 }

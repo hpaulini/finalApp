@@ -29,22 +29,22 @@ public class Matching {
     public int matchValue(Profile user1, Profile user2){
 
 
-        if (user1.getUserType().equals(user2.getUserType())){
+        if (!(user1.getUserType()==null) && !(user2.getUserType()==null) && user1.getUserType().equals(user2.getUserType())){
             return 0; //users cannot be of the same type to be a match
         }
-        if(user1.getCanerType().equals(user2.getCanerType())){
+        if(!(user1.getCanerType()==null) && !(user2.getCanerType()==null) && user1.getCanerType().equals(user2.getCanerType())){
             matchCompatibility+=5;
             matchAllowed = true;
         }
-        if(user1.getHospital().equals(user2.getHospital())){
+        if(!(user1.getHospital()==null) && !(user2.getHospital()==null) && user1.getHospital().equals(user2.getHospital())){
             matchCompatibility+=4;
             matchAllowed = true;
         }
-        if(user1.getTreatmentType().equals(user2.getTreatmentType())){
+        if(!(user1.getTreatmentType()==null) && !(user2.getTreatmentType()==null) && user1.getTreatmentType().equals(user2.getTreatmentType())){
             matchCompatibility+=4;
             matchAllowed = true;
         }
-        if(user1.getCity().equals(user2.getCity())){
+        if(!(user1.getCity()==null) && !(user2.getCity()==null) && user1.getCity().equals(user2.getCity())){
             matchCompatibility+=3;
         }
         if(matchAllowed==false){

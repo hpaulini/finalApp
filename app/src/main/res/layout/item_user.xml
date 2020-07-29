@@ -105,21 +105,10 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/btnNotification"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="0dp"
-        android:text="Send Notification"
-        android:textSize="10sp" />
-
-    <Button
         android:id="@+id/btnConnect"
         android:layout_width="125dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/btnNotification"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
         android:text="Save Connection"
         android:textSize="10sp" />

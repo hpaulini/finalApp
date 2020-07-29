@@ -157,7 +157,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             tvCancerType = itemView.findViewById(R.id.tvCancerType);
             tvHospital = itemView.findViewById(R.id.tvHospital);
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
-            btnNotification = itemView.findViewById(R.id.btnNotification);
             btnConnect = itemView.findViewById(R.id.btnConnect);
 
             itemView.setOnClickListener(this);
@@ -237,13 +236,24 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         }
 
         public void onSaveConnectionClick(Profile clickedProfile){
+
             //add the clicked profile item to the current user's myConnections arraylist
+            myConnections.add(clickedProfile);
+
             ParseUser currentUser = ParseUser.getCurrentUser();
             currentUser.fetchInBackground();
+            Log.i(TAG, "who is currently logged in: "+currentUser.getUsername());
+            MyConnections connections;
 
-                MyConnections connections = (MyConnections) currentUser.getParseObject("myConnections");
+            try {
+                if(currentUser.fetchIfNeeded().getParseObject("myConnections")==null) {
+                    connections = new MyConnections();
+                } else{
+                    connections = (MyConnections) currentUser.fetchIfNeeded().getParseObject("myConnections");
+                    Log.i(TAG, "previous connections: "+connections.getMyConnections());
+                }
+
                 connections.setUser(currentUser);
-                myConnections.add(clickedProfile);
                 connections.setMyConnections(myConnections);
 
                 connections.saveInBackground(new SaveCallback() {
@@ -253,7 +263,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                             Log.e(TAG, "Error while saving", e);
                             Toast.makeText(context, "Error while saving", Toast.LENGTH_SHORT).show();
                         }
-                        Log.i(TAG, "Profile saved successfully!!");
+                        Log.i(TAG, "My connections model saved successfully!!");
                     }
                 });
                 currentUser.put("myConnections", connections);
@@ -262,6 +272,12 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                     public void done(com.parse.ParseException e) {
                     }
                 });
+
+                Log.i(TAG, "current connections: "+connections.getMyConnections());
+
+            } catch (com.parse.ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
