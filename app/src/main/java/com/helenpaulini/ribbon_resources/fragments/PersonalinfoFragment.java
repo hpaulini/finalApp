@@ -97,6 +97,30 @@ public class PersonalinfoFragment extends Fragment {
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.fetchInBackground();
 
+        setViews(view);
+        setPreviouslyInputted(currentUser);
+
+        saveContactInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String city = cityText.getText().toString();
+                String email = emailText.getText().toString();
+                String phone = phoneText.getText().toString();
+                String facebook = facebookText.getText().toString();
+                String instagram = "@"+instagramText.getText().toString();
+                saveToContact(city, email, phone, facebook, instagram);
+            }
+        });
+
+        getMatches.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToMatches();
+            }
+        });
+    }
+
+    private void setViews(View view){
         cityText = view.findViewById(R.id.cityText);
         emailText = view.findViewById(R.id.emailText);
         phoneText = view.findViewById(R.id.phoneText);
@@ -104,7 +128,9 @@ public class PersonalinfoFragment extends Fragment {
         instagramText = view.findViewById(R.id.instagramText);
         saveContactInfo = view.findViewById(R.id.saveContactInfo);
         getMatches = view.findViewById(R.id.getMatches);
+    }
 
+    private void setPreviouslyInputted(ParseUser currentUser){
         //if this user already has made a profile, then restore the edit text field inputs
         try {
             if(currentUser.fetchIfNeeded().getParseObject("profile")!=null){
@@ -128,25 +154,6 @@ public class PersonalinfoFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        saveContactInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String city = cityText.getText().toString();
-                String email = emailText.getText().toString();
-                String phone = phoneText.getText().toString();
-                String facebook = facebookText.getText().toString();
-                String instagram = "@"+instagramText.getText().toString();
-                saveToContact(city, email, phone, facebook, instagram);
-            }
-        });
-
-        getMatches.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToMatches();
-            }
-        });
     }
 
     public void saveToContact(String city, String email, String phone, String facebook, String instagram){

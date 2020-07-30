@@ -128,7 +128,7 @@ public class ConnectionsFragment extends Fragment {
                 for(ParseObject user : users){
                     savedUsers.add((ParseUser) user);
                 }
-                savedUsers.add(ParseUser.getCurrentUser());
+                //savedUsers.add(ParseUser.getCurrentUser());
                 query.whereContainedIn(Profile.KEY_USER, savedUsers);
                 query.addDescendingOrder(Profile.KEY_CREATED_AT);
                 query.findInBackground(new FindCallback<Profile>() {
@@ -149,7 +149,7 @@ public class ConnectionsFragment extends Fragment {
         });
     }
 
-    public void goToDetailView(int position){
+    private void goToDetailView(int position){
         FragmentManager fm = getActivity().getSupportFragmentManager();
         UserdetailsFragment userdetailsFragment = new UserdetailsFragment();
         Profile profile = profiles.get(position);

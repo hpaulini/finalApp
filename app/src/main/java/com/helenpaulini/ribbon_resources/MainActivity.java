@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     final FragmentManager fragmentManager = getSupportFragmentManager();
     private BottomNavigationView bottomNavigationView;
 
-    private ProfileAdapter adapter;
+    //private ProfileAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==R.id.logout){
+        if (item.getItemId() == R.id.logout) {
             ParseUser.logOut();
             ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
             goLoginActivity();
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    public BottomNavigationView getBottomNavigationView (){
+    public BottomNavigationView getBottomNavigationView() {
         return bottomNavigationView;
     }
 }

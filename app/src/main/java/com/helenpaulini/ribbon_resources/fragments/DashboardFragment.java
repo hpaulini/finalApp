@@ -130,7 +130,19 @@ public class DashboardFragment extends Fragment {
         });
     }
 
-    public Profile getCurrentProfile(ParseUser user, List<Profile> allProfiles){
+//    private Profile getCurrentProfile(){
+//        ParseUser currentUser = ParseUser.getCurrentUser();
+//        Profile currentProfile = null;
+//        try {
+//            currentProfile = (Profile) currentUser.fetchIfNeeded().getParseObject("profile");
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return currentProfile;
+//    }
+
+    private Profile getCurrentProfile(ParseUser user, List<Profile> allProfiles){
         int indexOfCurrentProfile=0;
         for(int i=0; i<allProfiles.size(); i++){
             if (allProfiles.get(i).getUser().getObjectId().equals(user.getObjectId())){
@@ -141,7 +153,7 @@ public class DashboardFragment extends Fragment {
         return allProfiles.get(indexOfCurrentProfile);
     }
 
-    public List<Profile> profileMatches (Profile currentProfile, List<Profile> profiles){
+    private List<Profile> profileMatches (Profile currentProfile, List<Profile> profiles){
         List<Profile> profileMatches = new ArrayList<>();
         Matching potentialmatch = new Matching();
         for(int i=0; i<profiles.size(); i++){
@@ -150,14 +162,13 @@ public class DashboardFragment extends Fragment {
                     + " and "+ profiles.get(i).getUser().getUsername()+" is "+potentialmatch.matchValue(currentProfile, profiles.get(i)));
 
             if(potentialmatch.matchValue(currentProfile, profiles.get(i))>0){
-                //Log.i(TAG, "a match: " + profiles.get(i).getUser().getUsername());
                 profileMatches.add(profiles.get(i));
             }
         }
         return profileMatches;
     }
 
-    public void goToDetailView(int position){
+    private void goToDetailView(int position){
         FragmentManager fm = getActivity().getSupportFragmentManager();
         UserdetailsFragment userdetailsFragment = new UserdetailsFragment();
         Profile profile = profiles.get(position);

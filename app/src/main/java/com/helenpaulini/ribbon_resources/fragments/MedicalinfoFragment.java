@@ -123,6 +123,25 @@ public class MedicalinfoFragment extends Fragment {
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.fetchInBackground();
 
+        setViews(view);
+        setPreviouslyInputted(currentUser);
+
+        savePersonalInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String userType = getRadioButtonString();
+                String hospital = hospitalText.getText().toString();
+                String cancer = cancerText.getText().toString();
+                String treatment = treatmentText.getText().toString();
+                String start = startText.getText().toString();
+                String end = endText.getText().toString();
+                String interests = interestsText.getText().toString();
+                saveToProfile(userType, hospital, cancer, treatment, start, end, interests);
+            }
+        });
+    }
+
+    private void setViews(View view){
         selectedItems = view.findViewById(R.id.txt);
         radio_group = view.findViewById(R.id.radio_group);
         currentPatient = view.findViewById(R.id.currentPatient);
@@ -136,46 +155,9 @@ public class MedicalinfoFragment extends Fragment {
         endText = view.findViewById(R.id.endText);
         interestsText = view.findViewById(R.id.interestsText);
         savePersonalInfo = view.findViewById(R.id.savePersonalInfo);
+    }
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(API_URL, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d(TAG, "onsuccess");
-                JSONObject jsonObject = json.jsonObject;
-                try {
-                    JSONArray features = jsonObject.getJSONArray("features");
-                    hospitals = Hospital.fromJsonArray(features); //hospitals is a list of [{key:{key1:value, key2:value, ...}}, ...]
-                    spinnerDialog = new SpinnerDialog(getActivity(), hospitalNameList(hospitals),"Select or Search Hospitals");
-                    spinnerDialog.setCancellable(true); // for cancellable
-                    spinnerDialog.setShowKeyboard(false);// for open keyboard by default
-                    spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
-                        @Override
-                        public void onClick(String item, int position) {
-                            Toast.makeText(getContext(), item + "  " + position + "", Toast.LENGTH_SHORT).show();
-                            selectedItems.setText(item + " Position: " + position);
-                        }
-                    });
-                    hospitalText.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            spinnerDialog.showSpinerDialog();
-                        }
-                    });
-//                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-//                            android.R.layout.simple_spinner_item, hospitalNameList(hospitals));
-//                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                    spHospital.setAdapter(adapter);
-                } catch (JSONException e) {
-                    Log.e(TAG, "json exception", e);
-                }
-            }
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.e(TAG, "onfailure", throwable);
-            }
-        });
-
+    private void setPreviouslyInputted(ParseUser currentUser){
         //if this user already has made a profile, then restore the edit text field inputs
         try {
             if(currentUser.fetchIfNeeded().getParseObject("profile")!=null){
@@ -205,23 +187,9 @@ public class MedicalinfoFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        savePersonalInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String userType = getRadioButtonString();
-                String hospital = hospitalText.getText().toString();
-                String cancer = cancerText.getText().toString();
-                String treatment = treatmentText.getText().toString();
-                String start = startText.getText().toString();
-                String end = endText.getText().toString();
-                String interests = interestsText.getText().toString();
-                saveToProfile(userType, hospital, cancer, treatment, start, end, interests);
-            }
-        });
     }
 
-    public String getRadioButtonString(){
+    private String getRadioButtonString(){
         int selectedButtonID = radio_group.getCheckedRadioButtonId();
         if(selectedButtonID == currentPatient.getId())
         {
@@ -233,7 +201,7 @@ public class MedicalinfoFragment extends Fragment {
         }
     }
 
-    public void saveToProfile(String userType, String hospital, String cancer, String treatment, String start, String end, String interests){
+    private void saveToProfile(String userType, String hospital, String cancer, String treatment, String start, String end, String interests){
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.fetchInBackground();
         try {
@@ -262,7 +230,7 @@ public class MedicalinfoFragment extends Fragment {
         }
     }
 
-    public void setRadioButtonSelected(String userType){
+    private void setRadioButtonSelected(String userType){
         if(userType.equals("Current Patient")){
             currentPatient.setChecked(true);
         } else if(userType.equals("Previous Patient")){
@@ -270,13 +238,5 @@ public class MedicalinfoFragment extends Fragment {
         } else {
             parentOfPatient.setChecked(true);
         }
-    }
-
-    private ArrayList<String> hospitalNameList(List<Hospital> hospitals){
-        ArrayList<String> hospitalNameList = new ArrayList<>();
-        for(int i=0; i<hospitals.size(); i++){
-            hospitalNameList.add(hospitals.get(i).getName());
-        }
-        return hospitalNameList;
     }
 }

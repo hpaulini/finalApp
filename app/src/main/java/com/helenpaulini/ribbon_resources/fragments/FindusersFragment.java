@@ -156,7 +156,7 @@ public class FindusersFragment extends Fragment {
         });
     }
 
-    public void goToDetailView(int position){
+    private void goToDetailView(int position){
         FragmentManager fm = getActivity().getSupportFragmentManager();
         UserdetailsFragment userdetailsFragment = new UserdetailsFragment();
         Profile profile = profiles.get(position);
@@ -164,9 +164,5 @@ public class FindusersFragment extends Fragment {
         bundle.putParcelable("profileDetails",profile);
         userdetailsFragment.setArguments(bundle);
         fm.beginTransaction().replace(R.id.flContainer, userdetailsFragment).addToBackStack(null).commit();
-    }
-
-    public void doMySearch(String query){
-
     }
 }

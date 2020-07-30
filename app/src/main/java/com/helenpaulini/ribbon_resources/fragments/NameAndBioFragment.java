@@ -110,74 +110,77 @@ public class NameAndBioFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.fetchInBackground();
 
-            profile_image = view.findViewById(R.id.profile_image);
-            btnAddPic = view.findViewById(R.id.btnAddPic);
-            etFirst = view.findViewById(R.id.first);
-            etLast = view.findViewById(R.id.last);
-            bday = view.findViewById(R.id.bday);
-            biography = view.findViewById(R.id.biography);
-            saveProf = view.findViewById(R.id.saveProf);
+        setViews(view);
+        setPreviouslyInputted(currentUser);
+        btnAddPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchCamera();
+            }
+        });
 
+        saveProf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firstName = etFirst.getText().toString();
+                lastName = etLast.getText().toString();
+                birthday = bday.getText().toString();
+                bio = biography.getText().toString();
+
+                if (firstName.isEmpty()) {
+                    Toast.makeText(getContext(), "Required fields cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                saveProfile(photoFile, firstName, lastName, birthday, bio);
+            }
+        });
+    }
+
+    private void setViews(View view) {
+        profile_image = view.findViewById(R.id.profile_image);
+        btnAddPic = view.findViewById(R.id.btnAddPic);
+        etFirst = view.findViewById(R.id.first);
+        etLast = view.findViewById(R.id.last);
+        bday = view.findViewById(R.id.bday);
+        biography = view.findViewById(R.id.biography);
+        saveProf = view.findViewById(R.id.saveProf);
+    }
+
+    private void setPreviouslyInputted(ParseUser currentUser) {
         //if this user already has made a profile, then restore the edit text field inputs
         try {
-            if(currentUser.fetchIfNeeded().getParseObject("profile")!=null){
+            if (currentUser.fetchIfNeeded().getParseObject("profile") != null) {
                 Profile currentProfile = (Profile) currentUser.fetchIfNeeded().getParseObject("profile");
-                if(currentProfile.fetchIfNeeded().getParseFile("profilePic")!=null){
+                if (currentProfile.fetchIfNeeded().getParseFile("profilePic") != null) {
                     Glide.with(getContext()).load((currentProfile.getImage()).getUrl()).into(profile_image);
                 }
-                if(currentProfile.fetchIfNeeded().getString("firstName")!=null){
+                if (currentProfile.fetchIfNeeded().getString("firstName") != null) {
                     etFirst.setText(currentProfile.fetchIfNeeded().getString("firstName"));
                 }
-                if(currentProfile.fetchIfNeeded().getString("lastName")!=null){
+                if (currentProfile.fetchIfNeeded().getString("lastName") != null) {
                     etLast.setText(currentProfile.fetchIfNeeded().getString("lastName"));
                 }
-                if(currentProfile.fetchIfNeeded().getString("birthday")!=null){
+                if (currentProfile.fetchIfNeeded().getString("birthday") != null) {
                     bday.setText(currentProfile.fetchIfNeeded().getString("birthday"));
                 }
-                if(currentProfile.fetchIfNeeded().getString("bio")!=null){
+                if (currentProfile.fetchIfNeeded().getString("bio") != null) {
                     biography.setText(currentProfile.fetchIfNeeded().getString("bio"));
                 }
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-            btnAddPic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    launchCamera();
-                }
-            });
-
-            saveProf.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    firstName = etFirst.getText().toString();
-                    lastName = etLast.getText().toString();
-                    birthday = bday.getText().toString();
-                    bio = biography.getText().toString();
-
-                    if (firstName.isEmpty()) {
-                        Toast.makeText(getContext(), "Required fields cannot be empty", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    saveProfile(photoFile, firstName, lastName, birthday, bio);
-                }
-            });
     }
 
     private void launchCamera() {
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Create a File reference for future access
         photoFile = getPhotoFileUri(photoFileName);
 
-        // wrap File object into a content provider
         Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
@@ -214,7 +217,7 @@ public class NameAndBioFragment extends Fragment {
         }
     }
 
-    private void saveProfile(File photoFile, String firstName, String lastName, String birthday, String bio){
+    private void saveProfile(File photoFile, String firstName, String lastName, String birthday, String bio) {
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.fetchInBackground();
 
