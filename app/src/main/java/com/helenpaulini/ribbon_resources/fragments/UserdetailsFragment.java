@@ -12,7 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.helenpaulini.ribbon_resources.R;
+import com.helenpaulini.ribbon_resources.models.Profile;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.io.File;
 
@@ -42,6 +46,8 @@ public class UserdetailsFragment extends Fragment {
     private TextView phone;
     private TextView facebook;
     private TextView instagram;
+
+    private Profile profile;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -93,11 +99,19 @@ public class UserdetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        profile = getArguments().getParcelable("profileDetails");
 
+        setViews(view);
+        setTexts();
+        Glide.with(getContext()).load((profile.getImage()).getUrl()).into(profile_image);
+    }
+
+    private void setViews(View view){
         profile_image = view.findViewById(R.id.profile_image);
         firstName = view.findViewById(R.id.firstName);
         lastName = view.findViewById(R.id.lastName);
         birthday = view.findViewById(R.id.birthday);
+        city = view.findViewById(R.id.city);
         bio = view.findViewById(R.id.bio);
         interests = view.findViewById(R.id.interests);
         userType = view.findViewById(R.id.userType);
@@ -110,5 +124,24 @@ public class UserdetailsFragment extends Fragment {
         phone = view.findViewById(R.id.phone);
         facebook = view.findViewById(R.id.facebook);
         instagram = view.findViewById(R.id.instagram);
+    }
+
+    private void setTexts(){
+        firstName.setText(profile.getFirstName());
+        lastName.setText(profile.getLastName());
+        birthday.setText(profile.getBirthday());
+        city.setText(profile.getCity());
+        bio.setText(profile.getBio());
+        interests.setText(profile.getInsterests());
+        userType.setText(profile.getUserType());
+        cancerType.setText(profile.getCanerType());
+        hospital.setText(profile.getHospital());
+        treatmentType.setText(profile.getTreatmentType());
+        treatmentStart.setText(profile.getTreatmentStart());
+        treatmentEnd.setText(profile.getTreatmentEnd());
+        email.setText(profile.getFirstName());
+        phone.setText(profile.getFirstName());
+        facebook.setText(profile.getFirstName());
+        instagram.setText(profile.getFirstName());
     }
 }

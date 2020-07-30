@@ -162,7 +162,7 @@ public class DashboardFragment extends Fragment {
         UserdetailsFragment userdetailsFragment = new UserdetailsFragment();
         Profile profile = profiles.get(position);
         Bundle bundle = new Bundle();
-        bundle.putParcelable("profileDetails",profile);
+        bundle.putParcelable("profileDetails", profile);
         userdetailsFragment.setArguments(bundle);
         fm.beginTransaction().replace(R.id.flContainer, userdetailsFragment).addToBackStack(null).commit();
     }
