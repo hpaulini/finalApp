@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Movie;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,10 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.helenpaulini.ribbon_resources.R;
+import com.helenpaulini.ribbon_resources.fragments.ContactinfoFragment;
+import com.helenpaulini.ribbon_resources.fragments.UserdetailsFragment;
 import com.helenpaulini.ribbon_resources.models.MyConnections;
 import com.helenpaulini.ribbon_resources.models.Post;
 import com.helenpaulini.ribbon_resources.models.Profile;
@@ -42,14 +47,20 @@ import java.util.Locale;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> implements Filterable {
 
+    public interface OnDetailsClickListener{
+        void OnDetailsClicked(int position);
+    }
+
     public static final String TAG = "ProfileAdapter";
     Context context;
+    OnDetailsClickListener onDetailsClickListener;
     List<Profile> profiles;
     List<Profile> profileListFull;
     List<Profile> myConnections = new ArrayList<>();
 
-    public ProfileAdapter(Context context, List<Profile> profiles) {
+    public ProfileAdapter(Context context, OnDetailsClickListener onDetailsClickListener, List<Profile> profiles) {
         this.context = context;
+        this.onDetailsClickListener = onDetailsClickListener;
         this.profiles = profiles;
         //profileListFull = new ArrayList<>(profiles);
         profileListFull = profiles;
@@ -145,6 +156,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         private ImageView ivProfilePic;
         private Button btnNotification;
         private Button btnConnect;
+        private Button btnUserDetails;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -158,6 +170,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             tvHospital = itemView.findViewById(R.id.tvHospital);
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
             btnConnect = itemView.findViewById(R.id.btnConnect);
+            btnUserDetails = itemView.findViewById(R.id.btnUserDetails);
 
             itemView.setOnClickListener(this);
         }
@@ -185,6 +198,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivProfilePic);
             }
+
+            btnUserDetails.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onDetailsClickListener.OnDetailsClicked(getAdapterPosition());
+                }
+            });
         }
 
         public String age (Date birthday){
@@ -218,6 +238,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 age--;
             }
             return ""+age;
+        }
+
+        public void goToDetails(){
+
         }
 
         @Override

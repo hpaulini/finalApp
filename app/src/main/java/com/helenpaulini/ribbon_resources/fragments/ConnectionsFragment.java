@@ -42,6 +42,7 @@ public class ConnectionsFragment extends Fragment {
     protected ProfileAdapter adapter;
     protected List<Profile> profiles;
     List<Profile> profilesFromParseObject;
+    ProfileAdapter.OnDetailsClickListener onDetailsClickListener;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -98,7 +99,7 @@ public class ConnectionsFragment extends Fragment {
         profiles = new ArrayList<>();
 
         //create the adapter
-        adapter = new ProfileAdapter(getContext(), profiles);
+        adapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
         //set the adapter on the recycler view
         rvConnections.setAdapter(adapter);
         //set the layout on the recycler view

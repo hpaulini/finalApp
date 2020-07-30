@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -45,6 +46,7 @@ public class FindusersFragment extends Fragment {
     private SearchView svFindUsers;
     protected ProfileAdapter adapter;
     protected List<Profile> profiles;
+    ProfileAdapter.OnDetailsClickListener onDetailsClickListener;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -115,10 +117,17 @@ public class FindusersFragment extends Fragment {
             }
         });
 
+        onDetailsClickListener = new ProfileAdapter.OnDetailsClickListener() {
+            @Override
+            public void OnDetailsClicked(int position) {
+                goToDetailView(position);
+            }
+        };
+
         profiles = new ArrayList<>();
 
         //create the adapter
-        adapter = new ProfileAdapter(getContext(), profiles);
+        adapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
         //set the adapter on the recycler view
         rvFindUsers.setAdapter(adapter);
         //set the layout on the recycler view
@@ -145,6 +154,16 @@ public class FindusersFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public void goToDetailView(int position){
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        UserdetailsFragment userdetailsFragment = new UserdetailsFragment();
+        Profile profile = profiles.get(position);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("profileDetails",profile);
+        userdetailsFragment.setArguments(bundle);
+        fm.beginTransaction().replace(R.id.flContainer, userdetailsFragment).addToBackStack(null).commit();
     }
 
     public void doMySearch(String query){

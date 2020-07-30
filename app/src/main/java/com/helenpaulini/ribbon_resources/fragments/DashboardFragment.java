@@ -39,6 +39,7 @@ public class DashboardFragment extends Fragment {
     private RecyclerView rvDashboard;
     protected ProfileAdapter adapter;
     protected List<Profile> profiles;
+    ProfileAdapter.OnDetailsClickListener onDetailsClickListener;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -94,7 +95,7 @@ public class DashboardFragment extends Fragment {
         rvDashboard = view.findViewById(R.id.rvDashboard);
         profiles = new ArrayList<>();
 
-        adapter = new ProfileAdapter(getContext(), profiles);
+        adapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
         rvDashboard.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvDashboard.setLayoutManager(linearLayoutManager);
