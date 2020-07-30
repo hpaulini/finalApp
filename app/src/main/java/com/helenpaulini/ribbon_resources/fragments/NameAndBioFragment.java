@@ -187,7 +187,7 @@ public class NameAndBioFragment extends Fragment {
         }
     }
 
-    public File getPhotoFileUri(String fileName) {
+    private File getPhotoFileUri(String fileName) {
         File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
 
         // Create the storage directory if it does not exist
@@ -214,7 +214,7 @@ public class NameAndBioFragment extends Fragment {
         }
     }
 
-    public void saveProfile(File photoFile, String firstName, String lastName, String birthday, String bio){
+    private void saveProfile(File photoFile, String firstName, String lastName, String birthday, String bio){
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.fetchInBackground();
 

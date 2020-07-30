@@ -10,18 +10,36 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.material.textfield.TextInputEditText;
+import com.helenpaulini.ribbon_resources.MainActivity;
 import com.helenpaulini.ribbon_resources.R;
+import com.helenpaulini.ribbon_resources.models.Hospital;
 import com.helenpaulini.ribbon_resources.models.Profile;
+import com.hootsuite.nachos.NachoTextView;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
+import in.galaxyofandroid.spinerdialog.SpinnerDialog;
+import okhttp3.Headers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +49,11 @@ import com.parse.SaveCallback;
 public class MedicalinfoFragment extends Fragment {
 
     public static final String TAG = "Medicalinfo";
+    public static final String API_URL = "https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json";
+
+    public List<Hospital> hospitals = new ArrayList<>();
+    private SpinnerDialog spinnerDialog;
+    private TextView selectedItems;
 
     private RadioGroup radio_group;
     private RadioButton currentPatient;
@@ -43,7 +66,7 @@ public class MedicalinfoFragment extends Fragment {
     private TextInputEditText treatmentText;
     private TextInputEditText startText;
     private TextInputEditText endText;
-    private TextInputEditText interestsText;
+    private NachoTextView interestsText;
     private Button savePersonalInfo;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -100,6 +123,7 @@ public class MedicalinfoFragment extends Fragment {
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.fetchInBackground();
 
+        selectedItems = view.findViewById(R.id.txt);
         radio_group = view.findViewById(R.id.radio_group);
         currentPatient = view.findViewById(R.id.currentPatient);
         previousPatient = view.findViewById(R.id.previousPatient);
@@ -112,6 +136,45 @@ public class MedicalinfoFragment extends Fragment {
         endText = view.findViewById(R.id.endText);
         interestsText = view.findViewById(R.id.interestsText);
         savePersonalInfo = view.findViewById(R.id.savePersonalInfo);
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(API_URL, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "onsuccess");
+                JSONObject jsonObject = json.jsonObject;
+                try {
+                    JSONArray features = jsonObject.getJSONArray("features");
+                    hospitals = Hospital.fromJsonArray(features); //hospitals is a list of [{key:{key1:value, key2:value, ...}}, ...]
+                    spinnerDialog = new SpinnerDialog(getActivity(), hospitalNameList(hospitals),"Select or Search Hospitals");
+                    spinnerDialog.setCancellable(true); // for cancellable
+                    spinnerDialog.setShowKeyboard(false);// for open keyboard by default
+                    spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
+                        @Override
+                        public void onClick(String item, int position) {
+                            Toast.makeText(getContext(), item + "  " + position + "", Toast.LENGTH_SHORT).show();
+                            selectedItems.setText(item + " Position: " + position);
+                        }
+                    });
+                    hospitalText.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            spinnerDialog.showSpinerDialog();
+                        }
+                    });
+//                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+//                            android.R.layout.simple_spinner_item, hospitalNameList(hospitals));
+//                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                    spHospital.setAdapter(adapter);
+                } catch (JSONException e) {
+                    Log.e(TAG, "json exception", e);
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "onfailure", throwable);
+            }
+        });
 
         //if this user already has made a profile, then restore the edit text field inputs
         try {
@@ -207,5 +270,13 @@ public class MedicalinfoFragment extends Fragment {
         } else {
             parentOfPatient.setChecked(true);
         }
+    }
+
+    private ArrayList<String> hospitalNameList(List<Hospital> hospitals){
+        ArrayList<String> hospitalNameList = new ArrayList<>();
+        for(int i=0; i<hospitals.size(); i++){
+            hospitalNameList.add(hospitals.get(i).getName());
+        }
+        return hospitalNameList;
     }
 }
