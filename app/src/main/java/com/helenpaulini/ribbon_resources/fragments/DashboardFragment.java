@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -95,6 +96,13 @@ public class DashboardFragment extends Fragment {
         rvDashboard = view.findViewById(R.id.rvDashboard);
         profiles = new ArrayList<>();
 
+        onDetailsClickListener = new ProfileAdapter.OnDetailsClickListener() {
+            @Override
+            public void OnDetailsClicked(int position) {
+                goToDetailView(position);
+            }
+        };
+
         adapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
         rvDashboard.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -147,5 +155,15 @@ public class DashboardFragment extends Fragment {
             }
         }
         return profileMatches;
+    }
+
+    public void goToDetailView(int position){
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        UserdetailsFragment userdetailsFragment = new UserdetailsFragment();
+        Profile profile = profiles.get(position);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("profileDetails",profile);
+        userdetailsFragment.setArguments(bundle);
+        fm.beginTransaction().replace(R.id.flContainer, userdetailsFragment).addToBackStack(null).commit();
     }
 }

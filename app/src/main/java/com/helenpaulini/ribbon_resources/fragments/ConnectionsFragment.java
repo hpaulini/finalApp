@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -98,6 +99,13 @@ public class ConnectionsFragment extends Fragment {
         rvConnections = view.findViewById(R.id.rvConnections);
         profiles = new ArrayList<>();
 
+        onDetailsClickListener = new ProfileAdapter.OnDetailsClickListener() {
+            @Override
+            public void OnDetailsClicked(int position) {
+                goToDetailView(position);
+            }
+        };
+
         //create the adapter
         adapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
         //set the adapter on the recycler view
@@ -139,6 +147,16 @@ public class ConnectionsFragment extends Fragment {
                 });
             }
         });
+    }
+
+    public void goToDetailView(int position){
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        UserdetailsFragment userdetailsFragment = new UserdetailsFragment();
+        Profile profile = profiles.get(position);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("profileDetails",profile);
+        userdetailsFragment.setArguments(bundle);
+        fm.beginTransaction().replace(R.id.flContainer, userdetailsFragment).addToBackStack(null).commit();
     }
 
 }
