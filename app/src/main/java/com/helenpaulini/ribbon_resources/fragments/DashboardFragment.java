@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -45,6 +46,7 @@ public class DashboardFragment extends Fragment {
     private RecyclerView rvDashboard;
     private SearchView svFindUsers;
     private Spinner spFilterMatches;
+    private String selectedValue;
 
     protected ProfileAdapter adapter;
     protected List<Profile> profiles;
@@ -112,6 +114,20 @@ public class DashboardFragment extends Fragment {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spFilterMatches.setAdapter(arrayAdapter);
 
+        spFilterMatches.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedValue = spFilterMatches.getSelectedItem().toString();
+                Log.i(TAG, "selected spinner item*************************************** "+selectedValue);
+                queryProfiles();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         svFindUsers = view.findViewById(R.id.svFindUsers);
 
         svFindUsers.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -158,7 +174,7 @@ public class DashboardFragment extends Fragment {
         query.findInBackground(new FindCallback<Profile>() {
             @Override
             public void done(List<Profile> profilesList, ParseException e) {
-                //profilesList = profileMatches(getCurrentProfile(ParseUser.getCurrentUser(), profilesList), profilesList);
+                profilesList = profileMatches(getCurrentProfile(ParseUser.getCurrentUser(), profilesList), profilesList, selectedValue);
                 if (e != null) {
                     Log.e(TAG, "Issue with getting profiles", e);
                     return;
@@ -197,16 +213,21 @@ public class DashboardFragment extends Fragment {
         return allProfiles.get(indexOfCurrentProfile);
     }
 
-    private List<Profile> profileMatches (Profile currentProfile, List<Profile> profiles){
+    private List<Profile> profileMatches (Profile currentProfile, List<Profile> allProfiles, String filterSelection){
+        Log.i(TAG, "In list making method \n");
+        if(filterSelection.equals("Search All Users")){
+            Log.i(TAG, "Selected search all****************");
+            return allProfiles;
+        }
         List<Profile> profileMatches = new ArrayList<>();
         Matching potentialmatch = new Matching();
-        for(int i=0; i<profiles.size(); i++){
+        for(int i=0; i<allProfiles.size(); i++){
 
             Log.i(TAG, "match value between "+ currentProfile.getUser().getUsername()
-                    + " and "+ profiles.get(i).getUser().getUsername()+" is "+potentialmatch.matchValue(currentProfile, profiles.get(i)));
+                    + " and "+ allProfiles.get(i).getUser().getUsername()+" is "+potentialmatch.matchValue(currentProfile, allProfiles.get(i)));
 
-            if(potentialmatch.matchValue(currentProfile, profiles.get(i))>0){
-                profileMatches.add(profiles.get(i));
+            if(potentialmatch.matchValue(currentProfile, allProfiles.get(i))>0){
+                profileMatches.add(allProfiles.get(i));
             }
         }
         return profileMatches;
