@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="filters_menu">
+        <item>Top Matches</item>
+        <item>Cancer Type Matches</item>
+        <item>Hospital Matches</item>
+        <item>Treatment Type Matches</item>
+        <item>Current City Matches</item>
+        <item>Interests Matches</item>
+        <item>Search All Current Patients</item>
+        <item>Search All Previous Patients</item>
+        <item>Search All Parents</item>
+        <item>Search All Users</item>
+    </string-array>
+
+</resources>

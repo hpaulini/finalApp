@@ -178,7 +178,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         public void bind(final Profile profile) {
             tvFirstName.setText(profile.getFirstName());
             tvLastName.setText(profile.getLastName());
-            tvUserType.setText("User Type"); //To do: make this reflect what the user checks off in their profile
+            tvUserType.setText(profile.getUserType());
             tvCancerType.setText(profile.getCanerType());
             tvHospital.setText(profile.getHospital());
 

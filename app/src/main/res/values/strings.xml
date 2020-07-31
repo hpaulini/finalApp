@@ -4,11 +4,259 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="at">\u0040</string>
 
-    <string-array name="hospitals">
-        <item>Option1</item>
-        <item>Option2</item>
-        <item>Option3</item>
-        <item>Option4</item>
-        <item>Option5</item>
-    </string-array>
+    <string name="additionalHospitals">
+        The Children\'s Hospital at Providence, Providence Alaska Medical Center
+Children\'s of Alabama
+Childrens Hospital of Alabama Warehouse
+University of South Alabama Children\'s and Women\'s Hospital
+Arkansas Children\'s Hospital
+Arkansas Childrens Hospital Foundation
+Cardon Children\'s Medical Center
+Phoenix Children\'s Hospital
+CHOC Children\'s Hospital of Orange County
+CHOC Medical Group
+California Pacific Medical Center
+Chadwick Center for Children Families
+Children\'s Hospital Los Angeles
+Community Regional Medical Center
+Cottage Children\'s Medical Center
+Kaiser Foundation Hospital - Roseville Women\'s and Children\'s Services
+Kaiser Foundation Hospital - Santa Clara
+Kaiser Permanente - Oakland Medical Center
+Kaiser Permanente Pediatric Care Center Downey
+Kaiser Permanente Pediatric Care Center, Fontana
+Kaiser Permanente Pediatric Care Center, Los Angeles
+Loma Linda University Children\'s Hospital
+Lucile Packard Children\'s Hospital Stanford
+Miller Children\'s and Women\'s Hospital Long Beach
+Rady Children\'s Hospital San Diego
+Shriners Hospitals for Children - Northern California
+Sutter Children\'s Center, Sacramento
+UCLA Mattel Childrens Hospital
+UCLA Medical Center
+UCSF Benioff Children\'s Hospital Oakland
+UCSF Benioff Children\'s Hospital San Francisco
+University of California Davis Children\'s Hospital
+Valley Children\'s Healthcare
+Children\'s Hospital Colorado
+KidSmart
+Connecticut Children\'s Medical Center
+Yale-New Haven Children\'s Hospital
+Children\'s National Health System
+The HSC Pediatric Center
+NemoursAlfred I. duPont Hospital for Children
+AdventHealth for Children
+Arnold Palmer Hospital for Children
+Baptist Childrens Hospital
+Golisano Children\'s Hospital of Southwest Florida
+Holtz Children\'s Hospital Jackson Memorial Hospital
+Joe DiMaggio Children\'s Hospital at Memorial Regional Hospital
+Johns Hopkins All Children\'s Hospital
+Nemours Children\'s Hospital
+Nemours Childrens Specialty Care Jacksonville
+Nicklaus Children’s Hospital, part of Miami Children\'s Health System
+Palm Beach Children\'s Hospital at St. Mary\'s Medical Center
+Shriners Hospitals for Children
+St. Joseph\'s Children\'s Hospital of Tampa
+Tampa General Hospital Children\'s Medical Center
+The Salah Foundation Children\'s Hospital at Broward Health
+The Studer Family Children’s Hospital at Ascension Sacred Heart
+UF Health Shands Children\'s Hospital
+Wolfson Children\'s Hospital
+Beverly Knight Olson Children\'s Hospital
+Children\'s Healthcare of Atlanta
+Children\'s Hospital of Georgia, Georgia Regents
+Dwaine and Cynthia Willett Children’s Hospital of Savannah
+Kapi\'olani Medical Center for Women and Children
+Shriners Hospitals for Children - Honolulu
+Blank Children\'s Hospital
+ChildServe
+MercyOne Children’s Hospital – Des Moines
+University of Iowa Stead Family Children\'s Hospital
+St. Luke\'s Children\'s Hospital St. Luke\'s Regional Medical Center
+Advocate Children\'s Hospital - Oak Lawn
+Advocate Children\'s Hospital - Park Ridge
+Alexian Brothers Women and Children\'s Hospital
+Ann and Robert H. Lurie Children\'s Hospital of Chicago
+Children\'s Hospital of the University of Illinois
+Comer Children\'s Hospital at University of Chicago Medical Center
+HSHS St Johns Children\'s Hospital
+La Rabida Children\'s Hospital
+OSF Healthcare Children\'s Hospital of Illinois
+Rush University Children\'s Hospital
+Shriners Hospitals for Children - Chicago
+Beacon Children\'s Hospital
+Peyton Manning Children\'s Hospital at St. Vincent
+Riley Hospital for Children at Indiana University Health
+Riley Memorial Association
+Kentucky Children\'s Hospital
+Norton Children’s Hospital
+Shriners Hospitals for Children - Lexington
+Children\'s Hospital
+Ochsner Hospital for Children
+Our Lady of the Lake Children\'s Hospital
+Shriners Hospitals for Children - Shreveport
+WillisKnighton South and the Center for Womens and Childrens Health
+Baystate Children\'s Hospital
+Boston Children\'s Hospital/Dana Farber
+Claritas Genomics Inc
+Floating Hospital for Children at Tufts Medical Center
+Franciscan Children\'s
+Martha Elliot Health Center
+MassGeneral Hospital for Children
+Shriners Hospitals for Children - Boston
+Shriners Hospitals for Children - Springfield
+UMass Memorial Children\'s Medical Center
+Johns Hopkins Children\'s Center
+Johns Hopkins Medicine
+Kennedy Krieger Institute
+Mt. Washington Pediatric Hospital, Inc.
+University of Maryland Children\'s Hospital
+The Barbara Bush Children\'s Hospital at Maine Medical Center
+Ascension St John Childrens Hospital
+Beaumont Children\'s Hospital
+Bronson Methodist Hospital
+C.S. Mott Children\'s Hospital
+Children\'s Hospital of Michigan
+Helen DeVos Children\'s Hospital
+Children\'s Hospitals and Clinics of Minnesota
+Children\'s Hospitals and Clinics of Minnesota - St. Paul
+Gillette Children\'s Specialty Healthcare
+Hennepin County Medical Center
+Mayo Clinic Children\'s Center
+Shriners Hospitals for Children - Twin Cities
+St. Mary\'s Children\'s Hospital
+University of Minnesota Masonic Children\'s Hospital
+Children\'s Mercy Hospitals and Clinics
+CoxHealth
+Mercy Children\'s Hospital - Springfield
+Mercy Children\'s Hospital - St. Louis
+Ranken Jordan Pediatric Bridge Hospital
+SSM Cardinal Glennon Children\'s Medical Center
+Shriners Hospitals for Children - St. Louis
+St. Louis Children\'s Hospital
+Women\'s and Children\'s Hospital University of Missouri Health Care
+Children\'s of Mississippi
+Montana Childrens Medical Center
+Cone Health Children\'s Services
+Duke Children\'s Hospital Health Center
+James and Connie Maynard Children\'s Hospital at Vidant Medical Center
+Levine Children\'s Hospital
+North Carolina Children\'s Hospital
+Novant Health Hemby Children\'s Hospital
+Wake Forest Baptist Health - Brenner Children\'s Hospital
+WakeMed Children\'s Hospital WakeMed Health and Hospitals
+Sanford Children\'s Hospital - Fargo
+Boys Town National Research Hospital
+Children\'s Hospital and Medical Center
+Childrens Physicians UNMC
+Children\'s Hospital at Dartmouth-Hitchcock
+Children\'s Specialized Hospital
+Goryeb Children\'s Hospital
+Joseph M. Sanzari Children\'s Hospital Hackensack University Medical Center
+K. Hovnanian Children\'s Hospital at Jersey Shore University Medical Center
+Saint Barnabas Children\'s Center Saint Barnabas Medical Center
+St. Joseph\'s Children\'s Hospital
+The Bristol-Myers Squibb Children\'s Hospital at Robert Wood Johnson University Hospital
+The Children\'s Hospital at Monmouth Medical Center
+The Children\'s Hospital at Saint Peter\'s University Hospital
+The Children\'s Regional Hospital at Cooper
+Voorhees Pediatric Facility
+Carrie Tingley Hospital
+University of New Mexico Children\'s Hospital
+Children\'s Hospital of Nevada at University Medical Center
+Renown Children\'s Hospital Renown Regional Medical Center
+Bernard Millie Duker Childrens Hospital
+Blythedale Children\'s Hospital
+Cohen Children\'s Medical Center
+Elizabeth Seton Children’s Center
+Golisano Children\'s Hospital at The University of Rochester Medical Center
+Hassenfeld Children\'s Hospital at NYU Langone
+John R. Oishei Children\'s Hospital
+Maimonides Infants and Children\'s Hospital of Brooklyn
+Maria Fareri Children\'s Hospital at Westchester Medical Center
+NewYork-Presbyterian Komansky Children’s Hospital
+NewYork-Presbyterian Morgan Stanley Children\'s Hospital
+Stony Brook Children\'s Hospital
+The Children\'s Hospital at Montefiore
+The Children’s Medical Center at NYU Winthrop Hospital
+The Mount Sinai Kravis Children\'s Hospital
+Upstate Golisano Children\'s Hospital
+Akron Children\'s Hospital
+Cincinnati Children\'s Hospital Medical Center
+Cleveland Clinic Children\'s
+Cleveland Clinic Children\'s Hospital for Rehabilitation
+Dayton Children\'s Hospital
+Nationwide Children\'s Hospital
+ProMedica Toledo Children\'s Hospital
+Shriners Hospitals for Children - Cinncinati
+UH Rainbow Babies and Children\'s Hospital
+The Children\'s Hospital at OU Medical Center
+The Children\'s Hospital at Saint Francis
+Doernbecher Children\'s Hospital at Oregon Health and Science University
+Providence St. Vincent Medical Center
+Randall Children\'s Hospital at Legacy Emanuel
+Shriners Hospitals for Children - Portland
+CHOP Behavioral Health
+CHOP Grand View Hospital
+Childrens Hospital of Philadelphia
+Janet Weis Children\'s Hospital at Geisinger
+Lehigh Valley Reilly Children\'s Hospital
+Penn State Children\'s Hospital
+Shriners Hospitals for Children - Philadelphia
+St. Christopher\'s Hospital for Children
+UPMC Childrens Hospital of Pittsburgh
+Hasbro Children\'s Hospital at Rhode Island Hospital
+Women and Infants Hospital of Rhode Island
+MUSC Children\'s Hospital
+Prisma Health Children’s Hospital–Upstate
+Shriners Hospitals for Children - Greenville
+Sanford Children\'s Hospital
+Children\'s Hospital at Erlanger
+East Tennessee Children\'s Hospital
+Le Bonheur Children\'s Hospital
+Monroe Carell Jr. Children\'s Hospital at Vanderbilt
+Niswonger Children\'s Hospital
+Spence and Becky Wilson Baptist Children\'s Hospital
+St. Jude Children\'s Research Hospital
+Baylor Scott White McLane Children\'s Medical Center
+Children\'s Health, Dallas
+Children\'s Hospital of San Antonio
+Children\'s Memorial Hermann Hospital
+Childrens Health
+Cook Children\'s Medical Center
+Covenant Children\'s
+Dell Children\'s Medical Center of Central Texas
+Driscoll Children\'s Hospital
+El Paso Children\'s Hospital
+Medical City Children\'s Hospital
+Our Children\'s House
+Scott and White Childrens Health Center
+Shriners Hospitals for Children - Galveston
+Shriners Hospitals for Children - Houston
+Texas Children\'s Hospital
+Texas Scottish Rite Hospital for Children
+University Health System Children\'s Health
+Primary Children\'s Hospital
+Shriners Hospitals for Children - Salt Lake City
+Bon Secours St. Mary\'s Hospital Children\'s Services
+Carilion Clinic Children\'s Hospital
+Children\'s Hospital of Richmond at VCU
+Children\'s Hospital of Richmond at VCU - Brook Road Campus
+Children\'s Hospital of The King\'s Daughters, Inc.
+Childrens Hospital of the Kings Daughter Medical Tower
+Inova Children\'s Hospital
+The University of Vermont Children\'s Hospital
+Mary Bridge Children\'s Hospital and Health Center
+Sacred Heart Children\'s Hospital
+Seattle Children\'s
+Shriners Hospitals for Children - Spokane
+American Family Children\'s Hospital
+Children\'s Hospital of Wisconsin
+Gundersen Lutheran Medical Center
+HSHS St Vincent Children\'s Hospital
+Marshfield Children\'s Hospital
+Hoops Family Children\'s Hospital
+West Virginia University Children\'s Hospital
+    </string>
 </resources>

@@ -25,6 +25,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
@@ -151,11 +153,26 @@ public class SearchablespinnerFragment extends Fragment {
 
     private ArrayList<String> hospitalNameList(List<Hospital> hospitals){
         ArrayList<String> hospitalNameList = new ArrayList<>();
-        Log.i(TAG, "array length: "+hospitals.size());
         for(int i=0; i<hospitals.size(); i++){
-            hospitalNameList.add(hospitals.get(i).getName());
+            hospitalNameList.add(fixCapitalization(hospitals.get(i).getName()));
         }
-        Log.i(TAG, "returned length: "+hospitalNameList.size());
+        //String[] splitString = getResources().getString(R.string.additionalHospitals).split("[\r\n]+");
+        //List<String> myResArrayList = Arrays.asList(splitString);
+        //hospitalNameList.addAll(myResArrayList);
+        Collections.sort(hospitalNameList);
+
         return hospitalNameList;
     }
+
+    private String fixCapitalization(String name){
+        String properlyCapitalizedString = "";
+        String lowerCase = name.toLowerCase();
+        String[] splitString = lowerCase.split("\\s+");
+        for(int i=0; i<splitString.length; i++){
+            properlyCapitalizedString = properlyCapitalizedString + splitString[i].substring(0,1).toUpperCase()+splitString[i].substring(1)+" ";
+        }
+        return properlyCapitalizedString;
+    }
+
+
 }

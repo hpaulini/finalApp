@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.helenpaulini.ribbon_resources.ProfileAdapter;
 import com.helenpaulini.ribbon_resources.R;
@@ -25,6 +27,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,6 +41,8 @@ public class DashboardFragment extends Fragment {
 
     private String client;
     private RecyclerView rvDashboard;
+    private Spinner spFilterMatches;
+
     protected ProfileAdapter adapter;
     protected List<Profile> profiles;
     ProfileAdapter.OnDetailsClickListener onDetailsClickListener;
@@ -94,6 +99,16 @@ public class DashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvDashboard = view.findViewById(R.id.rvDashboard);
+        spFilterMatches = view.findViewById(R.id.spFilterMatches);
+
+        String[] filtersMenu = getResources().getStringArray(R.array.filters_menu);
+        List<String> filtersMenuArray = Arrays.asList(filtersMenu);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_spinner_item, filtersMenuArray);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spFilterMatches.setAdapter(arrayAdapter);
+
         profiles = new ArrayList<>();
 
         onDetailsClickListener = new ProfileAdapter.OnDetailsClickListener() {
