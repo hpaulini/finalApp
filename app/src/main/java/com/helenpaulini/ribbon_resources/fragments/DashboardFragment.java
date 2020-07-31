@@ -13,7 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
+import android.widget.SearchView;
 import android.widget.Spinner;
 
 import com.helenpaulini.ribbon_resources.ProfileAdapter;
@@ -41,6 +43,7 @@ public class DashboardFragment extends Fragment {
 
     private String client;
     private RecyclerView rvDashboard;
+    private SearchView svFindUsers;
     private Spinner spFilterMatches;
 
     protected ProfileAdapter adapter;
@@ -109,6 +112,30 @@ public class DashboardFragment extends Fragment {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spFilterMatches.setAdapter(arrayAdapter);
 
+        svFindUsers = view.findViewById(R.id.svFindUsers);
+
+        svFindUsers.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        svFindUsers.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s);
+                return false;
+            }
+        });
+
+        onDetailsClickListener = new ProfileAdapter.OnDetailsClickListener() {
+            @Override
+            public void OnDetailsClicked(int position) {
+                goToDetailView(position);
+            }
+        };
+
         profiles = new ArrayList<>();
 
         onDetailsClickListener = new ProfileAdapter.OnDetailsClickListener() {
@@ -131,7 +158,7 @@ public class DashboardFragment extends Fragment {
         query.findInBackground(new FindCallback<Profile>() {
             @Override
             public void done(List<Profile> profilesList, ParseException e) {
-                profilesList = profileMatches(getCurrentProfile(ParseUser.getCurrentUser(), profilesList), profilesList);
+                //profilesList = profileMatches(getCurrentProfile(ParseUser.getCurrentUser(), profilesList), profilesList);
                 if (e != null) {
                     Log.e(TAG, "Issue with getting profiles", e);
                     return;
@@ -139,8 +166,10 @@ public class DashboardFragment extends Fragment {
                 for (Profile profile : profilesList) {
                     Log.i(TAG, "Username: " + profile.getUser().getUsername());
                 }
-                profiles.addAll(profilesList);
-                adapter.notifyDataSetChanged();
+                adapter.clear();
+                adapter.addAll(profilesList);
+//                profiles.addAll(profilesList);
+//                adapter.notifyDataSetChanged();
             }
         });
     }

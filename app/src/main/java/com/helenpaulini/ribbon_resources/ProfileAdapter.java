@@ -62,8 +62,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         this.context = context;
         this.onDetailsClickListener = onDetailsClickListener;
         this.profiles = profiles;
-        //profileListFull = new ArrayList<>(profiles);
-        profileListFull = profiles;
+        profileListFull = new ArrayList<>(profiles);
+        //profileListFull = profiles;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -94,12 +94,14 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     // Clean all elements of the recycler
     public void clear() {
         profiles.clear();
+        profileListFull.clear();
         notifyDataSetChanged();
     }
 
     // Add a list of items -- change to type used
     public void addAll(List<Profile> list) {
         profiles.addAll(list);
+        profileListFull.addAll(list);
         notifyDataSetChanged();
     }
 
@@ -138,7 +140,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             profiles.clear();
-            profiles.addAll((List) results.values);
+            profiles.addAll((List<Profile>) results.values);
             notifyDataSetChanged();
         }
     };
