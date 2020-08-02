@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
@@ -51,9 +54,9 @@ public class MedicalinfoFragment extends Fragment {
     public static final String TAG = "Medicalinfo";
     public static final String API_URL = "https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json";
 
-    public List<Hospital> hospitals = new ArrayList<>();
-    private SpinnerDialog spinnerDialog;
-    private TextView selectedItems;
+    List<Hospital> hospitals = new ArrayList<>();
+    ArrayList<String> items = new ArrayList<>();
+    SpinnerDialog spinnerDialog;
 
     private RadioGroup radio_group;
     private RadioButton currentPatient;
@@ -120,6 +123,55 @@ public class MedicalinfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(API_URL, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "onsuccess");
+                JSONObject jsonObject = json.jsonObject;
+                try {
+                    JSONArray features = jsonObject.getJSONArray("features");
+                    hospitals = Hospital.fromJsonArray(features); //hospitals is a list of [{key:{key1:value, key2:value, ...}}, ...]
+                    items = hospitalNameList(hospitals);
+                    spinnerDialog = new SpinnerDialog(getActivity(), hospitalNameList(hospitals),
+                            "Search and Select a Hospital");
+
+                    spinnerDialog.setTitleColor(getResources().getColor(R.color.pink));
+                    spinnerDialog.setSearchIconColor(getResources().getColor(R.color.pink));
+                    spinnerDialog.setSearchTextColor(getResources().getColor(R.color.pink));
+                    spinnerDialog.setItemColor(getResources().getColor(R.color.pink));
+                    spinnerDialog.setItemDividerColor(getResources().getColor(R.color.lightpink));
+                    spinnerDialog.setCloseColor(getResources().getColor(R.color.pink));
+
+                    spinnerDialog.setCancellable(true);
+                    spinnerDialog.setShowKeyboard(false);
+
+                    spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
+                        @Override
+                        public void onClick(String item, int position) {
+                            hospitalText.setText(item);
+                        }
+                    });
+
+                    //view.findViewById(R.id.show).setOnClickListener(new View.OnClickListener()
+                    hospitalText.setInputType(InputType.TYPE_NULL);
+                    hospitalText.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            spinnerDialog.showSpinerDialog();
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    Log.e(TAG, "json exception", e);
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "onfailure", throwable);
+            }
+        });
+
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.fetchInBackground();
 
@@ -139,6 +191,29 @@ public class MedicalinfoFragment extends Fragment {
                 saveToProfile(userType, hospital, cancer, treatment, start, end, interests);
             }
         });
+    }
+
+    private ArrayList<String> hospitalNameList(List<Hospital> hospitals){
+        ArrayList<String> hospitalNameList = new ArrayList<>();
+        for(int i=0; i<hospitals.size(); i++){
+            hospitalNameList.add(fixCapitalization(hospitals.get(i).getName()));
+        }
+        String[] splitString = getResources().getString(R.string.additionalHospitals).split("[\r\n]+");
+        List<String> myResArrayList = Arrays.asList(splitString);
+        hospitalNameList.addAll(myResArrayList);
+        Collections.sort(hospitalNameList);
+
+        return hospitalNameList;
+    }
+
+    private String fixCapitalization(String name){
+        String properlyCapitalizedString = "";
+        String lowerCase = name.toLowerCase();
+        String[] splitString = lowerCase.split("\\s+");
+        for(int i=0; i<splitString.length; i++){
+            properlyCapitalizedString = properlyCapitalizedString + splitString[i].substring(0,1).toUpperCase()+splitString[i].substring(1)+" ";
+        }
+        return properlyCapitalizedString;
     }
 
     private void setViews(View view){

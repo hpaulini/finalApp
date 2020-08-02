@@ -118,7 +118,6 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedValue = spFilterMatches.getSelectedItem().toString();
-                Log.i(TAG, "selected spinner item*************************************** "+selectedValue);
                 queryProfiles();
             }
 
@@ -174,7 +173,7 @@ public class DashboardFragment extends Fragment {
         query.findInBackground(new FindCallback<Profile>() {
             @Override
             public void done(List<Profile> profilesList, ParseException e) {
-                profilesList = profileMatches(getCurrentProfile(ParseUser.getCurrentUser(), profilesList), profilesList, selectedValue);
+                //profilesList = profileMatches(getCurrentProfile(ParseUser.getCurrentUser(), profilesList), profilesList, selectedValue);
                 if (e != null) {
                     Log.e(TAG, "Issue with getting profiles", e);
                     return;
@@ -213,13 +212,32 @@ public class DashboardFragment extends Fragment {
         return allProfiles.get(indexOfCurrentProfile);
     }
 
+
     private List<Profile> profileMatches (Profile currentProfile, List<Profile> allProfiles, String filterSelection){
-        Log.i(TAG, "In list making method \n");
-        if(filterSelection.equals("Search All Users")){
-            Log.i(TAG, "Selected search all****************");
+        List<Profile> profileMatches = new ArrayList<>();
+
+        if(filterSelection.equals("Top Matches")){
+            return allProfiles;
+        } else if (filterSelection.equals("Cancer Type Matches")){
+
+        } else if (filterSelection.equals("Hospital Matches")){
+
+        } else if (filterSelection.equals("Treatment Type Matches")){
+
+        } else if (filterSelection.equals("Current City Matches")){
+
+        } else if (filterSelection.equals("Interests Matches")){
+
+        } else if (filterSelection.equals("Search All Current Patients")){
+
+        } else if (filterSelection.equals("Search All Previous Patients")){
+
+        } else if (filterSelection.equals("Search All Parents")){
+
+        } else {
             return allProfiles;
         }
-        List<Profile> profileMatches = new ArrayList<>();
+
         Matching potentialmatch = new Matching();
         for(int i=0; i<allProfiles.size(); i++){
 

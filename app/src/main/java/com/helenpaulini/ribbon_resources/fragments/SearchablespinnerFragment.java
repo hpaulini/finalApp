@@ -40,12 +40,13 @@ import okhttp3.Headers;
  */
 public class SearchablespinnerFragment extends Fragment {
 
-    public static final String API_URL = "https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json";
     public static final String TAG = "Searchable spinner";
+    public static final String API_URL = "https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json";
 
     List<Hospital> hospitals = new ArrayList<>();
     ArrayList<String> items = new ArrayList<>();
     SpinnerDialog spinnerDialog;
+    private TextView selectedItems;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -98,8 +99,7 @@ public class SearchablespinnerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final TextView selectedItems = view.findViewById(R.id.txt);
-
+        selectedItems = view.findViewById(R.id.txt);
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(API_URL, new JsonHttpResponseHandler() {
@@ -156,9 +156,9 @@ public class SearchablespinnerFragment extends Fragment {
         for(int i=0; i<hospitals.size(); i++){
             hospitalNameList.add(fixCapitalization(hospitals.get(i).getName()));
         }
-        //String[] splitString = getResources().getString(R.string.additionalHospitals).split("[\r\n]+");
-        //List<String> myResArrayList = Arrays.asList(splitString);
-        //hospitalNameList.addAll(myResArrayList);
+        String[] splitString = getResources().getString(R.string.additionalHospitals).split("[\r\n]+");
+        List<String> myResArrayList = Arrays.asList(splitString);
+        hospitalNameList.addAll(myResArrayList);
         Collections.sort(hospitalNameList);
 
         return hospitalNameList;

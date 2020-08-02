@@ -17,15 +17,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.helenpaulini.ribbon_resources.MainActivity;
 import com.helenpaulini.ribbon_resources.R;
 import com.helenpaulini.ribbon_resources.models.ContactInfo;
+import com.helenpaulini.ribbon_resources.models.Hospital;
 import com.helenpaulini.ribbon_resources.models.Profile;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
+import in.galaxyofandroid.spinerdialog.SpinnerDialog;
+import okhttp3.Headers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -133,7 +149,7 @@ public class PersonalinfoFragment extends Fragment {
     private void setPreviouslyInputted(ParseUser currentUser){
         //if this user already has made a profile, then restore the edit text field inputs
         try {
-            if(currentUser.fetchIfNeeded().getParseObject("profile")!=null){
+            if(currentUser.fetchIfNeeded().getParseObject("contactInfo")!=null){
                 ContactInfo currentContact = (ContactInfo) currentUser.fetchIfNeeded().getParseObject("contactInfo");
                 if(currentContact.fetchIfNeeded().getString("address")!=null){
                     cityText.setText(currentContact.fetchIfNeeded().getString("address"));
