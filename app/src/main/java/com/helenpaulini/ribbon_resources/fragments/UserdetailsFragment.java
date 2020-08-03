@@ -134,7 +134,7 @@ public class UserdetailsFragment extends Fragment {
         bio.setText(profile.getBio());
         interests.setText(profile.getInsterests());
         userType.setText(profile.getUserType());
-        cancerType.setText(profile.getCanerType());
+        cancerType.setText(profile.getCancerType());
         hospital.setText(profile.getHospital());
         treatmentType.setText(profile.getTreatmentType());
         treatmentStart.setText(profile.getTreatmentStart());

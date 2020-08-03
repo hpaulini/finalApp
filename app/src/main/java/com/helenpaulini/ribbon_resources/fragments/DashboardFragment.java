@@ -41,6 +41,7 @@ import java.util.List;
 public class DashboardFragment extends Fragment {
 
     public static final String TAG = "Dashboard fragment";
+    public static final String DEFAULT_SELECTION = "Top Matches";
 
     private String client;
     private RecyclerView rvDashboard;
@@ -123,7 +124,8 @@ public class DashboardFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                selectedValue = DEFAULT_SELECTION;
+                queryProfiles();
             }
         });
 
@@ -173,7 +175,7 @@ public class DashboardFragment extends Fragment {
         query.findInBackground(new FindCallback<Profile>() {
             @Override
             public void done(List<Profile> profilesList, ParseException e) {
-                //profilesList = profileMatches(getCurrentProfile(ParseUser.getCurrentUser(), profilesList), profilesList, selectedValue);
+                profilesList = profileMatches(getCurrentProfile(ParseUser.getCurrentUser(), profilesList), profilesList, selectedValue);
                 if (e != null) {
                     Log.e(TAG, "Issue with getting profiles", e);
                     return;
@@ -213,43 +215,44 @@ public class DashboardFragment extends Fragment {
     }
 
 
-    private List<Profile> profileMatches (Profile currentProfile, List<Profile> allProfiles, String filterSelection){
+    private List<Profile> profileMatches (Profile currentProfile, List<Profile> allProfiles, String filterSelection) {
         List<Profile> profileMatches = new ArrayList<>();
+        Matching potentialmatch = new Matching();
 
-        if(filterSelection.equals("Top Matches")){
-            return allProfiles;
-        } else if (filterSelection.equals("Cancer Type Matches")){
-
-        } else if (filterSelection.equals("Hospital Matches")){
-
-        } else if (filterSelection.equals("Treatment Type Matches")){
-
-        } else if (filterSelection.equals("Current City Matches")){
-
-        } else if (filterSelection.equals("Interests Matches")){
-
-        } else if (filterSelection.equals("Search All Current Patients")){
-
-        } else if (filterSelection.equals("Search All Previous Patients")){
-
-        } else if (filterSelection.equals("Search All Parents")){
-
+        if (filterSelection.equals("Top Matches")) {
+            return potentialmatch.topMatchList(currentProfile, allProfiles);
+        } else if (filterSelection.equals("Cancer Type Matches")) {
+            return potentialmatch.cancerTypeMatchList(currentProfile, allProfiles);
+        } else if (filterSelection.equals("Hospital Matches")) {
+            return potentialmatch.hospitalMatchList(currentProfile, allProfiles);
+        } else if (filterSelection.equals("Treatment Type Matches")) {
+            return potentialmatch.treatmentTypeMatchList(currentProfile, allProfiles);
+        } else if (filterSelection.equals("Current City Matches")) {
+            return potentialmatch.cityMatchList(currentProfile, allProfiles);
+        } else if (filterSelection.equals("Interests Matches")) {
+            return potentialmatch.interestsMatchList(currentProfile, allProfiles);
+        } else if (filterSelection.equals("Search All Current Patients")) {
+            return potentialmatch.currentPatientList(allProfiles);
+        } else if (filterSelection.equals("Search All Previous Patients")) {
+            return potentialmatch.previousPatientList(allProfiles);
+        } else if (filterSelection.equals("Search All Parents")) {
+            return potentialmatch.parentList(allProfiles);
         } else {
             return allProfiles;
         }
-
-        Matching potentialmatch = new Matching();
-        for(int i=0; i<allProfiles.size(); i++){
-
-            Log.i(TAG, "match value between "+ currentProfile.getUser().getUsername()
-                    + " and "+ allProfiles.get(i).getUser().getUsername()+" is "+potentialmatch.matchValue(currentProfile, allProfiles.get(i)));
-
-            if(potentialmatch.matchValue(currentProfile, allProfiles.get(i))>0){
-                profileMatches.add(allProfiles.get(i));
-            }
-        }
-        return profileMatches;
     }
+
+//        for(int i=0; i<allProfiles.size(); i++){
+//
+//            Log.i(TAG, "match value between "+ currentProfile.getUser().getUsername()
+//                    + " and "+ allProfiles.get(i).getUser().getUsername()+" is "+potentialmatch.matchValue(currentProfile, allProfiles.get(i)));
+//
+//            if(potentialmatch.matchValue(currentProfile, allProfiles.get(i))>0){
+//                profileMatches.add(allProfiles.get(i));
+//            }
+//        }
+//        return profileMatches;
+
 
     private void goToDetailView(int position){
         FragmentManager fm = getActivity().getSupportFragmentManager();

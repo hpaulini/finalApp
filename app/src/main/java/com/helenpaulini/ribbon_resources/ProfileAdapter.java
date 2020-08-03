@@ -125,7 +125,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                     if((profileListFull.get(i).getFirstName().toLowerCase().trim()).contains(filterPattern)
                     || (profileListFull.get(i).getLastName().toLowerCase().trim()).contains(filterPattern)
                     || (profileListFull.get(i).getHospital().toLowerCase().trim()).contains(filterPattern)
-                    || (profileListFull.get(i).getCanerType().toLowerCase().trim()).contains(filterPattern)
+                    || (profileListFull.get(i).getCancerType().toLowerCase().trim()).contains(filterPattern)
                     || (profileListFull.get(i).getUserType().toLowerCase().trim()).contains(filterPattern)){
                         filteredList.add(profileListFull.get(i));
                     }
@@ -181,7 +181,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             tvFirstName.setText(profile.getFirstName());
             tvLastName.setText(profile.getLastName());
             tvUserType.setText(profile.getUserType());
-            tvCancerType.setText(profile.getCanerType());
+            tvCancerType.setText(profile.getCancerType());
             tvHospital.setText(profile.getHospital());
 
             //to do: put my connections stuff in its own class where it makes an array list containing the saved connections

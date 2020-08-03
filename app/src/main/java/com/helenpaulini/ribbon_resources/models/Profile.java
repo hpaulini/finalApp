@@ -103,7 +103,7 @@ public class Profile extends ParseObject {
     }
 
     //Cancer type
-    public String getCanerType() {
+    public String getCancerType() {
         return getString(KEY_CANCERTYPE);
     }
 

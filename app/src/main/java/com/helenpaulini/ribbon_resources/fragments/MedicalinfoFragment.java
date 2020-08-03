@@ -217,7 +217,6 @@ public class MedicalinfoFragment extends Fragment {
     }
 
     private void setViews(View view){
-        selectedItems = view.findViewById(R.id.txt);
         radio_group = view.findViewById(R.id.radio_group);
         currentPatient = view.findViewById(R.id.currentPatient);
         previousPatient = view.findViewById(R.id.previousPatient);
