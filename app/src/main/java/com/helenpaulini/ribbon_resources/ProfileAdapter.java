@@ -272,7 +272,25 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         }
 
         public void connectWithUser(Profile clickedProfile){
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            currentUser.fetchInBackground();
+            try {
+                currentUser.fetchIfNeeded().getRelation("pendingConnectionRelation").add(clickedProfile.getUser());
 
+                currentUser.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(com.parse.ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving", e);
+                            Toast.makeText(context, "Error while saving", Toast.LENGTH_SHORT).show();
+                        }
+                        Log.i(TAG, "pending connection saved successfully!!");
+                    }
+                });
+                Log.i(TAG, "saved pending connection**");
+            } catch (com.parse.ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         public void saveUserRelation(Profile clickedProfile){

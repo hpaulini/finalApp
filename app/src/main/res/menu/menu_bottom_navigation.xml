@@ -17,11 +17,11 @@
         android:icon="@drawable/ic_baseline_group_24"
         android:title="connect"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/findUsers"
-        android:icon="@drawable/ic_baseline_find_in_page_24"
-        android:title="find"
-        app:showAsAction="always" />
+<!--    <item-->
+<!--        android:id="@+id/findUsers"-->
+<!--        android:icon="@drawable/ic_baseline_find_in_page_24"-->
+<!--        android:title="find"-->
+<!--        app:showAsAction="always" />-->
     <item
         android:id="@+id/resources"
         android:icon="@drawable/ic_baseline_comment_24"

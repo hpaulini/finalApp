@@ -54,15 +54,15 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.myConnections:
                         //Toast.makeText(MainActivity.this, "connections!", Toast.LENGTH_SHORT).show();
-                        fragment = new ConnectionsFragment();
+                        fragment = new ViewpagerconnectionsFragment();
                         break;
-                    case R.id.findUsers:
-                        //Toast.makeText(MainActivity.this, "findusers!", Toast.LENGTH_SHORT).show();
-                        fragment = new FindusersFragment();
-                        break;
+//                    case R.id.findUsers:
+//                        //Toast.makeText(MainActivity.this, "findusers!", Toast.LENGTH_SHORT).show();
+//                        fragment = new FindusersFragment();
+//                        break;
                     case R.id.resources:
                         //Toast.makeText(MainActivity.this, "resources!", Toast.LENGTH_SHORT).show();
-                        fragment = new ViewpagerconnectionsFragment();
+                        fragment = new ResourcesFragment();
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();

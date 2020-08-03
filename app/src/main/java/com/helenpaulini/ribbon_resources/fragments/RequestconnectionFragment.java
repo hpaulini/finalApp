@@ -1,14 +1,31 @@
 package com.helenpaulini.ribbon_resources.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.helenpaulini.ribbon_resources.ProfileAdapter;
 import com.helenpaulini.ribbon_resources.R;
+import com.helenpaulini.ribbon_resources.models.Profile;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +33,16 @@ import com.helenpaulini.ribbon_resources.R;
  * create an instance of this fragment.
  */
 public class RequestconnectionFragment extends Fragment {
+    public static final String TAG = "Request connection fragment";
+
+    private String client;
+    private RecyclerView rvMyConnections;
+    private RecyclerView rvRequestedConnections;
+    private RecyclerView rvPendingConnections;
+    protected ProfileAdapter adapter;
+    protected List<Profile> profiles;
+    List<Profile> profilesFromParseObject;
+    ProfileAdapter.OnDetailsClickListener onDetailsClickListener;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +89,75 @@ public class RequestconnectionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_requestconnection, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        rvMyConnections = view.findViewById(R.id.rvMyConnections);
+        rvRequestedConnections = view.findViewById(R.id.rvRequestedConnections);
+        rvPendingConnections = view.findViewById(R.id.rvPendingConnections);
+        profiles = new ArrayList<>();
+
+        onDetailsClickListener = new ProfileAdapter.OnDetailsClickListener() {
+            @Override
+            public void OnDetailsClicked(int position) {
+                goToDetailView(position);
+            }
+        };
+
+        //create the adapter
+        adapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
+        //set the adapter on the recycler view
+        rvPendingConnections.setAdapter(adapter);
+        //set the layout on the recycler view
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvPendingConnections.setLayoutManager(linearLayoutManager);
+        queryProfiles();
+    }
+
+    protected void queryProfiles() {
+        ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
+        query.include(Profile.KEY_USER);
+        final List<ParseUser> savedUsers = new ArrayList<>();
+        final ParseQuery<ParseObject> userRelation = ParseUser.getCurrentUser().getRelation("pendingConnectionRelation").getQuery();
+        userRelation.include("User");
+        userRelation.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> users, ParseException e) {
+                for(ParseObject user : users){
+                    savedUsers.add((ParseUser) user);
+                }
+                //savedUsers.add(ParseUser.getCurrentUser());
+                query.whereContainedIn(Profile.KEY_USER, savedUsers);
+                query.addDescendingOrder(Profile.KEY_CREATED_AT);
+                query.findInBackground(new FindCallback<Profile>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void done(List<Profile> profilesList, ParseException e) {
+                        if(e!=null){
+                            Log.e(TAG, "Issue with getting profiles");
+                            return;
+                        }
+                        for(Profile profile:profilesList){
+                            Log.i(TAG, "Profile username: "+profile.getUser().getUsername());
+                        }
+                        adapter.addAll(profilesList);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+    }
+
+    private void goToDetailView(int position){
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        UserdetailsFragment userdetailsFragment = new UserdetailsFragment();
+        Profile profile = profiles.get(position);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("profileDetails", profile);
+        userdetailsFragment.setArguments(bundle);
+        fm.beginTransaction().replace(R.id.flContainer, userdetailsFragment).addToBackStack(null).commit();
     }
 }

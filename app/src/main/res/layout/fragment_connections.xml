@@ -10,7 +10,7 @@
         android:id="@+id/tvMyConnections"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="My Connections"
+        android:text="Saved"
         android:textAlignment="center"
         android:textSize="18sp" />
 
