@@ -19,6 +19,7 @@ import com.helenpaulini.ribbon_resources.fragments.ProfileFragment;
 import com.helenpaulini.ribbon_resources.fragments.ResourcesFragment;
 import com.helenpaulini.ribbon_resources.fragments.SearchablespinnerFragment;
 import com.helenpaulini.ribbon_resources.fragments.ViewpagerFragment;
+import com.helenpaulini.ribbon_resources.fragments.ViewpagerconnectionsFragment;
 import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.resources:
                         //Toast.makeText(MainActivity.this, "resources!", Toast.LENGTH_SHORT).show();
-                        fragment = new SearchablespinnerFragment();
+                        fragment = new ViewpagerconnectionsFragment();
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();

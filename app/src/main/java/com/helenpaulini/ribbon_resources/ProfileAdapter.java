@@ -158,6 +158,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         private ImageView ivProfilePic;
         private Button btnNotification;
         private Button btnConnect;
+        private Button btnSave;
         private Button btnUserDetails;
 
         public ViewHolder(@NonNull View itemView) {
@@ -172,6 +173,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             tvHospital = itemView.findViewById(R.id.tvHospital);
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
             btnConnect = itemView.findViewById(R.id.btnConnect);
+            btnSave = itemView.findViewById(R.id.btnSave);
             btnUserDetails = itemView.findViewById(R.id.btnUserDetails);
 
             itemView.setOnClickListener(this);
@@ -184,9 +186,16 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             tvCancerType.setText(profile.getCancerType());
             tvHospital.setText(profile.getHospital());
 
+            btnConnect.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    connectWithUser(profile);
+                }
+            });
+
             //to do: put my connections stuff in its own class where it makes an array list containing the saved connections
             //then, in profile (or connections??) fragment, make a new object of that class and send the list to the parse database for the current user
-            btnConnect.setOnClickListener(new View.OnClickListener() {
+            btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     saveUserRelation(profile);
@@ -260,6 +269,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 //                // show the activity
 //                context.startActivity(intent);
 //            }
+        }
+
+        public void connectWithUser(Profile clickedProfile){
+
         }
 
         public void saveUserRelation(Profile clickedProfile){

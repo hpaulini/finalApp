@@ -36,7 +36,7 @@
         android:id="@+id/tvUserType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvCancerType"
+        android:layout_below="@+id/tvHospital"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_toEndOf="@+id/ivProfilePic"
@@ -46,10 +46,10 @@
         android:id="@+id/tvHospital"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tvCancerType"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/tvCancerType"
+        android:layout_below="@+id/tvCancerType"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/ivProfilePic"
         tools:text="Hospital" />
 
     <TextView
@@ -84,15 +84,28 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/btnConnect"
+        android:id="@+id/btnSave"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUserType"
-        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/ivProfilePic"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:layout_marginEnd="8dp"
+        android:layout_toEndOf="@+id/btnUserDetails"
         android:text="Save Profile"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/btnConnect"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivProfilePic"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/btnSave"
+        android:text="Connect"
         android:textSize="10sp" />
 
     <Button
@@ -100,12 +113,10 @@
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUserType"
-        android:layout_marginStart="16dp"
+        android:layout_below="@+id/ivProfilePic"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_toStartOf="@+id/btnConnect"
-        android:layout_toEndOf="@+id/ivProfilePic"
         android:text="View Details"
         android:textSize="10sp" />
 
