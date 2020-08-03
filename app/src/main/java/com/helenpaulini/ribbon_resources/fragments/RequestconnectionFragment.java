@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import com.helenpaulini.ribbon_resources.ProfileAdapter;
 import com.helenpaulini.ribbon_resources.R;
 import com.helenpaulini.ribbon_resources.models.Profile;
+import com.helenpaulini.ribbon_resources.models.RequestedConnections;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -39,7 +40,7 @@ public class RequestconnectionFragment extends Fragment {
     private RecyclerView rvMyConnections;
     private RecyclerView rvRequestedConnections;
     private RecyclerView rvPendingConnections;
-    protected ProfileAdapter adapter;
+    protected ProfileAdapter myConnectionsAdapter, requestedConnectionsAdapter, pendingConnectionsAdapter;
     protected List<Profile> profiles;
     List<Profile> profilesFromParseObject;
     ProfileAdapter.OnDetailsClickListener onDetailsClickListener;
@@ -107,17 +108,35 @@ public class RequestconnectionFragment extends Fragment {
             }
         };
 
+//        //create the adapter
+//        myConnectionsAdapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
+//        //set the adapter on the recycler view
+//        rvMyConnections.setAdapter(myConnectionsAdapter);
+//        //set the layout on the recycler view
+//        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
+//        rvMyConnections.setLayoutManager(linearLayoutManager2);
+//        queryConnectedProfiles();
+
         //create the adapter
-        adapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
+        pendingConnectionsAdapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
         //set the adapter on the recycler view
-        rvPendingConnections.setAdapter(adapter);
+        rvPendingConnections.setAdapter(pendingConnectionsAdapter);
         //set the layout on the recycler view
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvPendingConnections.setLayoutManager(linearLayoutManager);
-        queryProfiles();
+        queryPendingProfiles();
+
+        //create the adapter
+        requestedConnectionsAdapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
+        //set the adapter on the recycler view
+        rvRequestedConnections.setAdapter(requestedConnectionsAdapter);
+        //set the layout on the recycler view
+        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext());
+        rvRequestedConnections.setLayoutManager(linearLayoutManager3);
+        queryRequestedProfiles();
     }
 
-    protected void queryProfiles() {
+    protected void queryConnectedProfiles() {
         ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
         query.include(Profile.KEY_USER);
         final List<ParseUser> savedUsers = new ArrayList<>();
@@ -143,8 +162,76 @@ public class RequestconnectionFragment extends Fragment {
                         for(Profile profile:profilesList){
                             Log.i(TAG, "Profile username: "+profile.getUser().getUsername());
                         }
-                        adapter.addAll(profilesList);
-                        adapter.notifyDataSetChanged();
+                        myConnectionsAdapter.addAll(profilesList);
+                        myConnectionsAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+    }
+
+    protected void queryPendingProfiles() {
+        ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
+        query.include(Profile.KEY_USER);
+        final List<ParseUser> savedUsers = new ArrayList<>();
+        final ParseQuery<ParseObject> userRelation = ParseUser.getCurrentUser().getRelation("pendingConnectionRelation").getQuery();
+        userRelation.include("User");
+        userRelation.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> users, ParseException e) {
+                for(ParseObject user : users){
+                    savedUsers.add((ParseUser) user);
+                }
+                //savedUsers.add(ParseUser.getCurrentUser());
+                query.whereContainedIn(Profile.KEY_USER, savedUsers);
+                query.addDescendingOrder(Profile.KEY_CREATED_AT);
+                query.findInBackground(new FindCallback<Profile>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void done(List<Profile> profilesList, ParseException e) {
+                        if(e!=null){
+                            Log.e(TAG, "Issue with getting profiles");
+                            return;
+                        }
+                        for(Profile profile:profilesList){
+                            Log.i(TAG, "Profile username: "+profile.getUser().getUsername());
+                        }
+                        pendingConnectionsAdapter.addAll(profilesList);
+                        pendingConnectionsAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+    }
+
+    protected void queryRequestedProfiles() {
+        ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
+        query.include(Profile.KEY_USER);
+        final List<ParseUser> requestedUsers = new ArrayList<>();
+        final ParseQuery<ParseObject> userRelation = ParseUser.getCurrentUser().getRelation("requestedConnectionRelation").getQuery();
+        userRelation.include("User");
+        userRelation.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> users, ParseException e) {
+                for(ParseObject user : users){
+                    requestedUsers.add((ParseUser) user);
+                }
+                //savedUsers.add(ParseUser.getCurrentUser());
+                query.whereContainedIn(Profile.KEY_USER, requestedUsers);
+                query.addDescendingOrder(Profile.KEY_CREATED_AT);
+                query.findInBackground(new FindCallback<Profile>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void done(List<Profile> profilesList, ParseException e) {
+                        if(e!=null){
+                            Log.e(TAG, "Issue with getting profiles");
+                            return;
+                        }
+                        for(Profile profile:profilesList){
+                            Log.i(TAG, "Profile username: "+profile.getUser().getUsername());
+                        }
+                        requestedConnectionsAdapter.addAll(profilesList);
+                        requestedConnectionsAdapter.notifyDataSetChanged();
                     }
                 });
             }

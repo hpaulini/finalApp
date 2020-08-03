@@ -30,8 +30,11 @@ import com.helenpaulini.ribbon_resources.fragments.UserdetailsFragment;
 import com.helenpaulini.ribbon_resources.models.MyConnections;
 import com.helenpaulini.ribbon_resources.models.Post;
 import com.helenpaulini.ribbon_resources.models.Profile;
+import com.helenpaulini.ribbon_resources.models.RequestedConnections;
 import com.helenpaulini.ribbon_resources.models.SurvivorProfile;
+import com.parse.FindCallback;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -47,7 +50,7 @@ import java.util.Locale;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> implements Filterable {
 
-    public interface OnDetailsClickListener{
+    public interface OnDetailsClickListener {
         void OnDetailsClicked(int position);
     }
 
@@ -57,6 +60,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     List<Profile> profiles;
     List<Profile> profileListFull;
     List<Profile> myConnections = new ArrayList<>();
+    private RequestedConnections request;
 
     public ProfileAdapter(Context context, OnDetailsClickListener onDetailsClickListener, List<Profile> profiles) {
         this.context = context;
@@ -114,19 +118,19 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Profile> filteredList = new ArrayList<>();
-            Log.i(TAG, "What user typed: "+constraint);
-            if(constraint == null || constraint.length()==0){
+            Log.i(TAG, "What user typed: " + constraint);
+            if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(profileListFull);
-            } else{
+            } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                Log.i(TAG, "in else"+profileListFull.size());
-                for (int i=0; i<profileListFull.size(); i++){
+                Log.i(TAG, "in else" + profileListFull.size());
+                for (int i = 0; i < profileListFull.size(); i++) {
                     Log.i(TAG, "In for loop");
-                    if((profileListFull.get(i).getFirstName().toLowerCase().trim()).contains(filterPattern)
-                    || (profileListFull.get(i).getLastName().toLowerCase().trim()).contains(filterPattern)
-                    || (profileListFull.get(i).getHospital().toLowerCase().trim()).contains(filterPattern)
-                    || (profileListFull.get(i).getCancerType().toLowerCase().trim()).contains(filterPattern)
-                    || (profileListFull.get(i).getUserType().toLowerCase().trim()).contains(filterPattern)){
+                    if ((profileListFull.get(i).getFirstName().toLowerCase().trim()).contains(filterPattern)
+                            || (profileListFull.get(i).getLastName().toLowerCase().trim()).contains(filterPattern)
+                            || (profileListFull.get(i).getHospital().toLowerCase().trim()).contains(filterPattern)
+                            || (profileListFull.get(i).getCancerType().toLowerCase().trim()).contains(filterPattern)
+                            || (profileListFull.get(i).getUserType().toLowerCase().trim()).contains(filterPattern)) {
                         filteredList.add(profileListFull.get(i));
                     }
                 }
@@ -218,7 +222,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             });
         }
 
-        public String age (Date birthday){
+        public String age(Date birthday) {
             String dobString = birthday.toString();
             Date date = null;
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -228,7 +232,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 e.printStackTrace();
             }
 
-            if(date == null) {
+            if (date == null) {
                 return "0";
             }
 
@@ -241,17 +245,17 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             int month = dob.get(Calendar.MONTH);
             int day = dob.get(Calendar.DAY_OF_MONTH);
 
-            dob.set(year, month+1, day);
+            dob.set(year, month + 1, day);
 
             int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
 
-            if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+            if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
                 age--;
             }
-            return ""+age;
+            return "" + age;
         }
 
-        public void goToDetails(){
+        public void goToDetails() {
 
         }
 
@@ -271,7 +275,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 //            }
         }
 
-        public void connectWithUser(Profile clickedProfile){
+        public void connectWithUser(Profile clickedProfile) {
             ParseUser currentUser = ParseUser.getCurrentUser();
             currentUser.fetchInBackground();
             try {
@@ -291,9 +295,68 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             } catch (com.parse.ParseException e) {
                 e.printStackTrace();
             }
+
+            ParseUser clickedUser = clickedProfile.getUser();
+
+            RequestedConnections requestedConnection = new RequestedConnections();
+            requestedConnection.setUser(clickedUser);
+            requestedConnection.setRequestedUser(currentUser);
+
+            requestedConnection.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(com.parse.ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Error while saving", e);
+                        Toast.makeText(context, "Error while saving", Toast.LENGTH_SHORT).show();
+                    }
+                    Log.i(TAG, "requested connection saved successfully!!");
+                }
+            });
+            Log.i(TAG, "saved requested connection**");
+
         }
 
-        public void saveUserRelation(Profile clickedProfile){
+        //add the current user to the clicked user's relation in the requestedconnections model
+        //if the clicked user already has a requestedconnections object, add current user to the existing object's relations
+//            ParseUser clickedUser = clickedProfile.getUser();
+//            request = new RequestedConnections();
+//            try {
+//                ParseQuery<RequestedConnections> query = ParseQuery.getQuery(RequestedConnections.class);
+//
+//                query.findInBackground(new FindCallback<RequestedConnections>() {
+//                    @Override
+//                    public void done(List<RequestedConnections> requestedConnectionsList, com.parse.ParseException e) {
+//                        for (RequestedConnections existingConnection : requestedConnectionsList) {
+//                            if(existingConnection.getUser() != null){
+//                                if(existingConnection.getUser().equals(clickedUser)){
+//                                    request = existingConnection;
+//                                }
+//                            }
+//                        }
+//                        request.setUser(clickedUser);
+//                    }
+//                });
+//
+//                request.setUser(clickedUser);
+//
+//                request.fetchIfNeeded().getRelation("requestedConnectionRelation").add(currentUser);
+//
+//                request.saveInBackground(new SaveCallback() {
+//                    @Override
+//                    public void done(com.parse.ParseException e) {
+//                        if (e != null) {
+//                            Log.e(TAG, "Error while saving", e);
+//                            Toast.makeText(context, "Error while saving", Toast.LENGTH_SHORT).show();
+//                        }
+//                        Log.i(TAG, "requested connection saved successfully!!");
+//                    }
+//                });
+//                Log.i(TAG, "saved requested connection***");
+//            } catch (com.parse.ParseException e) {
+//                e.printStackTrace();
+//            }
+
+        public void saveUserRelation(Profile clickedProfile) {
             ParseUser currentUser = ParseUser.getCurrentUser();
             currentUser.fetchInBackground();
             try {
@@ -315,7 +378,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             }
         }
 
-        public void addToProfileArray(Profile clickedProfile){
+        public void addToProfileArray(Profile clickedProfile) {
             myConnections.add(clickedProfile);
             ParseUser currentUser = ParseUser.getCurrentUser();
             currentUser.fetchInBackground();
@@ -339,13 +402,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             }
         }
 
-        public void saveConnectionsRelation(Profile clickedProfile){
+        public void saveConnectionsRelation(Profile clickedProfile) {
             ParseUser currentUser = ParseUser.getCurrentUser();
             currentUser.fetchInBackground();
             try {
                 Profile currentProfile = (Profile) currentUser.fetchIfNeeded().getParseObject("profile");
-                Log.i(TAG, "clicked profile: "+clickedProfile.getFirstName());
-                Log.i(TAG, "current profile: "+(Profile) currentUser.fetchIfNeeded().getParseObject("profile"));
+                Log.i(TAG, "clicked profile: " + clickedProfile.getFirstName());
+                Log.i(TAG, "current profile: " + (Profile) currentUser.fetchIfNeeded().getParseObject("profile"));
                 currentProfile.fetchIfNeeded().getRelation("profileRelation").add(clickedProfile);
 
                 currentProfile.saveInBackground(new SaveCallback() {
@@ -365,23 +428,22 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         }
 
 
-
-        public void onSaveConnectionClick(Profile clickedProfile){
+        public void onSaveConnectionClick(Profile clickedProfile) {
 
             //add the clicked profile item to the current user's myConnections arraylist
             myConnections.add(clickedProfile);
 
             ParseUser currentUser = ParseUser.getCurrentUser();
             currentUser.fetchInBackground();
-            Log.i(TAG, "who is currently logged in: "+currentUser.getUsername());
+            Log.i(TAG, "who is currently logged in: " + currentUser.getUsername());
             MyConnections connections;
 
             try {
-                if(currentUser.fetchIfNeeded().getParseObject("myConnections")==null) {
+                if (currentUser.fetchIfNeeded().getParseObject("myConnections") == null) {
                     connections = new MyConnections();
-                } else{
+                } else {
                     connections = (MyConnections) currentUser.fetchIfNeeded().getParseObject("myConnections");
-                    Log.i(TAG, "previous connections: "+connections.getMyConnections());
+                    Log.i(TAG, "previous connections: " + connections.getMyConnections());
                 }
 
                 connections.setUser(currentUser);
@@ -404,7 +466,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                     }
                 });
 
-                Log.i(TAG, "current connections: "+connections.getMyConnections());
+                Log.i(TAG, "current connections: " + connections.getMyConnections());
 
             } catch (com.parse.ParseException e) {
                 e.printStackTrace();

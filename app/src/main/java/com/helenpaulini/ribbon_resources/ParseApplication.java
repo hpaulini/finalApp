@@ -6,6 +6,7 @@ import com.helenpaulini.ribbon_resources.models.ContactInfo;
 import com.helenpaulini.ribbon_resources.models.MyConnections;
 import com.helenpaulini.ribbon_resources.models.Post;
 import com.helenpaulini.ribbon_resources.models.Profile;
+import com.helenpaulini.ribbon_resources.models.RequestedConnections;
 import com.helenpaulini.ribbon_resources.models.SurvivorProfile;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -19,6 +20,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Profile.class);
         ParseObject.registerSubclass(ContactInfo.class);
         ParseObject.registerSubclass(MyConnections.class);
+        ParseObject.registerSubclass(RequestedConnections.class);
 
         // set applicationId, and server server based on the values in the Heroku settings.
         // clientKey is not needed unless explicitly configured
