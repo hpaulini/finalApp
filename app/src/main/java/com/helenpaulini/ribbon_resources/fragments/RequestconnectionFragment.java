@@ -45,6 +45,10 @@ public class RequestconnectionFragment extends Fragment {
     List<Profile> profilesFromParseObject;
     ProfileAdapter.OnDetailsClickListener onDetailsClickListener;
 
+    private List<Profile> requestedProfiles = new ArrayList<>();
+    private List<Profile> pendingProfiles = new ArrayList<>();
+    private List<Profile> acceptedProfiles = new ArrayList<>();
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -108,14 +112,14 @@ public class RequestconnectionFragment extends Fragment {
             }
         };
 
-//        //create the adapter
-//        myConnectionsAdapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
-//        //set the adapter on the recycler view
-//        rvMyConnections.setAdapter(myConnectionsAdapter);
-//        //set the layout on the recycler view
-//        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
-//        rvMyConnections.setLayoutManager(linearLayoutManager2);
-//        queryConnectedProfiles();
+        //create the adapter
+        myConnectionsAdapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
+        //set the adapter on the recycler view
+        rvMyConnections.setAdapter(myConnectionsAdapter);
+        //set the layout on the recycler view
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
+        rvMyConnections.setLayoutManager(linearLayoutManager2);
+        queryConnectedProfiles();
 
         //create the adapter
         pendingConnectionsAdapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
@@ -137,35 +141,34 @@ public class RequestconnectionFragment extends Fragment {
     }
 
     protected void queryConnectedProfiles() {
+
+        for(int i=0; i<pendingProfiles.size(); i++){
+            for(int j=0; j<requestedProfiles.size(); j++){
+                if(pendingProfiles.get(i).equals(requestedProfiles.get(j))){
+                    //to do: remove duplicate from pending and requested views, add it to the accepted connections
+                    acceptedProfiles.add(pendingProfiles.get(i));
+                    pendingProfiles.remove(i);
+                    requestedProfiles.remove(j);
+                }
+            }
+        }
+
         ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
         query.include(Profile.KEY_USER);
-        final List<ParseUser> savedUsers = new ArrayList<>();
-        final ParseQuery<ParseObject> userRelation = ParseUser.getCurrentUser().getRelation("pendingConnectionRelation").getQuery();
-        userRelation.include("User");
-        userRelation.findInBackground(new FindCallback<ParseObject>() {
+        query.findInBackground(new FindCallback<Profile>() {
+            @SuppressLint("LongLogTag")
             @Override
-            public void done(List<ParseObject> users, ParseException e) {
-                for(ParseObject user : users){
-                    savedUsers.add((ParseUser) user);
+            public void done(List<Profile> profilesList, ParseException e) {
+                profilesList = acceptedProfiles;
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting profiles", e);
+                    return;
                 }
-                //savedUsers.add(ParseUser.getCurrentUser());
-                query.whereContainedIn(Profile.KEY_USER, savedUsers);
-                query.addDescendingOrder(Profile.KEY_CREATED_AT);
-                query.findInBackground(new FindCallback<Profile>() {
-                    @SuppressLint("LongLogTag")
-                    @Override
-                    public void done(List<Profile> profilesList, ParseException e) {
-                        if(e!=null){
-                            Log.e(TAG, "Issue with getting profiles");
-                            return;
-                        }
-                        for(Profile profile:profilesList){
-                            Log.i(TAG, "Profile username: "+profile.getUser().getUsername());
-                        }
-                        myConnectionsAdapter.addAll(profilesList);
-                        myConnectionsAdapter.notifyDataSetChanged();
-                    }
-                });
+                for (Profile profile : profilesList) {
+                    Log.i(TAG, "Username: " + profile.getUser().getUsername());
+                }
+                myConnectionsAdapter.clear();
+                myConnectionsAdapter.addAll(profilesList);
             }
         });
     }
@@ -196,6 +199,7 @@ public class RequestconnectionFragment extends Fragment {
                         for(Profile profile:profilesList){
                             Log.i(TAG, "Profile username: "+profile.getUser().getUsername());
                         }
+                        pendingProfiles = profilesList;
                         pendingConnectionsAdapter.addAll(profilesList);
                         pendingConnectionsAdapter.notifyDataSetChanged();
                     }
@@ -204,6 +208,7 @@ public class RequestconnectionFragment extends Fragment {
         });
     }
 
+    //to do: for some reason users appear in duplicates after requesting
     protected void queryRequestedProfiles() {
         ParseQuery<Profile> profileQuery = ParseQuery.getQuery(Profile.class);
         final List<ParseUser> requestedUsers = new ArrayList<>();
@@ -229,6 +234,7 @@ public class RequestconnectionFragment extends Fragment {
                         for (Profile profile : profilesList) {
                             Log.i(TAG, "Profile username: " + profile.getUser().getUsername());
                         }
+                        requestedProfiles = profilesList;
                         requestedConnectionsAdapter.addAll(profilesList);
                         requestedConnectionsAdapter.notifyDataSetChanged();
                     }
