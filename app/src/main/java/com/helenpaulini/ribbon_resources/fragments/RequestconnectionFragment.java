@@ -239,8 +239,86 @@ public class RequestconnectionFragment extends Fragment {
         }
     }
 
+    @SuppressLint("LongLogTag")
     public void queryConnectionsAccepted(){
 
+        try {
+            List<ParseUser> requestsList = new ArrayList<>();
+            List<ParseUser> requestorsList = new ArrayList<>();
+            List<ParseUser> acceptedList = new ArrayList<>();
+
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            currentUser.fetchInBackground();
+            Profile currentProfile = (Profile) currentUser.fetchIfNeeded().getParseObject("profile");
+            final ParseQuery<ParseObject> requests = currentProfile.getRelation("requestedProfiles").getQuery();
+            final ParseQuery<ParseObject> requestors = currentProfile.getRelation("requestorProfiles").getQuery();
+
+            requests.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> profiles, ParseException e) {
+                    for(ParseObject profile:profiles){
+                        try {
+                            Log.i(TAG, "connection requests: " +profile.fetchIfNeeded().getString("firstName"));
+                            requestsList.add((ParseUser) profile.fetchIfNeeded().getParseUser("user"));
+                        } catch (ParseException ex) {
+                            ex.printStackTrace();
+                        }
+
+                        requestors.findInBackground(new FindCallback<ParseObject>() {
+                            @Override
+                            public void done(List<ParseObject> profiles, ParseException e) {
+                                for(ParseObject profile:profiles){
+                                    try {
+                                        Log.i(TAG, "connection requestors: " +profile.fetchIfNeeded().getString("firstName"));
+                                        requestorsList.add((ParseUser) profile.fetchIfNeeded().getParseUser("user"));
+                                    } catch (ParseException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+
+                                Log.i("****************************", "size: "+requestorsList.size());
+                                for(int i=0; i<requestorsList.size(); i++){
+                                    for(int j=0; j<requestsList.size(); j++){
+                                        try {
+                                            String userName1 = requestorsList.get(i).fetchIfNeeded().getUsername().toString();
+                                            String userName2 = requestsList.get(j).fetchIfNeeded().getUsername().toString();
+                                            Log.i("****************************", "name1: " + userName1 + ", name2: " + userName2);
+                                            if (userName1.equals(userName2)) {
+                                                Log.i("****************************", "hello?");
+                                                Log.i(TAG, "overlapping requests: " + requestorsList.get(i).fetchIfNeeded().getUsername());
+                                                acceptedList.add(requestorsList.get(i));
+                                            }
+                                        }catch (ParseException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                    }
+                                }
+                                ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
+                                query.include(Profile.KEY_USER);
+                                query.whereContainedIn(Profile.KEY_USER, acceptedList);
+                                query.addDescendingOrder(Profile.KEY_CREATED_AT);
+                                query.findInBackground(new FindCallback<Profile>() {
+                                    @Override
+                                    public void done(List<Profile> profilesList, ParseException e) {
+                                        if(e!=null){
+                                            Log.e(TAG, "Issue with getting profiles");
+                                            return;
+                                        }
+                                        for(Profile profile:profilesList){
+                                            Log.i(TAG, "connections requested Profile username: "+profile.getUser().getUsername());
+                                        }
+                                        myConnectionsAdapter.clear();
+                                        myConnectionsAdapter.addAll(profilesList);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+    } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
     }
 
     protected void queryConnectedProfiles() {
