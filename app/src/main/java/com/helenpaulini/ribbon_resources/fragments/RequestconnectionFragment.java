@@ -128,7 +128,7 @@ public class RequestconnectionFragment extends Fragment {
         //set the layout on the recycler view
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvPendingConnections.setLayoutManager(linearLayoutManager);
-        queryPendingProfiles();
+        //queryPendingProfiles();
 
         //create the adapter
         requestedConnectionsAdapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
@@ -200,8 +200,8 @@ public class RequestconnectionFragment extends Fragment {
                             Log.i(TAG, "Profile username: "+profile.getUser().getUsername());
                         }
                         pendingProfiles = profilesList;
+                        pendingConnectionsAdapter.clear();
                         pendingConnectionsAdapter.addAll(profilesList);
-                        pendingConnectionsAdapter.notifyDataSetChanged();
                     }
                 });
             }
@@ -235,8 +235,8 @@ public class RequestconnectionFragment extends Fragment {
                             Log.i(TAG, "Profile username: " + profile.getUser().getUsername());
                         }
                         requestedProfiles = profilesList;
+                        requestedConnectionsAdapter.clear();
                         requestedConnectionsAdapter.addAll(profilesList);
-                        requestedConnectionsAdapter.notifyDataSetChanged();
                     }
                 });
             }

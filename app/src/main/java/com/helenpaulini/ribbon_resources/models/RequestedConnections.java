@@ -13,6 +13,8 @@ public class RequestedConnections extends ParseObject {
 
     public static final String KEY_USER = "user";
     public static final String KEY_REQUESTEDUSER = "requestedUser";
+    public static final String KEY_REQUESTORPROFILE = "requestorProfile";
+    public static final String KEY_REQUESTEDPROFILE = "requestedProfile";
 
     public RequestedConnections(){
 
@@ -36,4 +38,21 @@ public class RequestedConnections extends ParseObject {
         put(KEY_REQUESTEDUSER, user);
     }
 
+    //requestor profile
+    public ParseObject getRequestorProfile() {
+        return getParseObject(KEY_REQUESTORPROFILE);
+    }
+
+    public void setRequestorProfile(ParseObject profile) {
+        put(KEY_REQUESTORPROFILE, profile);
+    }
+
+    //requested profile
+    public ParseObject getRequestedProfile() {
+        return getParseObject(KEY_REQUESTEDPROFILE);
+    }
+
+    public void setRequestedProfile(ParseObject profile) {
+        put(KEY_REQUESTEDPROFILE, profile);
+    }
 }

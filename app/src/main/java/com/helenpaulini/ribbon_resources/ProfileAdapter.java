@@ -45,6 +45,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -61,6 +62,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     List<Profile> profileListFull;
     List<Profile> myConnections = new ArrayList<>();
     private RequestedConnections request;
+    HashMap<Profile, List<Profile>> listOfRequestors = new HashMap<>();
 
     public ProfileAdapter(Context context, OnDetailsClickListener onDetailsClickListener, List<Profile> profiles) {
         this.context = context;
@@ -193,7 +195,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             btnConnect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    connectWithUser(profile);
+                    saveConnection(profile);
                 }
             });
 
@@ -273,6 +275,83 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 //                // show the activity
 //                context.startActivity(intent);
 //            }
+        }
+
+        public void saveConnection(Profile clickedProfile){
+            try {
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                currentUser.fetchInBackground();
+                Profile currentProfile = (Profile) currentUser.fetchIfNeeded().getParseObject("profile");
+                currentProfile.getRelation("requestedProfiles").add(clickedProfile);
+                currentProfile.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(com.parse.ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving connection", e);
+                            Toast.makeText(context, "Error while saving connection", Toast.LENGTH_SHORT).show();
+                        }
+                        Log.i(TAG, "connection saved successfully for profile making the request");
+                    }
+                });
+
+                clickedProfile.getRelation("requestorProfiles").add(currentProfile);
+                clickedProfile.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(com.parse.ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving connection", e);
+                            Toast.makeText(context, "Error while saving connection", Toast.LENGTH_SHORT).show();
+                        }
+                        Log.i(TAG, "connection saved successfully for profile being requested");
+                    }
+                });
+            } catch (com.parse.ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        public void newConnection(Profile clickedProfile){
+            try {
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                currentUser.fetchInBackground();
+                Profile requestor = (Profile) currentUser.fetchIfNeeded().getParseObject("profile");
+                Profile requested = clickedProfile;
+
+                if(listOfRequestors.get(requested)==null){
+                    List<Profile> requestors = new ArrayList<>();
+                    requestors.add(requestor);
+                    listOfRequestors.put(requested, requestors);
+                } else{
+                    listOfRequestors.get(requested).add(requestor);
+                }
+
+                checkIfAccepted(requestor, requested);
+
+                RequestedConnections connection = new RequestedConnections();
+                connection.setRequestorProfile(requestor);
+                connection.setRequestedProfile(requested);
+
+                connection.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(com.parse.ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving connection", e);
+                            Toast.makeText(context, "Error while saving connection", Toast.LENGTH_SHORT).show();
+                        }
+                        Log.i(TAG, "connection object saved successfully!!");
+                    }
+                });
+            } catch (com.parse.ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        public void checkIfAccepted(Profile requestor, Profile requested){
+
+
+
         }
 
         public void connectWithUser(Profile clickedProfile) {
