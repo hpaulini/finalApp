@@ -5,14 +5,19 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
 import java.util.Date;
 
+@Parcel(analyze = {Post.class})
 @ParseClassName("Post")
 public class Post extends ParseObject {
 
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
+    public static final String KEY_TAGS = "tags";
+    public static final String KEY_HEADER = "header";
 
     //empty constructor for parceler
     public Post() {}
@@ -40,5 +45,13 @@ public class Post extends ParseObject {
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
     }
+
+    public String getTags(){return getString(KEY_TAGS);}
+
+    public void setTags(String tags){put (KEY_TAGS, tags);}
+
+    public String getHeader(){return getString(KEY_HEADER);}
+
+    public void setHeader(String header){put(KEY_HEADER, header);}
 
 }

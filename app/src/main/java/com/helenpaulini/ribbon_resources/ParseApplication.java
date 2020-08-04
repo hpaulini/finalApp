@@ -21,6 +21,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(ContactInfo.class);
         ParseObject.registerSubclass(MyConnections.class);
         ParseObject.registerSubclass(RequestedConnections.class);
+        ParseObject.registerSubclass(Post.class);
 
         // set applicationId, and server server based on the values in the Heroku settings.
         // clientKey is not needed unless explicitly configured

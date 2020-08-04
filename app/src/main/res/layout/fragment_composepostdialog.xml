@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/compose_post"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    tools:context=".fragments.ComposepostdialogFragment">
+
+    <TextView
+        android:id="@+id/lbl_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_toEndOf="@+id/lbl_body">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/postTitle"
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/lbl_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etTitle"
+        android:text="Body Text" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etTitle"
+        android:layout_marginStart="0dp"
+        android:layout_toEndOf="@+id/lbl_body">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/postBody"
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/lbl_tags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etBody"
+        android:text="Tags" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etTags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etBody"
+        android:layout_marginStart="0dp"
+        android:layout_toEndOf="@+id/lbl_body">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/postTags"
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnSubmitPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etTags"
+        android:layout_marginTop="0dp"
+        android:text="Submit Post" />
+
+
+</RelativeLayout>
