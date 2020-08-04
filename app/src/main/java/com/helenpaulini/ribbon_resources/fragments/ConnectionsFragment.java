@@ -121,7 +121,7 @@ public class ConnectionsFragment extends Fragment {
         query.include(Profile.KEY_USER);
         final List<ParseUser> savedUsers = new ArrayList<>();
         final ParseQuery<ParseObject> userRelation = ParseUser.getCurrentUser().getRelation("userRelation").getQuery();
-        userRelation.include("User");
+        //userRelation.include("User");
         userRelation.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> users, ParseException e) {
