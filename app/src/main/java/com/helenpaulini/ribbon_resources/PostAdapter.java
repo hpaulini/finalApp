@@ -20,6 +20,7 @@ import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,7 +28,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     public static final String TAG = "PostsAdapter";
     Context context;
-    List<Post> posts;
+    List<Post> posts = new ArrayList<>();
+
+    public PostAdapter(Context context, List<Post> posts){
+        this.context = context;
+        this.posts = posts;
+    }
 
     @NonNull
     @Override
@@ -95,14 +101,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             Profile profile = (Profile) post.getUser().fetchIfNeeded().getParseObject("profile");
             tvHeader.setText(post.getHeader());
             tvTags.setText(post.getTags());
-            tvAuthor.setText(profile.getFirstName()+" "+profile.getLastName());
+            tvAuthor.setText(post.getUser().getUsername());
+            //tvAuthor.setText(profile.getFirstName()+" "+profile.getLastName());
             tvCaption.setText(post.getDescription());
             String date = post.getCreatedAt().toString();
             tvDate.setText(getRelativeTimeAgo(date));
-            ParseFile image = profile.getImage();
-            if (image != null) {
-                Glide.with(context).load(image.getUrl()).into(ivProfilePic);
-            }
+//            ParseFile image = ((Profile) post.getUser().fetchIfNeeded().getParseObject("profile")).getParseFile("profilePic");
+//            if (image != null) {
+//                Glide.with(context).load(image.getUrl()).into(ivProfilePic);
+//            }
         }
 
         public String getRelativeTimeAgo(String rawJsonDate) {

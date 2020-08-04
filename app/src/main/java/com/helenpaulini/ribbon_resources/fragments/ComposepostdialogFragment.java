@@ -7,14 +7,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.helenpaulini.ribbon_resources.R;
+import com.helenpaulini.ribbon_resources.models.Post;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import java.io.File;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +31,8 @@ import com.helenpaulini.ribbon_resources.R;
  * create an instance of this fragment.
  */
 public class ComposepostdialogFragment extends DialogFragment {
+
+    public static final String TAG = "Compose dialog fragment";
 
     private TextInputEditText postTitle;
     private TextInputEditText postBody;
@@ -82,8 +93,47 @@ public class ComposepostdialogFragment extends DialogFragment {
         postTitle = view.findViewById(R.id.postTitle);
         postBody = view.findViewById(R.id.postBody);
         postTags = view.findViewById(R.id.postTags);
+        btnSubmitPost = view.findViewById(R.id.btnSubmitPost);
 
         postTitle.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        btnSubmitPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String title = postTitle.getText().toString();
+                String body = postBody.getText().toString();
+                String tags = postTags.getText().toString();
+
+                if (body.isEmpty() || title.isEmpty()) {
+                    Toast.makeText(getContext(), "Title and body text cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                savePost(title, body, tags, currentUser);
+            }
+        });
+    }
+
+    private void savePost(String title, String body, String tags, ParseUser currentUser) {
+        Post post = new Post();
+        post.setHeader(title);
+        post.setDescription(body);
+        post.setTags(tags);
+        post.setUser(currentUser);
+
+        post.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving", e);
+                    Toast.makeText(getContext(), "Error while saving", Toast.LENGTH_SHORT).show();
+                }
+                Log.i(TAG, "Post saved successfully!!");
+                postTitle.setText("");
+                postBody.setText("");
+                postTags.setText("");
+            }
+        });
     }
 }
