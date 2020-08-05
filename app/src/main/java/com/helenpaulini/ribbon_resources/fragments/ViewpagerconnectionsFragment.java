@@ -91,6 +91,7 @@ public class ViewpagerconnectionsFragment extends Fragment {
 
         pagerAdapter = new ConnectionPagerAdapter(getFragmentManager(), connectionTabBar.getTabCount());
         viewPager.setAdapter(pagerAdapter);
+        connectionTabBar.setupWithViewPager(viewPager);
         connectionTabBar.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

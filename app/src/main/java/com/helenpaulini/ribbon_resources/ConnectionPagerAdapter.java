@@ -1,10 +1,12 @@
 package com.helenpaulini.ribbon_resources;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.helenpaulini.ribbon_resources.fragments.AcceptedprofilesFragment;
 import com.helenpaulini.ribbon_resources.fragments.ConnectionsFragment;
 import com.helenpaulini.ribbon_resources.fragments.MedicalinfoFragment;
 import com.helenpaulini.ribbon_resources.fragments.NameAndBioFragment;
@@ -28,7 +30,24 @@ public class ConnectionPagerAdapter extends FragmentPagerAdapter{
             case 0:
                 return new RequestconnectionFragment();
             case 1:
+                return new AcceptedprofilesFragment();
+            case 2:
                 return new ConnectionsFragment();
+            default:
+                return null;
+        }
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position){
+            case 0:
+                return "Connections";
+            case 1:
+                return "Requests";
+            case 2:
+                return "Saved Profiles";
             default:
                 return null;
         }

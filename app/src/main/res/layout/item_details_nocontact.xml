@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.UserdetailsFragment">
+
+
+        <ImageView
+            android:id="@+id/ivAddProfPic"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_below="@+id/textView2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/ic_twotone_account_circle_24" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignTop="@+id/ivAddProfPic"
+            android:layout_alignEnd="@+id/ivAddProfPic"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/firstName"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivAddProfPic"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="4dp"
+            tools:text="First Name" />
+
+        <TextView
+            android:id="@+id/lastName"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/firstName"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_toEndOf="@+id/firstName"
+            tools:text="Last Name" />
+
+        <TextView
+            android:id="@+id/birthday"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/firstName"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            tools:text="Age" />
+
+        <TextView
+            android:id="@+id/city"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/birthday"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_toEndOf="@+id/birthday"
+            tools:text="City" />
+
+        <TextView
+            android:id="@+id/bio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/birthday"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            tools:text="Bio" />
+
+        <TextView
+            android:id="@+id/interests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bio"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            tools:text="Interests" />
+
+        <TextView
+            android:id="@+id/userType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/interests"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            tools:text="User type" />
+
+        <TextView
+            android:id="@+id/cancerType"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userType"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            tools:text="Cancer type" />
+
+        <TextView
+            android:id="@+id/hospital"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/cancerType"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_toEndOf="@+id/cancerType"
+            tools:text="Hospital" />
+
+        <TextView
+            android:id="@+id/treatmentType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cancerType"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            tools:text="Treatment type" />
+
+        <TextView
+            android:id="@+id/treatmentStart"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/treatmentType"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            tools:text="Treatment start" />
+
+        <TextView
+            android:id="@+id/treatmentEnd"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/treatmentStart"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_toEndOf="@+id/treatmentStart"
+            tools:text="Treatment end" />
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="4dp"
+            android:text="User Details"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+
+        <Button
+            android:id="@+id/saveProf"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/treatmentEnd"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="Save Profile" />
+
+
+    </RelativeLayout>
+</ScrollView>

@@ -62,16 +62,6 @@
         android:layout_toEndOf="@+id/ivProfilePic"
         tools:text="Cancer Type" />
 
-    <!--    <ImageView-->
-    <!--        android:id="@+id/ivProfilePic"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_alignParentStart="true"-->
-    <!--        android:layout_alignParentTop="true"-->
-    <!--        android:layout_marginStart="0dp"-->
-    <!--        android:layout_marginTop="0dp"-->
-    <!--        tools:srcCompat="@tools:sample/avatars" />-->
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivProfilePic"
         android:layout_width="75dp"
@@ -86,40 +76,28 @@
     <Button
         android:id="@+id/btnSave"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-        android:layout_width="118dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivProfilePic"
-        android:layout_marginStart="8dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
         android:layout_toStartOf="@+id/btnConnect"
-        android:layout_toEndOf="@+id/btnUserDetails"
         android:text="Save Profile"
         android:textSize="10sp" />
 
     <Button
         android:id="@+id/btnConnect"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-        android:layout_width="118dp"
+        android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivProfilePic"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
-        android:text="Connect"
-        android:textSize="10sp" />
-
-    <Button
-        android:id="@+id/btnUserDetails"
-        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-        android:layout_width="118dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivProfilePic"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="12dp"
-        android:text="View Details"
+        android:text="Details &amp; Contact Info"
         android:textSize="10sp" />
 
 </RelativeLayout>
