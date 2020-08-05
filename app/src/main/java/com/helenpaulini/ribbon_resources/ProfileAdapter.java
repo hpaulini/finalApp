@@ -309,24 +309,40 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
                 ParseQuery<ParseObject> currentRequests = currentProfile.getRelation("requestedProfiles").getQuery();
                 ParseQuery<ParseObject> currentRequestors = currentProfile.getRelation("requestorProfiles").getQuery();
+                ParseQuery<ParseObject> currentAccepted = currentProfile.getRelation("acceptedProfiles").getQuery();
                 List<Profile> acceptedProfilesList = new ArrayList<>();
+                List<Profile> removeFromRequestors = new ArrayList<>();
+                List<Profile> removeFromRequests = new ArrayList<>();
                 currentRequests.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> requestsList, com.parse.ParseException e) {
                         currentRequestors.findInBackground(new FindCallback<ParseObject>() {
                             @Override
                             public void done(List<ParseObject> requestorList, com.parse.ParseException e) {
+                                currentAccepted.findInBackground(new FindCallback<ParseObject>() {
+                                    @Override
+                                    public void done(List<ParseObject> acceptedList, com.parse.ParseException e) {
                                 for(int i=0; i<requestsList.size(); i++){
                                     for(int j=0; j<requestorList.size(); j++){
-                                        try {
-                                            Log.i(TAG, "requested**: " + requestsList.get(i).getParseUser("user").fetchIfNeeded().getUsername());
-                                            Log.i(TAG, "requestor**: " + requestorList.get(j).getParseUser("user").fetchIfNeeded().getUsername());
-                                            if (requestsList.get(i).getParseUser("user").fetchIfNeeded().getUsername().equals(requestorList.get(j).fetchIfNeeded().getParseUser("user").getUsername())) {
-                                                Log.i(TAG, "done: in here???????!!!!!!");
-                                                acceptedProfilesList.add((Profile) requestsList.get(i));
+                                        for(int k=0; k<acceptedList.size(); k++) {
+                                            try {
+                                                Log.i(TAG, "requested**: " + requestsList.get(i).getParseUser("user").fetchIfNeeded().getUsername());
+                                                Log.i(TAG, "requestor**: " + requestorList.get(j).getParseUser("user").fetchIfNeeded().getUsername());
+                                                if (requestsList.get(i).getParseUser("user").fetchIfNeeded().getUsername().equals(requestorList.get(j).fetchIfNeeded().getParseUser("user").getUsername())) {
+                                                    Log.i(TAG, "in here???????!!!!!!");
+                                                    acceptedProfilesList.add((Profile) requestsList.get(i));
+                                                }
+                                                if(requestsList.get(i).getParseUser("user").fetchIfNeeded().getUsername().equals(acceptedList.get(k).fetchIfNeeded().getParseUser("user").getUsername())){
+                                                    Log.i(TAG, "done: adding to remove requests");
+                                                    removeFromRequests.add((Profile) requestsList.get(i));
+                                                }
+                                                if(requestorList.get(j).getParseUser("user").fetchIfNeeded().getUsername().equals(acceptedList.get(k).fetchIfNeeded().getParseUser("user").getUsername())){
+                                                    Log.i(TAG, "done: adding to remove requestor");
+                                                    removeFromRequestors.add((Profile) requestorList.get(j));
+                                                }
+                                            } catch (com.parse.ParseException e1) {
+                                                e1.printStackTrace();
                                             }
-                                        }catch(com.parse.ParseException e1) {
-                                            e1.printStackTrace();
                                         }
                                     }
                                 }
@@ -336,7 +352,16 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                                     Log.i(TAG, "Accepted Profiles list***********: "+acceptedProfilesList.get(i).getString("firstName"));
                                     currentProfile.getRelation("acceptedProfiles").add(acceptedProfilesList.get(i));
                                     currentProfile.getRelation("requestorProfiles").remove(acceptedProfilesList.get(i));
+                                    Log.i("********hello", "removed: "+acceptedProfilesList.get(i)+" from: " +currentProfile.getString("firstName"));
                                     currentProfile.getRelation("requestedProfiles").remove(acceptedProfilesList.get(i));
+                                }
+
+                                for(int i=0; i<removeFromRequestors.size(); i++){
+                                    currentProfile.getRelation("requestorProfiles").remove(removeFromRequestors.get(i));
+                                }
+
+                                for(int i=0; i<removeFromRequests.size(); i++){
+                                    currentProfile.getRelation("requestedProfiles").remove(removeFromRequests.get(i));
                                 }
 
                                 currentProfile.saveInBackground(new SaveCallback() {
@@ -347,6 +372,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                                             Toast.makeText(context, "Error while saving connection", Toast.LENGTH_SHORT).show();
                                         }
                                         Log.i(TAG, "accepted profile saved successfully");
+                                    }
+                                });
                                     }
                                 });
                             }

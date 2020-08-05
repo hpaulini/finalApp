@@ -12,58 +12,58 @@
     android:layout_marginRight="8dp">
 
     <TextView
-        android:id="@+id/tvConnectedFirstName"
+        android:id="@+id/tvRequestedFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_toEndOf="@+id/ivConnectedProfilePic"
+        android:layout_toEndOf="@+id/ivRequestedProfilePic"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="First Name" />
 
     <TextView
-        android:id="@+id/tvConnectedLastName"
+        android:id="@+id/tvRequestedLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tvConnectedFirstName"
+        android:layout_alignTop="@+id/tvRequestedFirstName"
         android:layout_marginStart="8dp"
         android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/tvConnectedFirstName"
+        android:layout_toEndOf="@+id/tvRequestedFirstName"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="Last Name" />
 
     <TextView
-        android:id="@+id/tvConnectedUserType"
+        android:id="@+id/tvRequestedUserType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvConnectedHospital"
+        android:layout_below="@+id/tvRequestedHospital"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_toEndOf="@+id/ivConnectedProfilePic"
+        android:layout_toEndOf="@+id/ivRequestedProfilePic"
         tools:text="User Type" />
 
     <TextView
-        android:id="@+id/tvConnectedHospital"
+        android:id="@+id/tvRequestedHospital"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvConnectedCancerType"
+        android:layout_below="@+id/tvRequestedCancerType"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_toEndOf="@+id/ivConnectedProfilePic"
+        android:layout_toEndOf="@+id/ivRequestedProfilePic"
         tools:text="Hospital" />
 
     <TextView
-        android:id="@+id/tvConnectedCancerType"
+        android:id="@+id/tvRequestedCancerType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvConnectedFirstName"
+        android:layout_below="@+id/tvRequestedFirstName"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_toEndOf="@+id/ivConnectedProfilePic"
+        android:layout_toEndOf="@+id/ivRequestedProfilePic"
         tools:text="Cancer Type" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/ivConnectedProfilePic"
+        android:id="@+id/ivRequestedProfilePic"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_alignParentStart="true"
@@ -74,25 +74,25 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/btnConnectedSave"
+        android:id="@+id/btnRequestedSave"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivConnectedProfilePic"
+        android:layout_below="@+id/ivRequestedProfilePic"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
-        android:layout_toStartOf="@+id/btnConnectedDetails"
+        android:layout_toStartOf="@+id/btnRequestedDetails"
         android:text="Save Profile"
         android:textSize="10sp" />
 
     <Button
-        android:id="@+id/btnConnectedDetails"
+        android:id="@+id/btnRequestedDetails"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivConnectedProfilePic"
+        android:layout_below="@+id/ivRequestedProfilePic"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="0dp"

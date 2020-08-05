@@ -46,9 +46,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder" + position);
-        // Get the movie at the position
         Post post = posts.get(position);
-        //Bind the movie data into the view holder
         try {
             holder.bind(post);
         } catch (com.parse.ParseException e) {

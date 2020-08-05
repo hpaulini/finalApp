@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.helenpaulini.ribbon_resources.ConnectedProfileAdapter;
 import com.helenpaulini.ribbon_resources.ProfileAdapter;
 import com.helenpaulini.ribbon_resources.R;
 import com.helenpaulini.ribbon_resources.models.Profile;
@@ -39,8 +40,8 @@ public class AcceptedprofilesFragment extends Fragment {
     private String client;
     private RecyclerView rvMyConnections;
     protected List<Profile> profiles;
-    ProfileAdapter adapter;
-    ProfileAdapter.OnDetailsClickListener onDetailsClickListener;
+    ConnectedProfileAdapter adapter;
+    ConnectedProfileAdapter.OnConnectedDetailsClickListener onDetailsClickListener;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -96,14 +97,14 @@ public class AcceptedprofilesFragment extends Fragment {
         rvMyConnections = view.findViewById(R.id.rvMyConnections);
         profiles = new ArrayList<>();
 
-        onDetailsClickListener = new ProfileAdapter.OnDetailsClickListener() {
+        onDetailsClickListener = new ConnectedProfileAdapter.OnConnectedDetailsClickListener() {
             @Override
             public void OnDetailsClicked(int position) {
                 goToDetailView(position);
             }
         };
 
-        adapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
+        adapter = new ConnectedProfileAdapter(getContext(), onDetailsClickListener, profiles);
         rvMyConnections.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvMyConnections.setLayoutManager(linearLayoutManager);
