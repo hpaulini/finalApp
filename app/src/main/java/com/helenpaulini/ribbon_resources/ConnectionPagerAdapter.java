@@ -28,9 +28,9 @@ public class ConnectionPagerAdapter extends FragmentPagerAdapter{
 
         switch (position){
             case 0:
-                return new RequestconnectionFragment();
-            case 1:
                 return new AcceptedprofilesFragment();
+            case 1:
+                return new RequestconnectionFragment();
             case 2:
                 return new ConnectionsFragment();
             default:
