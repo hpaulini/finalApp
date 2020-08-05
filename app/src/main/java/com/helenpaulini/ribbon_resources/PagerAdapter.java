@@ -1,6 +1,7 @@
 package com.helenpaulini.ribbon_resources;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -24,7 +25,6 @@ public class PagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-
         switch (position){
             case 0:
                 return new NameAndBioFragment();
@@ -32,6 +32,21 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 return new MedicalinfoFragment();
             case 2:
                 return new PersonalinfoFragment();
+            default:
+                return null;
+        }
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position){
+            case 0:
+                return "Profile";
+            case 1:
+                return "Match Info.";
+            case 2:
+                return "Contact";
             default:
                 return null;
         }

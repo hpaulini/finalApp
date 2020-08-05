@@ -92,10 +92,19 @@ public class ViewpagerFragment extends Fragment {
 
         pagerAdapter = new PagerAdapter(getFragmentManager(), tabBar.getTabCount());
         viewPager.setAdapter(pagerAdapter);
+        tabBar.setupWithViewPager(viewPager);
         tabBar.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+
+//                tabBar.getTabAt(tab.getPosition()).select();
+
+//                tabBar.setScrollPosition(tab.getPosition(),0f,true);
+//                viewPager.setCurrentItem(tab.getPosition());
+
+//                TabLayout.Tab selectedTab = tabBar.getTabAt(tab.getPosition());
+//                selectedTab.select();
             }
 
             @Override
