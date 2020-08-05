@@ -220,16 +220,23 @@ public class NameAndBioFragment extends Fragment {
     private void saveProfile(File photoFile, String firstName, String lastName, String birthday, String bio) {
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.fetchInBackground();
+        Profile currentProfile;
+        Log.i(TAG, "current user: " +currentUser.getUsername());
+        if(currentUser.getParseObject("profile")!=null){
+            currentProfile = (Profile) currentUser.getParseObject("profile");
+            currentProfile.fetchInBackground();
+        } else {
+            currentProfile = new Profile();
+            currentProfile.fetchInBackground();
+        }
 
-        Profile profile = new Profile();
-        profile.setUser(currentUser);
+        currentProfile.setFirstName(firstName);
+        currentProfile.setLastName(lastName);
+        currentProfile.setBirthday(birthday);
+        currentProfile.setBio(bio);
+        currentProfile.put("user", currentUser);
 
-        profile.setFirstName(firstName);
-        profile.setLastName(lastName);
-        profile.setBirthday(birthday);
-        profile.setBio(bio);
-
-        profile.saveInBackground(new SaveCallback() {
+        currentProfile.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e != null) {
@@ -239,7 +246,8 @@ public class NameAndBioFragment extends Fragment {
                 Log.i(TAG, "Profile saved successfully!!");
             }
         });
-        currentUser.put("profile", profile);
+
+        currentUser.put("profile", currentProfile);
         currentUser.saveInBackground(new SaveCallback() {
             @Override
             public void done(com.parse.ParseException e) {

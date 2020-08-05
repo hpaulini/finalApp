@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.helenpaulini.ribbon_resources.models.Post;
 import com.helenpaulini.ribbon_resources.models.Profile;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import org.w3c.dom.Text;
 
@@ -96,10 +97,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         }
 
         public void bind(Post post) throws com.parse.ParseException {
-            Profile profile = (Profile) post.getUser().fetchIfNeeded().getParseObject("profile");
+            //Profile profile = (Profile) post.getUser().fetchIfNeeded().getParseObject("profile");
             tvHeader.setText(post.getHeader());
             tvTags.setText(post.getTags());
-            tvAuthor.setText(post.getUser().getUsername());
+            //tvAuthor.setText(post.getUser().getUsername());
             //tvAuthor.setText(profile.getFirstName()+" "+profile.getLastName());
             tvCaption.setText(post.getDescription());
             String date = post.getCreatedAt().toString();

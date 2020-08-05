@@ -332,14 +332,14 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                                                     Log.i(TAG, "in here???????!!!!!!");
                                                     acceptedProfilesList.add((Profile) requestsList.get(i));
                                                 }
-                                                if(requestsList.get(i).getParseUser("user").fetchIfNeeded().getUsername().equals(acceptedList.get(k).fetchIfNeeded().getParseUser("user").getUsername())){
-                                                    Log.i(TAG, "done: adding to remove requests");
-                                                    removeFromRequests.add((Profile) requestsList.get(i));
-                                                }
-                                                if(requestorList.get(j).getParseUser("user").fetchIfNeeded().getUsername().equals(acceptedList.get(k).fetchIfNeeded().getParseUser("user").getUsername())){
-                                                    Log.i(TAG, "done: adding to remove requestor");
-                                                    removeFromRequestors.add((Profile) requestorList.get(j));
-                                                }
+//                                                if(requestsList.get(i).getParseUser("user").fetchIfNeeded().getUsername().equals(acceptedList.get(k).fetchIfNeeded().getParseUser("user").getUsername())){
+//                                                    Log.i(TAG, "done: adding to remove requests");
+//                                                    removeFromRequests.add((Profile) requestsList.get(i));
+//                                                }
+//                                                if(requestorList.get(j).getParseUser("user").fetchIfNeeded().getUsername().equals(acceptedList.get(k).fetchIfNeeded().getParseUser("user").getUsername())){
+//                                                    Log.i(TAG, "done: adding to remove requestor");
+//                                                    removeFromRequestors.add((Profile) requestorList.get(j));
+//                                                }
                                             } catch (com.parse.ParseException e1) {
                                                 e1.printStackTrace();
                                             }
@@ -352,7 +352,11 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                                     Log.i(TAG, "Accepted Profiles list***********: "+acceptedProfilesList.get(i).getString("firstName"));
                                     currentProfile.getRelation("acceptedProfiles").add(acceptedProfilesList.get(i));
                                     currentProfile.getRelation("requestorProfiles").remove(acceptedProfilesList.get(i));
-                                    Log.i("********hello", "removed: "+acceptedProfilesList.get(i)+" from: " +currentProfile.getString("firstName"));
+                                    try {
+                                        Log.i("********hello", "removed: "+acceptedProfilesList.get(i)+" from: " +currentProfile.fetchIfNeeded().getString("firstName"));
+                                    } catch (com.parse.ParseException ex) {
+                                        ex.printStackTrace();
+                                    }
                                     currentProfile.getRelation("requestedProfiles").remove(acceptedProfilesList.get(i));
                                 }
 

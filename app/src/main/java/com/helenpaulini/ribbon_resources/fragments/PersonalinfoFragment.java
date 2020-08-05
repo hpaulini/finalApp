@@ -182,9 +182,14 @@ public class PersonalinfoFragment extends Fragment {
     public void saveToContact(String city, String email, String phone, String facebook, String instagram){
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.fetchInBackground();
+        ContactInfo contact;
 
-        ContactInfo contact = new ContactInfo();
-        contact.setUser(currentUser);
+        if(currentUser.getParseObject("contactInfo")!=null){
+            contact = (ContactInfo) currentUser.getParseObject("contactInfo");
+        } else {
+            contact = new ContactInfo();
+            contact.setUser(currentUser);
+        }
 
         contact.setAddress(city);
         contact.setEmail(email);
@@ -202,6 +207,7 @@ public class PersonalinfoFragment extends Fragment {
                 Log.i(TAG, "Profile saved successfully!!");
             }
         });
+
         currentUser.put("contactInfo", contact);
         currentUser.saveInBackground(new SaveCallback() {
             @Override
