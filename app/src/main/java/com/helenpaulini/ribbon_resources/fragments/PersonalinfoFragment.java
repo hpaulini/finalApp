@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.helenpaulini.ribbon_resources.MainActivity;
+import com.helenpaulini.ribbon_resources.MyBounceInterpolator;
 import com.helenpaulini.ribbon_resources.R;
 import com.helenpaulini.ribbon_resources.models.ContactInfo;
 import com.helenpaulini.ribbon_resources.models.Hospital;
@@ -119,6 +122,10 @@ public class PersonalinfoFragment extends Fragment {
         saveContactInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final Animation myAnim = AnimationUtils.loadAnimation(getContext(), R.anim.bounce);
+                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+                myAnim.setInterpolator(interpolator);
+                getMatches.startAnimation(myAnim);
                 String city = cityText.getText().toString();
                 String email = emailText.getText().toString();
                 String phone = phoneText.getText().toString();
