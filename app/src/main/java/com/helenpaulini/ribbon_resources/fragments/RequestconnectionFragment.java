@@ -39,7 +39,7 @@ public class RequestconnectionFragment extends Fragment {
     public static final String TAG = "Request connection fragment";
 
     private String client;
-    private RecyclerView rvMyConnections;
+    //private RecyclerView rvMyConnections;
     private RecyclerView rvRequestedConnections;
     private RecyclerView rvPendingConnections;
     protected ProfileAdapter myConnectionsAdapter, requestedConnectionsAdapter, pendingConnectionsAdapter;
@@ -102,7 +102,7 @@ public class RequestconnectionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        rvMyConnections = view.findViewById(R.id.rvMyConnections);
+        //rvMyConnections = view.findViewById(R.id.rvMyConnections);
         rvRequestedConnections = view.findViewById(R.id.rvRequestedConnections);
         rvPendingConnections = view.findViewById(R.id.rvPendingConnections);
         profiles = new ArrayList<>();
@@ -135,15 +135,15 @@ public class RequestconnectionFragment extends Fragment {
         queryConnectionRequests();
 
         //create the adapter
-        myConnectionsAdapter = new ProfileAdapter(getContext(), onDetailsClickListener, acceptedProfiles);
+        //myConnectionsAdapter = new ProfileAdapter(getContext(), onDetailsClickListener, acceptedProfiles);
         //set the adapter on the recycler view
-        rvMyConnections.setAdapter(myConnectionsAdapter);
+        //rvMyConnections.setAdapter(myConnectionsAdapter);
         //set the layout on the recycler view
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
-        rvMyConnections.setLayoutManager(linearLayoutManager2);
+        //LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
+        //rvMyConnections.setLayoutManager(linearLayoutManager2);
         //queryConnectedProfiles();
         //queryConnectionsAccepted();
-        queryAcceptedConnections();
+        //queryAcceptedConnections();
     }
 
     public void queryConnectionRequests(){
