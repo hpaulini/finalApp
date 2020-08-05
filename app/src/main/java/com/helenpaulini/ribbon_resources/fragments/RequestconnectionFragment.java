@@ -122,7 +122,13 @@ public class RequestconnectionFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvPendingConnections.setLayoutManager(linearLayoutManager);
         //queryPendingProfiles();
-        queryConnectionsRequested();
+        try {
+            if(ParseUser.getCurrentUser().fetchIfNeeded().getParseObject("profile")!=null){
+                queryConnectionsRequested();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         //create the adapter
         requestedConnectionsAdapter = new ProfileAdapter(getContext(), onDetailsClickListener, requestedProfiles);
@@ -132,7 +138,13 @@ public class RequestconnectionFragment extends Fragment {
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext());
         rvRequestedConnections.setLayoutManager(linearLayoutManager3);
         //queryRequestedProfiles();
-        queryConnectionRequests();
+        try {
+            if(ParseUser.getCurrentUser().fetchIfNeeded().getParseObject("profile")!=null){
+                queryConnectionRequests();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         //create the adapter
         //myConnectionsAdapter = new ProfileAdapter(getContext(), onDetailsClickListener, acceptedProfiles);

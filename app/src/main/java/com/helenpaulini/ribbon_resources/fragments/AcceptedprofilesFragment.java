@@ -108,7 +108,13 @@ public class AcceptedprofilesFragment extends Fragment {
         rvMyConnections.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvMyConnections.setLayoutManager(linearLayoutManager);
-        queryAcceptedConnections();
+        try {
+            if(ParseUser.getCurrentUser().fetchIfNeeded().getParseObject("profile")!=null){
+                queryAcceptedConnections();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public void queryAcceptedConnections(){

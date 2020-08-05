@@ -100,7 +100,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             //Profile profile = (Profile) post.getUser().fetchIfNeeded().getParseObject("profile");
             tvHeader.setText(post.getHeader());
             tvTags.setText(post.getTags());
-            //tvAuthor.setText(post.getUser().getUsername());
+            tvAuthor.setText(post.getUser().getUsername());
             //tvAuthor.setText(profile.getFirstName()+" "+profile.getLastName());
             tvCaption.setText(post.getDescription());
             String date = post.getCreatedAt().toString();
