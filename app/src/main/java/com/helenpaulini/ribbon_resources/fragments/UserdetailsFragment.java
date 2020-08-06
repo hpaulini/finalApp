@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.helenpaulini.ribbon_resources.R;
+import com.helenpaulini.ribbon_resources.models.ContactInfo;
 import com.helenpaulini.ribbon_resources.models.Profile;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -48,6 +49,7 @@ public class UserdetailsFragment extends Fragment {
     private TextView instagram;
 
     private Profile profile;
+    private ContactInfo contactInfo;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -100,7 +102,14 @@ public class UserdetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         profile = getArguments().getParcelable("profileDetails");
-
+        try {
+            if(profile.fetchIfNeeded().getParseUser("user").getParseObject("contactInfo")!=null) {
+                contactInfo = (ContactInfo) profile.fetchIfNeeded().getParseUser("user").getParseObject("contactInfo");
+                contactInfo.fetchInBackground();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         setViews(view);
         setTexts();
         Glide.with(getContext()).load((profile.getImage()).getUrl()).into(profile_image);
@@ -130,7 +139,7 @@ public class UserdetailsFragment extends Fragment {
         firstName.setText(profile.getFirstName());
         lastName.setText(profile.getLastName());
         birthday.setText(profile.getBirthday());
-        city.setText(profile.getCity());
+        //city.setText(profile.getCity());
         bio.setText(profile.getBio());
         interests.setText(profile.getInsterests());
         userType.setText(profile.getUserType());
@@ -139,9 +148,16 @@ public class UserdetailsFragment extends Fragment {
         treatmentType.setText(profile.getTreatmentType());
         treatmentStart.setText(profile.getTreatmentStart());
         treatmentEnd.setText(profile.getTreatmentEnd());
-        email.setText(profile.getFirstName());
-        phone.setText(profile.getFirstName());
-        facebook.setText(profile.getFirstName());
-        instagram.setText(profile.getFirstName());
+        try {
+            if(profile.fetchIfNeeded().getParseUser("user").getParseObject("contactInfo")!=null) {
+                city.setText(contactInfo.fetchIfNeeded().getString("address"));
+                email.setText(contactInfo.fetchIfNeeded().getString("email"));
+                phone.setText(contactInfo.fetchIfNeeded().getString("phone"));
+                facebook.setText(contactInfo.fetchIfNeeded().getString("facebook"));
+                instagram.setText(contactInfo.fetchIfNeeded().getString("instagram"));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
