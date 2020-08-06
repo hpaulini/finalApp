@@ -33,6 +33,8 @@ import com.helenpaulini.ribbon_resources.models.Profile;
 import com.helenpaulini.ribbon_resources.models.RequestedConnections;
 import com.helenpaulini.ribbon_resources.models.SurvivorProfile;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.Parse;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -192,10 +194,39 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             tvUserType.setText(profile.getUserType());
             tvCancerType.setText(profile.getCancerType());
             tvHospital.setText(profile.getHospital());
+//            btnSave.setTag(1);
+//            btnConnect.setTag(1);
+
+//            setButtonSaveStates(profile);
+//            setButtonConnectionStates(profile);
+
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            currentUser.fetchInBackground();
+            ParseQuery<ParseObject> savedProfiles = currentUser.getRelation("userRelation").getQuery();
+            savedProfiles.whereEqualTo("username", profile.getUser().getUsername());
+            savedProfiles.getFirstInBackground(new GetCallback<ParseObject>() {
+                @Override
+                public void done(ParseObject profile, com.parse.ParseException e) {
+                    if(e==null){
+                        btnSave.setText("Remove Connection");
+                        btnSave.setTag(0);
+                        Log.i(TAG, "changed button text");
+                        return;
+                    }
+                }
+            });
 
             btnConnect.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View v) {
+                    final int status =(Integer) v.getTag();
+                    if(status == 1) {
+                        btnConnect.setText("Remove Connection");
+                        v.setTag(0);
+                    } else {
+                        btnConnect.setText("Connect");
+                        v.setTag(1);
+                    }
                     saveConnection(profile);
                 }
             });
@@ -204,7 +235,15 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             //then, in profile (or connections??) fragment, make a new object of that class and send the list to the parse database for the current user
             btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View v) {
+                    final int status =(Integer) v.getTag();
+                    if(status == 1) {
+                        btnSave.setText("Remove Profile");
+                        v.setTag(0);
+                    } else {
+                        btnSave.setText("Save Profile");
+                        v.setTag(1);
+                    }
                     saveUserRelation(profile);
                     //addToProfileArray(profile);
                     //saveConnectionsRelation(profile);
@@ -223,6 +262,49 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                     onDetailsClickListener.OnDetailsClicked(getAdapterPosition());
                 }
             });
+        }
+
+        public void setButtonSaveStates(Profile checkProfile){
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            currentUser.fetchInBackground();
+            ParseQuery<ParseObject> savedUsers = currentUser.getRelation("userRelation").getQuery();
+            savedUsers.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> savedUsers, com.parse.ParseException e) {
+                    for(ParseObject savedUser:savedUsers){
+                        btnSave.setTag(1);
+                    }
+                }
+            });
+        }
+
+        public void setButtonConnectionStates(Profile checkProfile){
+            try {
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                currentUser.fetchInBackground();
+                Profile currentProfile = (Profile) currentUser.fetchIfNeeded().getParseObject("profile");
+                ParseQuery<ParseObject> requestedProfiles = currentProfile.getRelation("requestedProfiles").getQuery();
+                requestedProfiles.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> requestedProfiles, com.parse.ParseException e) {
+                        for(ParseObject requestedProfile:requestedProfiles){
+                            btnConnect.setTag(1);
+                        }
+                    }
+                });
+
+                ParseQuery<ParseObject> acceptedProfiles = currentProfile.getRelation("acceptedProfiles").getQuery();
+                acceptedProfiles.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> acceptedProfiles, com.parse.ParseException e) {
+                        for(ParseObject acceptedProfile:acceptedProfiles){
+                            btnConnect.setTag(1);
+                        }
+                    }
+                });
+            } catch (com.parse.ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         public String age(Date birthday) {
