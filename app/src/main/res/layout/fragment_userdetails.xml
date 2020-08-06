@@ -230,17 +230,6 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
 
-        <Button
-            android:id="@+id/saveProf"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/instagram"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="Save Profile" />
-
         <TextView
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
