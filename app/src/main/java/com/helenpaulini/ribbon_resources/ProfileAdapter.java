@@ -66,6 +66,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     List<Profile> myConnections = new ArrayList<>();
     private RequestedConnections request;
     HashMap<Profile, List<Profile>> listOfRequestors = new HashMap<>();
+    private int saveButtonTag;
+    private int connectButtonTag;
 
     public ProfileAdapter(Context context, OnDetailsClickListener onDetailsClickListener, List<Profile> profiles) {
         this.context = context;
@@ -210,7 +212,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 public void done(ParseObject profile, com.parse.ParseException e) {
                     if(e==null){
                         btnConnect.setText("Remove Connection");
-                        btnConnect.setTag(0);
+                        connectButtonTag = 0;
                         Log.i(TAG, "changed button connect text");
                         return;
                     }
@@ -224,7 +226,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 public void done(ParseObject profile, com.parse.ParseException e) {
                     if(e==null){
                         btnConnect.setText("Remove Connection");
-                        btnConnect.setTag(0);
+                        connectButtonTag = 0;
                         Log.i(TAG, "changed button connect text");
                         return;
                     }
@@ -238,7 +240,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 public void done(ParseObject profile, com.parse.ParseException e) {
                     if(e==null){
                         btnSave.setText("Remove Profile");
-                        btnSave.setTag(0);
+                        saveButtonTag = 0;
                         Log.i(TAG, "changed button save text");
                         return;
                     }
@@ -248,15 +250,15 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             btnConnect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final int status =(Integer) v.getTag();
-                    if(status == 1) {
+                    //final int status =(Integer) v.getTag();
+                    if(connectButtonTag == 1) {
                         //TO DO save connection here
                         btnConnect.setText("Remove Connection");
-                        v.setTag(0);
+                        connectButtonTag = 0;
                     } else {
                         //TO DO remove connection here
                         btnConnect.setText("Connect");
-                        v.setTag(1);
+                        connectButtonTag = 1;
                     }
                     saveConnection(profile);
                 }
@@ -267,15 +269,15 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final int status =(Integer) v.getTag();
-                    if(status == 1) {
+                    //final int status =(Integer) v.getTag();
+                    if(saveButtonTag == 1) {
                         // SAVE profile here
                         btnSave.setText("Remove Profile");
-                        v.setTag(0);
+                        saveButtonTag = 0;
                     } else {
                         // REMOVE profile here
                         btnSave.setText("Save Profile");
-                        v.setTag(1);
+                        saveButtonTag = 1;
                     }
                     saveUserRelation(profile);
                     //addToProfileArray(profile);

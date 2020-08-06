@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.helenpaulini.ribbon_resources.ProfileAdapter;
@@ -46,6 +47,7 @@ public class RequestconnectionFragment extends Fragment {
     protected List<Profile> profiles;
     List<Profile> profilesFromParseObject;
     ProfileAdapter.OnDetailsClickListener onDetailsClickListener;
+    protected ProgressBar progress_bar;
 
     private List<Profile> requestedProfiles = new ArrayList<>();
     private List<Profile> pendingProfiles = new ArrayList<>();
@@ -105,6 +107,8 @@ public class RequestconnectionFragment extends Fragment {
         //rvMyConnections = view.findViewById(R.id.rvMyConnections);
         rvRequestedConnections = view.findViewById(R.id.rvRequestedConnections);
         rvPendingConnections = view.findViewById(R.id.rvPendingConnections);
+        //progress_bar = view.findViewById(R.id.progress_bar);
+        //progress_bar.setVisibility(View.VISIBLE);
         profiles = new ArrayList<>();
 
         onDetailsClickListener = new ProfileAdapter.OnDetailsClickListener() {
@@ -122,13 +126,14 @@ public class RequestconnectionFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvPendingConnections.setLayoutManager(linearLayoutManager);
         //queryPendingProfiles();
-        try {
-            if(ParseUser.getCurrentUser().fetchIfNeeded().getParseObject("profile")!=null){
-                queryConnectionsRequested();
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
+//        try {
+//            if(ParseUser.getCurrentUser().fetchIfNeeded().getParseObject("profile")!=null){
+//                queryConnectionsRequested();
+//            }
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
 
         //create the adapter
         requestedConnectionsAdapter = new ProfileAdapter(getContext(), onDetailsClickListener, requestedProfiles);
@@ -141,10 +146,30 @@ public class RequestconnectionFragment extends Fragment {
         try {
             if(ParseUser.getCurrentUser().fetchIfNeeded().getParseObject("profile")!=null){
                 queryConnectionRequests();
+                queryConnectionsRequested();
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    if(ParseUser.getCurrentUser().fetchIfNeeded().getParseObject("profile")!=null){
+//                        queryConnectionRequests();
+//                        queryConnectionsRequested();
+//                    }
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//                getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        progress_bar.setVisibility(View.GONE);
+//                    }
+//                });
+//            }
+//        });
 
         //create the adapter
         //myConnectionsAdapter = new ProfileAdapter(getContext(), onDetailsClickListener, acceptedProfiles);
@@ -553,5 +578,4 @@ public class RequestconnectionFragment extends Fragment {
         userdetailsFragment.setArguments(bundle);
         fm.beginTransaction().replace(R.id.flContainer, userdetailsFragment).addToBackStack(null).commit();
     }
-
 }
