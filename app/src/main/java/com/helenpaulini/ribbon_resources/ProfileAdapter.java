@@ -250,9 +250,11 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 public void onClick(View v) {
                     final int status =(Integer) v.getTag();
                     if(status == 1) {
+                        //TO DO save connection here
                         btnConnect.setText("Remove Connection");
                         v.setTag(0);
                     } else {
+                        //TO DO remove connection here
                         btnConnect.setText("Connect");
                         v.setTag(1);
                     }
@@ -267,9 +269,11 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 public void onClick(View v) {
                     final int status =(Integer) v.getTag();
                     if(status == 1) {
+                        // SAVE profile here
                         btnSave.setText("Remove Profile");
                         v.setTag(0);
                     } else {
+                        // REMOVE profile here
                         btnSave.setText("Save Profile");
                         v.setTag(1);
                     }

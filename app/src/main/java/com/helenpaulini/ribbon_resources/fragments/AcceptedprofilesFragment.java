@@ -40,8 +40,8 @@ public class AcceptedprofilesFragment extends Fragment {
     private String client;
     private RecyclerView rvMyConnections;
     protected List<Profile> profiles;
-    ConnectedProfileAdapter adapter;
-    ConnectedProfileAdapter.OnConnectedDetailsClickListener onDetailsClickListener;
+    ProfileAdapter adapter;
+    ProfileAdapter.OnDetailsClickListener onDetailsClickListener;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -97,14 +97,14 @@ public class AcceptedprofilesFragment extends Fragment {
         rvMyConnections = view.findViewById(R.id.rvMyConnections);
         profiles = new ArrayList<>();
 
-        onDetailsClickListener = new ConnectedProfileAdapter.OnConnectedDetailsClickListener() {
+        onDetailsClickListener = new ProfileAdapter.OnDetailsClickListener() {
             @Override
             public void OnDetailsClicked(int position) {
                 goToDetailView(position);
             }
         };
 
-        adapter = new ConnectedProfileAdapter(getContext(), onDetailsClickListener, profiles);
+        adapter = new ProfileAdapter(getContext(), onDetailsClickListener, profiles);
         rvMyConnections.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvMyConnections.setLayoutManager(linearLayoutManager);
