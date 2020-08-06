@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.helenpaulini.ribbon_resources.R;
 import com.helenpaulini.ribbon_resources.models.Profile;
@@ -115,10 +118,30 @@ public class NameAndBioFragment extends Fragment {
 
         setViews(view);
         setPreviouslyInputted(currentUser);
+
+        MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
+        builder.setTitleText("Select your Birthday");
+        final MaterialDatePicker materialDatePicker = builder.build();
+
         btnAddPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchCamera();
+            }
+        });
+
+        bday.setInputType(InputType.TYPE_NULL);
+        bday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                materialDatePicker.show(getFragmentManager(), "Date Picker");
+            }
+        });
+
+        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+                bday.setText(materialDatePicker.getHeaderText());
             }
         });
 

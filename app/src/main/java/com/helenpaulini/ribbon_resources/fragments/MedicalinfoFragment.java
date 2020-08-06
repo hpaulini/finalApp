@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
 import android.text.InputType;
@@ -21,6 +22,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.helenpaulini.ribbon_resources.MainActivity;
 import com.helenpaulini.ribbon_resources.R;
@@ -34,11 +37,15 @@ import com.parse.SaveCallback;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
 import in.galaxyofandroid.spinerdialog.SpinnerDialog;
@@ -177,6 +184,44 @@ public class MedicalinfoFragment extends Fragment {
 
         setViews(view);
         setPreviouslyInputted(currentUser);
+
+        MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
+        builder.setTitleText("Treatment Start");
+        final MaterialDatePicker materialDatePicker = builder.build();
+
+        startText.setInputType(InputType.TYPE_NULL);
+        startText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                materialDatePicker.show(getFragmentManager(), "Date Picker");
+            }
+        });
+
+        MaterialDatePicker.Builder builder1 = MaterialDatePicker.Builder.datePicker();
+        builder1.setTitleText("Treatment End");
+        final MaterialDatePicker materialDatePicker1 = builder.build();
+
+        endText.setInputType(InputType.TYPE_NULL);
+        endText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                materialDatePicker1.show(getFragmentManager(), "Date Picker");
+            }
+        });
+
+        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+                startText.setText(materialDatePicker.getHeaderText());
+            }
+        });
+
+        materialDatePicker1.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+                endText.setText(materialDatePicker1.getHeaderText());
+            }
+        });
 
         savePersonalInfo.setOnClickListener(new View.OnClickListener() {
             @Override
