@@ -272,14 +272,15 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                     //final int status =(Integer) v.getTag();
                     if(saveButtonTag == 1) {
                         // SAVE profile here
+                        saveUserRelation(profile);
                         btnSave.setText("Remove Profile");
                         saveButtonTag = 0;
                     } else {
                         // REMOVE profile here
+                        removeUserRelation(profile);
                         btnSave.setText("Save Profile");
                         saveButtonTag = 1;
                     }
-                    saveUserRelation(profile);
                     //addToProfileArray(profile);
                     //saveConnectionsRelation(profile);
                     //onSaveConnectionClick(profile);
@@ -647,6 +648,28 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                             Toast.makeText(context, "Error while saving", Toast.LENGTH_SHORT).show();
                         }
                         Log.i(TAG, "My user relaitons saved successfully!!");
+                    }
+                });
+                Log.i(TAG, "saved user relations**");
+            } catch (com.parse.ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void removeUserRelation(Profile clickedProfile) {
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            currentUser.fetchInBackground();
+            try {
+                currentUser.fetchIfNeeded().getRelation("userRelation").remove(clickedProfile.getUser());
+
+                currentUser.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(com.parse.ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving", e);
+                            Toast.makeText(context, "Error while saving", Toast.LENGTH_SHORT).show();
+                        }
+                        Log.i(TAG, "My user relaitons removed successfully!!");
                     }
                 });
                 Log.i(TAG, "saved user relations**");
