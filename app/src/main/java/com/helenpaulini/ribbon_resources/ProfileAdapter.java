@@ -309,22 +309,22 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
                 ParseQuery<ParseObject> currentRequests = currentProfile.getRelation("requestedProfiles").getQuery();
                 ParseQuery<ParseObject> currentRequestors = currentProfile.getRelation("requestorProfiles").getQuery();
-                ParseQuery<ParseObject> currentAccepted = currentProfile.getRelation("acceptedProfiles").getQuery();
+//                ParseQuery<ParseObject> currentAccepted = currentProfile.getRelation("acceptedProfiles").getQuery();
                 List<Profile> acceptedProfilesList = new ArrayList<>();
-                List<Profile> removeFromRequestors = new ArrayList<>();
-                List<Profile> removeFromRequests = new ArrayList<>();
+//                List<Profile> removeFromRequestors = new ArrayList<>();
+//                List<Profile> removeFromRequests = new ArrayList<>();
                 currentRequests.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> requestsList, com.parse.ParseException e) {
                         currentRequestors.findInBackground(new FindCallback<ParseObject>() {
                             @Override
                             public void done(List<ParseObject> requestorList, com.parse.ParseException e) {
-                                currentAccepted.findInBackground(new FindCallback<ParseObject>() {
-                                    @Override
-                                    public void done(List<ParseObject> acceptedList, com.parse.ParseException e) {
+//                                currentAccepted.findInBackground(new FindCallback<ParseObject>() {
+//                                    @Override
+//                                    public void done(List<ParseObject> acceptedList, com.parse.ParseException e) {
                                 for(int i=0; i<requestsList.size(); i++){
                                     for(int j=0; j<requestorList.size(); j++){
-                                        for(int k=0; k<acceptedList.size(); k++) {
+//                                        for(int k=0; k<acceptedList.size(); k++) {
                                             try {
                                                 Log.i(TAG, "requested**: " + requestsList.get(i).getParseUser("user").fetchIfNeeded().getUsername());
                                                 Log.i(TAG, "requestor**: " + requestorList.get(j).getParseUser("user").fetchIfNeeded().getUsername());
@@ -345,7 +345,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                                             }
                                         }
                                     }
-                                }
+//                                }
                                 Log.i(TAG, "Accepted Profiles list*********: "+acceptedProfilesList.size());
 
                                 for(int i=0; i<acceptedProfilesList.size(); i++){
@@ -360,13 +360,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                                     currentProfile.getRelation("requestedProfiles").remove(acceptedProfilesList.get(i));
                                 }
 
-                                for(int i=0; i<removeFromRequestors.size(); i++){
-                                    currentProfile.getRelation("requestorProfiles").remove(removeFromRequestors.get(i));
-                                }
-
-                                for(int i=0; i<removeFromRequests.size(); i++){
-                                    currentProfile.getRelation("requestedProfiles").remove(removeFromRequests.get(i));
-                                }
+//                                for(int i=0; i<removeFromRequestors.size(); i++){
+//                                    currentProfile.getRelation("requestorProfiles").remove(removeFromRequestors.get(i));
+//                                }
+//
+//                                for(int i=0; i<removeFromRequests.size(); i++){
+//                                    currentProfile.getRelation("requestedProfiles").remove(removeFromRequests.get(i));
+//                                }
 
                                 currentProfile.saveInBackground(new SaveCallback() {
                                     @Override
@@ -382,8 +382,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                                 });
                             }
                         });
-                    }
-                });
+//                    }
+//                });
 
 
             } catch (com.parse.ParseException e) {
