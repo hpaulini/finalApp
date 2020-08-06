@@ -130,7 +130,7 @@ public class PersonalinfoFragment extends Fragment {
                 String email = emailText.getText().toString();
                 String phone = phoneText.getText().toString();
                 String facebook = facebookText.getText().toString();
-                String instagram = "@"+instagramText.getText().toString();
+                String instagram = instagramText.getText().toString();
                 saveToContact(city, email, phone, facebook, instagram);
             }
         });

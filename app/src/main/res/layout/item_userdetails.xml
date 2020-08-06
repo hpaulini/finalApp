@@ -32,21 +32,21 @@
 
         <TextView
             android:id="@+id/firstName"
-            android:layout_width="160dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ivAddProfPic"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="22dp"
             android:layout_marginEnd="4dp"
+            android:layout_toEndOf="@+id/imageView2"
             tools:text="First Name" />
 
         <TextView
             android:id="@+id/lastName"
-            android:layout_width="160dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/firstName"
-            android:layout_marginStart="0dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="4dp"
             android:layout_toEndOf="@+id/firstName"
@@ -54,23 +54,24 @@
 
         <TextView
             android:id="@+id/birthday"
-            android:layout_width="160dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/firstName"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="4dp"
+            android:layout_toEndOf="@+id/imageView3"
             tools:text="Age" />
 
         <TextView
             android:id="@+id/city"
-            android:layout_width="160dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/birthday"
-            android:layout_marginStart="0dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="4dp"
-            android:layout_toEndOf="@+id/birthday"
+            android:layout_toEndOf="@+id/imageView6"
             tools:text="City" />
 
         <TextView
@@ -231,6 +232,45 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="Save Profile" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="200dp" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivAddProfPic"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="18dp"
+            app:srcCompat="@drawable/ic_baseline_person_24" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/firstName"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/ic_baseline_date_range_24" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/firstName"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_toEndOf="@+id/birthday"
+            app:srcCompat="@drawable/ic_baseline_place_24" />
 
 
     </RelativeLayout>
