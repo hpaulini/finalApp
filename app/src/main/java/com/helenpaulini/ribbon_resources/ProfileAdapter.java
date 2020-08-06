@@ -252,15 +252,17 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 public void onClick(View v) {
                     //final int status =(Integer) v.getTag();
                     if(connectButtonTag == 1) {
-                        //TO DO save connection here
+                        //save connection here
+                        saveConnection(profile);
                         btnConnect.setText("Remove Connection");
                         connectButtonTag = 0;
                     } else {
-                        //TO DO remove connection here
+                        //remove connection here
+                        removeAcceptedConnection(profile);
+                        removeConnection(profile);
                         btnConnect.setText("Connect");
                         connectButtonTag = 1;
                     }
-                    saveConnection(profile);
                 }
             });
 
@@ -507,7 +509,100 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             } catch (com.parse.ParseException e) {
                 e.printStackTrace();
             }
+        }
 
+        public void removeAcceptedConnection(Profile clickedProfile){
+            try {
+                Log.i(TAG, "removeConnection: here");
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                currentUser.fetchInBackground();
+                Profile currentProfile = (Profile) currentUser.fetchIfNeeded().getParseObject("profile");
+
+                ParseQuery<ParseObject> acceptedProfiles = currentProfile.getRelation("acceptedProfiles").getQuery();
+                acceptedProfiles.whereEqualTo("user", clickedProfile.getUser());
+                acceptedProfiles.getFirstInBackground(new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject profile, com.parse.ParseException e) {
+                        if(e==null){
+                            currentProfile.getRelation("acceptedProfiles").remove(profile);
+                            Log.i(TAG, "done: removed from accepted profiles");
+                            currentProfile.getRelation("requestedProfiles").remove(clickedProfile);
+                            currentProfile.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(com.parse.ParseException e) {
+                                    if (e != null) {
+                                        Log.e(TAG, "Error while saving connection", e);
+                                        Toast.makeText(context, "Error while saving connection", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    clickedProfile.getRelation("requestorProfiles").remove(currentProfile);
+                                    clickedProfile.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(com.parse.ParseException e) {
+                                            if (e != null) {
+                                                Log.e(TAG, "Error while saving connection", e);
+                                                Toast.makeText(context, "Error while saving connection", Toast.LENGTH_SHORT).show();
+                                            }
+                                            Log.i(TAG, "connection saved successfully for profile being requested");
+                                        }
+                                    });
+                                }
+                            });
+                            return;
+                        }
+                    }
+                });
+            } catch (com.parse.ParseException e){
+                e.printStackTrace();
+            }
+        }
+
+        public void removeConnection(Profile clickedProfile){
+            try {
+                Log.i(TAG, "removeConnection: here");
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                currentUser.fetchInBackground();
+                Profile currentProfile = (Profile) currentUser.fetchIfNeeded().getParseObject("profile");
+
+//                ParseQuery<ParseObject> acceptedProfiles = currentProfile.getRelation("acceptedProfiles").getQuery();
+//                acceptedProfiles.whereEqualTo("user", clickedProfile.getUser());
+//                acceptedProfiles.getFirstInBackground(new GetCallback<ParseObject>() {
+//                    @Override
+//                    public void done(ParseObject profile, com.parse.ParseException e) {
+//                        if(e==null){
+//                            currentProfile.getRelation("acceptedProfiles").remove(profile);
+//                            Log.i(TAG, "done: removed from accepted profiles");
+//                            return;
+//                        }
+//                    }
+//                });
+
+                currentProfile.getRelation("requestedProfiles").remove(clickedProfile);
+                currentProfile.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(com.parse.ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving connection", e);
+                            Toast.makeText(context, "Error while saving connection", Toast.LENGTH_SHORT).show();
+                        }
+
+                        clickedProfile.getRelation("requestorProfiles").remove(currentProfile);
+                        clickedProfile.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(com.parse.ParseException e) {
+                                if (e != null) {
+                                    Log.e(TAG, "Error while saving connection", e);
+                                    Toast.makeText(context, "Error while saving connection", Toast.LENGTH_SHORT).show();
+                                }
+                                Log.i(TAG, "connection saved successfully for profile being requested");
+                            }
+                        });
+                    }
+                });
+
+        } catch (com.parse.ParseException e){
+                e.printStackTrace();
+            }
         }
 
         public void newConnection(Profile clickedProfile){
