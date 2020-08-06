@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/radio_group"
             android:layout_marginStart="36dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="4dp"
             android:hint="Hospital of Treatment*"
             app:helperText="*Required">
@@ -69,7 +69,7 @@
             android:layout_below="@+id/hospital"
             android:layout_alignParentStart="true"
             android:layout_marginStart="36dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="4dp"
             android:hint="Cancer Type*"
             app:helperText="*Required">
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/cancerType"
             android:layout_marginStart="36dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="4dp"
             android:hint="Treatment Type">
 
@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/treatmentType"
             android:layout_marginStart="36dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="4dp"
             android:hint="Treatment Start">
 
@@ -144,7 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/treatmentStart"
             android:layout_marginStart="36dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="4dp"
             android:hint="Interests"
             app:helperText="This will help us match you with users of similar interests">
@@ -153,30 +153,19 @@
                 android:id="@+id/interestsText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:chipTextSize="16dp"
                 app:chipHeight="30dp"
-                app:chipVerticalSpacing="3dp"/>
+                app:chipTextSize="16dp"
+                app:chipVerticalSpacing="3dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ivAddProfPic"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="0dp"
-            android:text="Matching Information"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="0dp"
             android:text="Select what type of user you are:"
             android:textAlignment="center"
@@ -251,7 +240,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/interests"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
             android:text="Save Match Data" />
 

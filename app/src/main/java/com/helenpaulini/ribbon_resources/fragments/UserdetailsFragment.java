@@ -154,7 +154,7 @@ public class UserdetailsFragment extends Fragment {
                 email.setText(contactInfo.fetchIfNeeded().getString("email"));
                 phone.setText(contactInfo.fetchIfNeeded().getString("phone"));
                 facebook.setText(contactInfo.fetchIfNeeded().getString("facebook"));
-                instagram.setText(contactInfo.fetchIfNeeded().getString("instagram"));
+                instagram.setText("@"+contactInfo.fetchIfNeeded().getString("instagram"));
             }
         } catch (ParseException e) {
             e.printStackTrace();
