@@ -111,6 +111,7 @@ public class ComposepostdialogFragment extends DialogFragment {
                 }
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 savePost(title, body, tags, currentUser);
+                dismiss();
             }
         });
     }
