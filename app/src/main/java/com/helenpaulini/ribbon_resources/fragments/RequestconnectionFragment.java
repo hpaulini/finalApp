@@ -546,7 +546,7 @@ public class RequestconnectionFragment extends Fragment {
 
     private void goToDetailView(int position){
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        UserdetailsFragment userdetailsFragment = new UserdetailsFragment();
+        UserdetailsnocontactFragment userdetailsFragment = new UserdetailsnocontactFragment();
         Profile profile = pendingProfiles.get(position);
         Bundle bundle = new Bundle();
         bundle.putParcelable("profileDetails", profile);

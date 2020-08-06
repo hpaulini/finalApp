@@ -256,7 +256,7 @@ public class DashboardFragment extends Fragment {
 
     private void goToDetailView(int position){
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        UserdetailsFragment userdetailsFragment = new UserdetailsFragment();
+        UserdetailsnocontactFragment userdetailsFragment = new UserdetailsnocontactFragment();
         Profile profile = profiles.get(position);
         Bundle bundle = new Bundle();
         bundle.putParcelable("profileDetails", profile);
