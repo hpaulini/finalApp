@@ -202,15 +202,44 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
             ParseUser currentUser = ParseUser.getCurrentUser();
             currentUser.fetchInBackground();
+
+            ParseQuery<ParseObject> connectedProfiles = currentUser.getParseObject("profile").getRelation("requestedProfiles").getQuery();
+            connectedProfiles.whereEqualTo("user", profile.getUser());
+            connectedProfiles.getFirstInBackground(new GetCallback<ParseObject>() {
+                @Override
+                public void done(ParseObject profile, com.parse.ParseException e) {
+                    if(e==null){
+                        btnConnect.setText("Remove Connection");
+                        btnConnect.setTag(0);
+                        Log.i(TAG, "changed button connect text");
+                        return;
+                    }
+                }
+            });
+
+            ParseQuery<ParseObject> acceptedProfiles = currentUser.getParseObject("profile").getRelation("acceptedProfiles").getQuery();
+            acceptedProfiles.whereEqualTo("user", profile.getUser());
+            acceptedProfiles.getFirstInBackground(new GetCallback<ParseObject>() {
+                @Override
+                public void done(ParseObject profile, com.parse.ParseException e) {
+                    if(e==null){
+                        btnConnect.setText("Remove Connection");
+                        btnConnect.setTag(0);
+                        Log.i(TAG, "changed button connect text");
+                        return;
+                    }
+                }
+            });
+
             ParseQuery<ParseObject> savedProfiles = currentUser.getRelation("userRelation").getQuery();
             savedProfiles.whereEqualTo("username", profile.getUser().getUsername());
             savedProfiles.getFirstInBackground(new GetCallback<ParseObject>() {
                 @Override
                 public void done(ParseObject profile, com.parse.ParseException e) {
                     if(e==null){
-                        btnSave.setText("Remove Connection");
+                        btnSave.setText("Remove Profile");
                         btnSave.setTag(0);
-                        Log.i(TAG, "changed button text");
+                        Log.i(TAG, "changed button save text");
                         return;
                     }
                 }
