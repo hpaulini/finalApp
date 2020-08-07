@@ -16,9 +16,9 @@ public class Matching {
     public static final int HIGH_MATCH_VALUE = 10;
     public static final int MEDIUM_MATCH_VALUE = 5;
     public static final int LOW_MATCH_VALUE = 2;
-    public static final int NO_MATCH_VALUE = 0;
+    public static final int NO_MATCH_VALUE = -5;
     private int matchCompatibility = 0;
-    int matchValue = 0;
+    //int matchValue = 0;
     private boolean matchAllowed = false;
 //    private Profile user1;
 //    private Profile user2;
@@ -30,7 +30,7 @@ public class Matching {
     public List<Profile> topMatchList(Profile currentProfile, List<Profile> allProfiles){
         List<Profile> topMatches = new ArrayList<>();
         for(int i=0; i<allProfiles.size(); i++){
-            if(matchValue(currentProfile, allProfiles.get(i))>0){
+            if(topMatchValue(currentProfile, allProfiles.get(i))>0){
                 topMatches.add(allProfiles.get(i));
             }
         }
@@ -118,9 +118,14 @@ public class Matching {
     }
 
     public int topMatchValue(Profile user1, Profile user2){
-        matchValue = 0;
-        if(user1.getUser().equals(user2.getUser())){
-            return NO_MATCH_VALUE; //cannot match with self
+        int matchValue = 0;
+        try {
+            if(user1.getUser().fetchIfNeeded().getString("username").equals(user2.getUser().fetchIfNeeded().getString("username"))){
+                Log.i(TAG, "cancerMatchValue: NO MATCH");
+                return NO_MATCH_VALUE; //cannot match with self
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         if(user1.getUserType().equals(user2.getUserType())){
             return NO_MATCH_VALUE; //cannot match with user of same type
@@ -131,9 +136,9 @@ public class Matching {
         if(user1.getCancerType().equals(user2.getCancerType())){
             matchValue+=HIGH_MATCH_VALUE;
         }
-        if(user1.getCity().equals(user2.getCity())){
-            matchValue+=HIGH_MATCH_VALUE;
-        }
+//        if(user1.getCity().equals(user2.getCity())){
+//            matchValue+=HIGH_MATCH_VALUE;
+//        }
         if(user1.getTreatmentType().equals(user2.getTreatmentType())){
             matchValue+=MEDIUM_MATCH_VALUE;
         }
@@ -142,11 +147,20 @@ public class Matching {
                 matchValue+=LOW_MATCH_VALUE;
             }
         }
+        matchValue+=cityMatchValue(user1, user2);
         return matchValue;
     }
 
     public int cancerMatchValue(Profile user1, Profile user2){
-        matchValue = 0;
+        int matchValue = 0;
+        try {
+            if(user1.getUser().fetchIfNeeded().getString("username").equals(user2.getUser().fetchIfNeeded().getString("username"))){
+                Log.i(TAG, "cancerMatchValue: NO MATCH");
+                return NO_MATCH_VALUE; //cannot match with self
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if(user1.getCancerType().equals(user2.getCancerType())){
             matchValue+=HIGH_MATCH_VALUE;
         } else if (user1.getCancerType().contains(user2.getCancerType())){
@@ -156,7 +170,15 @@ public class Matching {
     }
 
     public int hospitalMatchValue(Profile user1, Profile user2){
-        matchValue = 0;
+        int matchValue = 0;
+        try {
+            if(user1.getUser().fetchIfNeeded().getString("username").equals(user2.getUser().fetchIfNeeded().getString("username"))){
+                Log.i(TAG, "cancerMatchValue: NO MATCH");
+                return NO_MATCH_VALUE; //cannot match with self
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (user1.getHospital().equals(user2.getHospital())){
             matchValue+=HIGH_MATCH_VALUE;
         }
@@ -164,7 +186,15 @@ public class Matching {
     }
 
     public int treatmentMatchValue(Profile user1, Profile user2){
-        matchValue = 0;
+        int matchValue = 0;
+        try {
+            if(user1.getUser().fetchIfNeeded().getString("username").equals(user2.getUser().fetchIfNeeded().getString("username"))){
+                Log.i(TAG, "cancerMatchValue: NO MATCH");
+                return NO_MATCH_VALUE; //cannot match with self
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         String[] user1Treatment=user1.getTreatmentType().split(" ,");
         String[] user2Treatment=user2.getTreatmentType().split(" ,");
 
@@ -179,7 +209,15 @@ public class Matching {
     }
 
     public int cityMatchValue(Profile user1, Profile user2){
-        matchValue = 0;
+        int matchValue = 0;
+        try {
+            if(user1.getUser().fetchIfNeeded().getString("username").equals(user2.getUser().fetchIfNeeded().getString("username"))){
+                Log.i(TAG, "cancerMatchValue: NO MATCH");
+                return NO_MATCH_VALUE; //cannot match with self
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         try {
             if(user1.getParseObject("user").fetchIfNeeded().getParseObject("contactInfo")!=null && user2.getParseObject("user").fetchIfNeeded().getParseObject("contactInfo")!=null){
                 String city1 = user1.getParseObject("user").fetchIfNeeded().getParseObject("contactInfo").fetchIfNeeded().getString("address");
@@ -198,6 +236,14 @@ public class Matching {
 
     private int interestsMatchValue(Profile user1, Profile user2){
         int numSimilar = 0;
+        try {
+            if(user1.getUser().fetchIfNeeded().getString("username").equals(user2.getUser().fetchIfNeeded().getString("username"))){
+                Log.i(TAG, "cancerMatchValue: NO MATCH");
+                return NO_MATCH_VALUE; //cannot match with self
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         String[] user1Interests = user1.getInsterests().split(", ");
         String[] user2Interests = user2.getInsterests().split(", ");
 

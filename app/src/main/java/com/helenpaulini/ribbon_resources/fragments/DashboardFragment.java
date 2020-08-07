@@ -176,7 +176,16 @@ public class DashboardFragment extends Fragment {
             @Override
             public void done(List<Profile> profilesList, ParseException e) {
                 if(profilesList!=null){
-                    profilesList = profileMatches(getCurrentProfile(ParseUser.getCurrentUser(), profilesList), profilesList, selectedValue);
+                    ParseUser currentUser = ParseUser.getCurrentUser();
+                    currentUser.fetchInBackground();
+                    try {
+                        Profile currentProfile = (Profile) currentUser.fetchIfNeeded().getParseObject("profile");
+                        currentProfile.fetchInBackground();
+                        profilesList = profileMatches(currentProfile.fetchIfNeeded(), profilesList, selectedValue);
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+                    //profilesList = profileMatches(getCurrentProfile(ParseUser.getCurrentUser(), profilesList), profilesList, selectedValue);
                 }
                 if (e != null) {
                     Log.e(TAG, "Issue with getting profiles", e);
