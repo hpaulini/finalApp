@@ -20,6 +20,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import java.io.File;
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -139,7 +140,6 @@ public class UserdetailsFragment extends Fragment {
         firstName.setText(profile.getFirstName());
         lastName.setText(profile.getLastName());
         birthday.setText(profile.getBirthday());
-        //city.setText(profile.getCity());
         bio.setText(profile.getBio());
         interests.setText(profile.getInsterests());
         userType.setText(profile.getUserType());
@@ -160,4 +160,5 @@ public class UserdetailsFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
 }

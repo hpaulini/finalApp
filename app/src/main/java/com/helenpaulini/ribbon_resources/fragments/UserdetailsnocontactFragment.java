@@ -18,6 +18,8 @@ import com.helenpaulini.ribbon_resources.models.ContactInfo;
 import com.helenpaulini.ribbon_resources.models.Profile;
 import com.parse.ParseException;
 
+import java.util.Calendar;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link UserdetailsnocontactFragment#newInstance} factory method to
@@ -128,7 +130,7 @@ public class UserdetailsnocontactFragment extends Fragment {
     private void setTexts(){
         firstName.setText(profile.getFirstName());
         lastName.setText(profile.getLastName());
-        birthday.setText(profile.getBirthday());
+        birthday.setText(getAge(profile.getBirthday())+" years old");
         bio.setText(profile.getBio());
         interests.setText(profile.getInsterests());
         userType.setText(profile.getUserType());
@@ -144,5 +146,59 @@ public class UserdetailsnocontactFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    private String getAge(String birthday){
+        String monthString = birthday.substring(0, 3);
+        String dayString = birthday.substring(4, birthday.indexOf(','));
+        String yearString = birthday.substring(birthday.indexOf(',')+2);
+
+        int month = monthToInt(monthString);
+        int year = Integer.parseInt(yearString);
+        int day = Integer.parseInt(dayString);
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+            age--;
+        }
+        Integer ageInt = new Integer(age);
+        String ageS = ageInt.toString();
+
+        return ageS;
+    }
+
+    private int monthToInt(String month){
+        int monthInt;
+        if(month.equals("Jan")) {
+            monthInt = 1;
+        } else if (month.equals("Feb")){
+            monthInt = 2;
+        } else if (month.equals("Mar")){
+            monthInt = 3;
+        } else if (month.equals("Apr")){
+            monthInt = 4;
+        } else if (month.equals("May")){
+            monthInt = 5;
+        } else if (month.equals("Jun")){
+            monthInt = 6;
+        } else if (month.equals("Jul")){
+            monthInt = 7;
+        } else if (month.equals("Aug")){
+            monthInt = 8;
+        } else if (month.equals("Sep")){
+            monthInt = 9;
+        } else if (month.equals("Oct")){
+            monthInt = 10;
+        } else if (month.equals("Nov")){
+            monthInt = 11;
+        } else {
+            monthInt = 12;
+        }
+        return monthInt;
     }
 }
