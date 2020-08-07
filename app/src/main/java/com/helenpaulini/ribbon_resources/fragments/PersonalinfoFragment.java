@@ -205,13 +205,13 @@ public class PersonalinfoFragment extends Fragment {
                     Toast.makeText(getContext(), "Error while saving", Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, "Profile saved successfully!!");
-            }
-        });
 
-        currentUser.put("contactInfo", contact);
-        currentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(com.parse.ParseException e) {
+                currentUser.put("contactInfo", contact);
+                currentUser.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(com.parse.ParseException e) {
+                    }
+                });
             }
         });
     }
