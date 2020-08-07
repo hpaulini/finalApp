@@ -5,6 +5,7 @@ import android.util.Log;
 import com.helenpaulini.ribbon_resources.models.PatientProfile;
 import com.helenpaulini.ribbon_resources.models.Profile;
 import com.helenpaulini.ribbon_resources.models.SurvivorProfile;
+import com.parse.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,10 +180,18 @@ public class Matching {
 
     public int cityMatchValue(Profile user1, Profile user2){
         matchValue = 0;
-        if(user1.getCity().equals(user2.getCity())){
-            matchValue+=HIGH_MATCH_VALUE;
-        } else{
-            return 0;
+        try {
+            if(user1.getParseObject("user").fetchIfNeeded().getParseObject("contactInfo")!=null && user2.getParseObject("user").fetchIfNeeded().getParseObject("contactInfo")!=null){
+                String city1 = user1.getParseObject("user").fetchIfNeeded().getParseObject("contactInfo").fetchIfNeeded().getString("address");
+                String city2 = user2.getParseObject("user").fetchIfNeeded().getParseObject("contactInfo").fetchIfNeeded().getString("address");
+                if(city1.equals(city2)){
+                    matchValue+=HIGH_MATCH_VALUE;
+                } else{
+                    return 0;
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         return matchValue;
     }
