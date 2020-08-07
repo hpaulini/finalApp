@@ -137,27 +137,38 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/interests"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <com.hootsuite.nachos.NachoTextView
+            android:id="@+id/interestsText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/treatmentStart"
             android:layout_marginStart="36dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="4dp"
-            android:hint="Interests"
-            app:helperText="This will help us match you with users of similar interests">
+            app:chipBackground="@color/lighyellow"
+            app:chipTextSize="16dp"
+            app:chipHeight="30dp"
+            app:chipVerticalSpacing="3dp"
+            android:hint="Interests" />
 
-            <com.hootsuite.nachos.NachoTextView
-                android:id="@+id/interestsText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:chipHeight="30dp"
-                app:chipTextSize="16dp"
-                app:chipVerticalSpacing="3dp" />
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/interests"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/treatmentStart"-->
+<!--            android:layout_marginStart="36dp"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:layout_marginEnd="4dp"-->
+<!--            android:hint="Interests"-->
+<!--            app:helperText="This will help us match you with users of similar interests">-->
 
-        </com.google.android.material.textfield.TextInputLayout>
+<!--            <com.hootsuite.nachos.NachoTextView-->
+<!--                android:id="@+id/interestsText"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content" />-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
 
         <TextView
@@ -225,12 +236,12 @@
             android:id="@+id/imageView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/interests"
-            android:layout_alignBottom="@+id/interests"
+            android:layout_alignTop="@+id/interestsText"
+            android:layout_alignBottom="@+id/interestsText"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="-28dp"
             android:layout_marginBottom="0dp"
-            android:layout_toStartOf="@+id/interests"
+            android:layout_toStartOf="@+id/interestsText"
             android:src="@drawable/ic_baseline_sports_tennis_24" />
 
         <Button
@@ -238,7 +249,7 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/interests"
+            android:layout_below="@+id/interestsText"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"

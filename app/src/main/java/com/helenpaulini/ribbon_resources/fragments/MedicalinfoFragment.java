@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -30,6 +31,9 @@ import com.helenpaulini.ribbon_resources.R;
 import com.helenpaulini.ribbon_resources.models.Hospital;
 import com.helenpaulini.ribbon_resources.models.Profile;
 import com.hootsuite.nachos.NachoTextView;
+import com.hootsuite.nachos.chip.Chip;
+import com.hootsuite.nachos.terminator.ChipTerminatorHandler;
+import com.hootsuite.nachos.validator.ChipifyingNachoValidator;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -46,6 +50,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
 import in.galaxyofandroid.spinerdialog.SpinnerDialog;
@@ -60,6 +65,8 @@ public class MedicalinfoFragment extends Fragment {
 
     public static final String TAG = "Medicalinfo";
     public static final String API_URL = "https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json";
+
+    //private static String[] SUGGESTIONS = new String[]{"Nachos", "Chip", "Tortilla Chips", "Melted Cheese", "Salsa", "Guacamole", "Cheddar", "Mozzarella", "Mexico", "Jalapeno"};
 
     List<Hospital> hospitals = new ArrayList<>();
     ArrayList<String> items = new ArrayList<>();
@@ -232,7 +239,10 @@ public class MedicalinfoFragment extends Fragment {
                 String treatment = treatmentText.getText().toString();
                 String start = startText.getText().toString();
                 String end = endText.getText().toString();
-                String interests = interestsText.getText().toString();
+                String interests = "";
+                for(int i=0; i<interestsText.getChipAndTokenValues().size(); i++){
+                    interests = interests + interestsText.getChipAndTokenValues().get(i)+", ";
+                }
                 saveToProfile(userType, hospital, cancer, treatment, start, end, interests);
             }
         });
@@ -274,6 +284,25 @@ public class MedicalinfoFragment extends Fragment {
         endText = view.findViewById(R.id.endText);
         interestsText = view.findViewById(R.id.interestsText);
         savePersonalInfo = view.findViewById(R.id.savePersonalInfo);
+
+        setupChipTextView(interestsText);
+    }
+
+    private void setupChipTextView(NachoTextView nachoTextView) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_dropdown_item_1line);
+        nachoTextView.setAdapter(adapter);
+        nachoTextView.addChipTerminator('\n', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_ALL);
+        //nachoTextView.addChipTerminator(' ', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_TO_TERMINATOR);
+        nachoTextView.addChipTerminator(';', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_CURRENT_TOKEN);
+        nachoTextView.addChipTerminator(',', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_TO_TERMINATOR);
+        nachoTextView.setNachoValidator(new ChipifyingNachoValidator());
+        nachoTextView.enableEditChipOnTouch(true, true);
+        nachoTextView.setOnChipClickListener(new NachoTextView.OnChipClickListener() {
+            @Override
+            public void onChipClick(Chip chip, MotionEvent motionEvent) {
+                Log.d(TAG, "onChipClick: " + chip.getText());
+            }
+        });
     }
 
     private void setPreviouslyInputted(ParseUser currentUser){
