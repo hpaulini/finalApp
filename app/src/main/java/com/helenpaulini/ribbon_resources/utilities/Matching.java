@@ -31,10 +31,27 @@ public class Matching {
         List<Profile> topMatches = new ArrayList<>();
         for(int i=0; i<allProfiles.size(); i++){
             if(topMatchValue(currentProfile, allProfiles.get(i))>0){
-                topMatches.add(allProfiles.get(i));
+                //topMatches.add(allProfiles.get(i));
+                sortedAdd(currentProfile, topMatches, allProfiles.get(i));
             }
         }
-        return topMatches;
+        return topMatches.subList(0, 3);
+    }
+
+    public void sortedAdd (Profile currentProfile, List<Profile> list, Profile item){
+        if(list.size()==0){
+            list.add(item);
+            return;
+        }
+        int i=0;
+        while(i<list.size()){
+            if(topMatchValue(currentProfile, list.get(i))>topMatchValue(currentProfile, item)){
+                i++;
+            } else{
+                list.add(i, item);
+                return;
+            }
+        }
     }
 
     public List<Profile> cancerTypeMatchList(Profile currentProfile, List<Profile> allProfiles){
@@ -61,7 +78,8 @@ public class Matching {
         List<Profile> treatmentTypeMatches = new ArrayList<>();
         for(int i=0; i<allProfiles.size(); i++){
             if(treatmentMatchValue(currentProfile, allProfiles.get(i))>0){
-                treatmentTypeMatches.add(allProfiles.get(i));
+                //treatmentTypeMatches.add(allProfiles.get(i));
+                sortedAdd(currentProfile, treatmentTypeMatches, allProfiles.get(i));
             }
         }
         return treatmentTypeMatches;
@@ -81,7 +99,8 @@ public class Matching {
         List<Profile> interestsMatches = new ArrayList<>();
         for(int i=0; i<allProfiles.size(); i++){
             if(interestsMatchValue(currentProfile, allProfiles.get(i))>0){
-                interestsMatches.add(allProfiles.get(i));
+                //interestsMatches.add(allProfiles.get(i));
+                sortedAdd(currentProfile, interestsMatches, allProfiles.get(i));
             }
         }
         return interestsMatches;
