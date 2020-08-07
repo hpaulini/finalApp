@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Title"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etTitle"
@@ -36,7 +37,8 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="8dp"
         android:text="Body Text"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etBody"
@@ -59,7 +61,8 @@
         android:layout_below="@+id/etBody"
         android:layout_marginTop="8dp"
         android:text="Tags"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etTags"

@@ -175,7 +175,9 @@ public class DashboardFragment extends Fragment {
         query.findInBackground(new FindCallback<Profile>() {
             @Override
             public void done(List<Profile> profilesList, ParseException e) {
-                profilesList = profileMatches(getCurrentProfile(ParseUser.getCurrentUser(), profilesList), profilesList, selectedValue);
+                if(profilesList!=null){
+                    profilesList = profileMatches(getCurrentProfile(ParseUser.getCurrentUser(), profilesList), profilesList, selectedValue);
+                }
                 if (e != null) {
                     Log.e(TAG, "Issue with getting profiles", e);
                     return;
@@ -205,15 +207,14 @@ public class DashboardFragment extends Fragment {
 
     private Profile getCurrentProfile(ParseUser user, List<Profile> allProfiles){
         int indexOfCurrentProfile=0;
-        for(int i=0; i<allProfiles.size(); i++){
-            if (allProfiles.get(i).getUser().getObjectId().equals(user.getObjectId())){
-                indexOfCurrentProfile = i;
+            for(int i=0; i<allProfiles.size(); i++){
+                if (allProfiles.get(i).getUser().getObjectId().equals(user.getObjectId())){
+                    indexOfCurrentProfile = i;
+                }
             }
-        }
-        Log.i(TAG, "current user: " + allProfiles.get(indexOfCurrentProfile).getUser().getUsername());
-        return allProfiles.get(indexOfCurrentProfile);
+            Log.i(TAG, "current user: " + allProfiles.get(indexOfCurrentProfile).getUser().getUsername());
+            return allProfiles.get(indexOfCurrentProfile);
     }
-
 
     private List<Profile> profileMatches (Profile currentProfile, List<Profile> allProfiles, String filterSelection) {
         List<Profile> profileMatches = new ArrayList<>();
