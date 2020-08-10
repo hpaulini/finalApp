@@ -24,13 +24,14 @@
 
             <TextView
                 android:id="@+id/tvHeader"
-                android:layout_width="370dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:layout_toEndOf="@+id/ivProfilePic"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 tools:text="Post Header" />
 
             <TextView
@@ -38,10 +39,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvCaption"
-                android:layout_alignStart="@+id/tvCaption"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="8dp"
-                android:layout_toEndOf="@+id/ivProfilePic"
+                android:layout_marginBottom="8dp"
+                android:layout_toEndOf="@+id/textView16"
                 tools:text="Tags" />
 
             <TextView
@@ -52,6 +53,7 @@
                 android:layout_alignStart="@+id/ivProfilePic"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="Body of Post" />
 
             <TextView
@@ -59,9 +61,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvHeader"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="8dp"
-                android:layout_toEndOf="@+id/ivProfilePic"
+                android:layout_toEndOf="@+id/textView15"
                 tools:text="Author" />
 
             <!--    <ImageView-->
@@ -83,6 +85,26 @@
                 android:layout_marginTop="8dp"
                 android:layout_toEndOf="@+id/tvAuthor"
                 tools:text="Date" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvHeader"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/at" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvCaption"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Tags: " />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

@@ -35,7 +35,7 @@ public class Matching {
                 sortedAdd(currentProfile, topMatches, allProfiles.get(i));
             }
         }
-        return topMatches.subList(0, 3);
+        return topMatches.subList(0, Math.min(3, topMatches.size()));
     }
 
     public void sortedAdd (Profile currentProfile, List<Profile> list, Profile item){

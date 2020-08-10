@@ -151,7 +151,8 @@
             android:layout_marginEnd="-36dp"
             android:layout_marginBottom="-8dp"
             android:layout_toStartOf="@+id/facebook"
-            android:src="@drawable/ic_facebook" />
+            android:src="@drawable/ic_fb"
+            android:tint="#626262"/>
 
         <ImageView
             android:id="@+id/imageView9"
@@ -163,7 +164,8 @@
             android:layout_marginEnd="-36dp"
             android:layout_marginBottom="-8dp"
             android:layout_toStartOf="@+id/instagram"
-            android:src="@drawable/ic_instagram" />
+            android:src="@drawable/ic_instagram"
+            android:tint="#626262" />
 
         <Button
             android:id="@+id/saveContactInfo"
